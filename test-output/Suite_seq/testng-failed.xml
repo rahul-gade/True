@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite_seq]">
+  <parameter name="Locality" value="Hub"/>
+  <parameter name="appType" value="Web"/>
+  <parameter name="ExecutionType" value="Sequential"/>
+  <parameter name="testname1" value="TestMadisonCart"/>
+  <parameter name="browser" value="Chrome"/>
+  <parameter name="testname" value="TestMadisonCart-Run1"/>
+  <parameter name="toolName" value="Selenium"/>
+  <test name="TestMadisonCart-Run1(failed)">
+    <parameter name="Locality" value="Hub"/>
+    <parameter name="appType" value="Web"/>
+    <parameter name="ExecutionType" value="Sequential"/>
+    <parameter name="testname1" value="TestMadisonCart"/>
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="testname" value="TestMadisonCart-Run1"/>
+    <parameter name="toolName" value="Selenium"/>
+    <classes>
+      <class name="com.mop.qa.test.bvt.TestMadisonCart">
+        <methods>
+          <include name="executeSuite"/>
+          <include name="afterTest"/>
+          <include name="finishExecution"/>
+          <include name="startTestReport"/>
+          <include name="TestMadisonCart"/>
+        </methods>
+      </class> <!-- com.mop.qa.test.bvt.TestMadisonCart -->
+    </classes>
+  </test> <!-- TestMadisonCart-Run1(failed) -->
+</suite> <!-- Failed suite [Suite_seq] -->

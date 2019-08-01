@@ -1,0 +1,39 @@
+#!/bin/bash
+echo "---> Getting System proxy --->"
+proxyIp=$(system_profiler SPNetworkDataType|grep "HTTP Proxy Server"|awk {'sub(/^.*:[ \t]*/, "", $0); print $0;'})
+set -- $proxyIp
+echo "---> System proxy is $1 --->"
+export HTTP_PROXY=http://$1:6050 HTTPS_PROXY=http://$1:6050
+echo "---> stopping existing minikube --->" 
+minikube stop
+
+echo "---> staring minikube with hyperkit VM using system proxy: $1--->"
+minikube start --vm-driver=hyperkit --docker-env HTTP_PROXY=http://$1:6050 --docker-env HTTPS_PROXY=http://$1:6050 --docker-env NO_PROXY=localhost,127.0.0.0/8,192.0.0.0/8  --cpus 4 --memory 8192
+export NO_PROXY=$no_proxy,$(minikube ip)
+echo "---> Stopping minikibe because RBAC clusterrolebinding was not done properly the first time --->"
+minikube stop
+echo "---> Restarting the minikube --->"
+minikube start
+echo "--->  Applying the RBAC clusterrolebinding to the minikube. This will start the API Service successfully in the minikube --->"
+kubectl create clusterrolebinding fixRBAC --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
+echo "---> Deploying Selenium hub --->"
+kubectl create -f ../selenium-hub-deployment.yaml
+echo "---> Creating Service for the Selenium hub to be used from the host machine --->"
+kubectl create -f ../selenium-hub-svc.yaml
+echo "---> Deploying selenium Chrome Pods with VNC server enabled --->"
+kubectl create -f ../selenium-node-chrome-deployment.yaml
+echo "---> Deploying firefox Pods with VNC server enabled ---> "
+kubectl create -f ../selenium-node-firefox-deployment.yaml 
+echo "---> Please use 'kubectl port-forward $POD_NAME 5901:5900' if interested in monitoring the test run on the pods. The use VNC viewer to login in with the password 'secret' --->"
+
+echo "---> Getting pod names --->"
+kubectl get pod -n kube-system
+echo "---> Waiting for all pods to be running --->"
+names=$(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
+for i in $names; do echo waiting for pod $i to be running; kubectl wait --for=condition=Ready pod/$i; done
+
+echo ---> "Starting port forwarding  hub on localhost:4444 --->"
+export PODNAME=`kubectl get pods --selector="app=selenium-hub" --output=template --template="{{with index .items 0}}{{.metadata.name}}{{end}}"` && kubectl port-forward $PODNAME 4444:4444 &
+disown
+mvn clean install -Dmaven.test.skip=true -f ../../pom.xml
