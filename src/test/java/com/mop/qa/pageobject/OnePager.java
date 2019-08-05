@@ -82,6 +82,7 @@ public class OnePager extends PageBase{
 		do {
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		if(competitionLike.isDisplayed()){
 		click(competitionLike, "What We Like");	
 		txtcompetitionLike.sendKeys(Keys.ENTER);
 		Thread.sleep(100);
@@ -96,6 +97,7 @@ public class OnePager extends PageBase{
 		Thread.sleep(100);
 		click(competitionLikeIcon, "Competition Like Icon");	
 		Thread.sleep(100);
+		}
 		click(industryLike, "What We Like");	
 		Thread.sleep(100);
 		industryLike.sendKeys(Keys.ENTER);

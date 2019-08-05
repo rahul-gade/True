@@ -8,7 +8,7 @@ import com.mop.qa.pageobject.InvestmentHome;
 import com.mop.qa.testbase.TestBase;
 
 public class TestCancelDeal extends TestBase {
-	private static final Logger LOGGER = Logger.getLogger(TestEdit.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TestCancelDeal.class.getName());
 	 @Test
 		public void cancelDeal() throws Exception  {
 		 try{

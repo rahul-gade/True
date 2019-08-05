@@ -8,7 +8,7 @@ import com.mop.qa.pageobject.InvestmentHome;
 import com.mop.qa.testbase.TestBase;
 
 public class TestEditAndClose extends TestBase {
-	private static final Logger LOGGER = Logger.getLogger(TestEdit.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TestEditAndClose.class.getName());
 	InvestmentHome inst;
 	 @Test
 		public void editAndClose() throws Exception  {

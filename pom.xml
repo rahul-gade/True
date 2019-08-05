@@ -609,13 +609,18 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile></suiteXmlFile>
+					</suiteXmlFiles>
+			</configuration>
+		</plugin>
 
-		</plugins>
+	   </plugins>
 
-	</build>
+   </build>
 
-	<profiles>
+<profiles>
 
 	</profiles>
 

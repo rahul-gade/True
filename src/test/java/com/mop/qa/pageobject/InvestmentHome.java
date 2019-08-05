@@ -81,11 +81,11 @@ public class InvestmentHome extends PageBase{
 		if(url.contains("Talent-Acquisition")){
 			module = "TA";
 			click(talent, "Talent Acquisition");
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		}else if(url.contains("Investment-Management")){
 			module = "IM";
 			click(investment, "Investment");
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		}
 	}
 	public void findDeal(RemoteWebDriver driver, String projName, String compName, String sect) throws Exception {

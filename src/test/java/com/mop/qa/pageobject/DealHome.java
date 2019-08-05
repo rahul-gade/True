@@ -48,7 +48,7 @@ public class DealHome extends PageBase{
 	
 public void verifyDealOwner(RemoteWebDriver driver, String dOwner) throws Exception {
 		click(btnNewDeal, "New Deal");
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		WebElement dealOwner = driver.findElement(By.xpath(owner.replace("PLACEHOLDER", dOwner)));
 		if(getText(dealOwner).contains(dOwner)) {
 			assertTrue("Deal Owner is displayed as "+getText(dealOwner));
@@ -58,8 +58,9 @@ public void verifyDealOwner(RemoteWebDriver driver, String dOwner) throws Except
 	}
 	
 public void cancelDeal(RemoteWebDriver driver) throws Exception {	
-		click(btnNewDeal, "New Deal");
-		Thread.sleep(1000);
+	Thread.sleep(2000);	
+	click(btnNewDeal, "New Deal");
+		Thread.sleep(3000);
 		click(btnClose, "Close Button");
 		waitForVisibilityOfElement(btnDiscardDeal);
 		if(driver.findElements(By.xpath("//span[text()='YES']")).size()>0) {

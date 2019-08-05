@@ -108,7 +108,7 @@ public class HypothesesPage extends PageBase{
 			assertTrue("Successfully posted a Comment");
 		}
 		click(btnBack, "Back");
-		Thread.sleep(100);
+		Thread.sleep(1500);
 		click(btnBack1, "Back");
 		Thread.sleep(100);
 	}
