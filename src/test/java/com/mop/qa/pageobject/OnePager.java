@@ -14,84 +14,106 @@ public class OnePager extends PageBase{
 		super(remoteDriver);
 	} 
 	//----------------Industry Page------------//
-	@FindBy(xpath = "(//div[text()=' Competition ']/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement competitionLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement txtcompetitionLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement competitionDisLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']//a[@class='link-dislike-btn'])[1]")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement competitionLikeIcon;
-	@FindBy(xpath = "(//div[text()=' Underlying industry growth ']//a[@class='link-dislike-btn'])[1]")
+	
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement industryLikeIcon;
-	@FindBy(xpath = "(//div[text()=' Underlying industry growth ']/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement industryLike;
-	@FindBy(xpath = "(//div[text()=' Underlying industry growth ']/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement industryDisLike;
-	@FindBy(xpath = "(//div[text()=' Underlying industry growth ']/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement txtindustryDisLike;
-	@FindBy(xpath = "(//div[text()=' Expected Industry Growth ']//a[@class='link-dislike-btn'])[1]")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[3]")
 	private WebElement industryDisLikeIcon;
-	@FindBy(xpath = "(//span[text()='NEXT'])[1]/parent::button")
+	
+	
+	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
+	private WebElement expectedIndustryLike; 
+	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
+	private WebElement expectedIndustryDislike; 
+	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div//a[@class='link-dislike-btn'])[3]")
+	private WebElement expectedIndustryDislikeIcon;
+	
+	@FindBy(xpath = "(//span[text()='NEXT'])[2]/parent::button")
 	private WebElement btnnext;
 	
 	//----------------Company Page------------//
-	@FindBy(xpath = "//div[text()=' Customer Value Proposition & MOATS ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement customerLike;
-	@FindBy(xpath = "//div[text()=' Customer Value Proposition & MOATS ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul/li")
+	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement txtcustomerLike;
-	@FindBy(xpath = "//div[text()=' Customer Value Proposition & MOATS ']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement customerDisLike;
-	@FindBy(xpath = "(//div[text()=' Customer Value Proposition & MOATS ']//a[@class='link-dislike-btn'])[1]")
+	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement customerLikeIcon;
-	@FindBy(xpath = "//div[text()=' Leadership ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	
+	@FindBy(xpath = "(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement leadershipLike;
-	@FindBy(xpath = "//div[text()=' Leadership ']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement leadershipDisLike;
-	@FindBy(xpath = "(//div[text()=' Leadership ']//a[@class='link-dislike-btn'])[1]")
+	@FindBy(xpath = "(//span[text()='Leadership']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement leadershipLikeIcon;
-		@FindBy(xpath = "//div[text()=' Financial Outcomes ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
-	private WebElement financialLike;
-	@FindBy(xpath = "//div[text()=' Financial Outcomes ']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
-	private WebElement financialDisLike;
-	@FindBy(xpath = "(//button[@class='btn mat-flat-button'])[2]")
+	
+	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
+	private WebElement compDynamicsLike;
+	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
+	private WebElement compDynamicsDislike;
+	
+	@FindBy(xpath = "(//span[text()='NEXT'])[3]/parent::button")
 	private WebElement btnnext2;
 	
 	//----------------Deal Dynamics Page------------//
-	@FindBy(xpath = "//div[text()=' Valuation ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	@FindBy(xpath = "//div[text()='Valuation']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
 	private WebElement valuationLike;
-	@FindBy(xpath = "//div[text()=' Valuation ']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
+	@FindBy(xpath = "//div[text()='Valuation']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
 	private WebElement valuationDisLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']/following-sibling::div//label[text()='What We Like'])[2]/following-sibling::ul")
+	
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[2]/following-sibling::ul")
 	private WebElement dealCompetitionLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']/following-sibling::div//label[text()='What We Dislike'])[2]/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[2]/following-sibling::ul")
 	private WebElement dealCompetitionDisLike;
-	@FindBy(xpath = "(//div[text()=' Competition ']//a[@class='link-dislike-btn'])[4]")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div//a[@class='link-dislike-btn'])[4]")
 	private WebElement competition1LikeIcon;
-	@FindBy(xpath = "(//div[text()=' Exit strategy ']//a[@class='link-dislike-btn'])[1]")
+	
+	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement exitStrategyLikeIcon;
-	@FindBy(xpath = "//div[text()=' Exit strategy ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul")
 	private WebElement exitStrategyLike;
-	@FindBy(xpath = "//div[text()=' Exit strategy ']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul")
 	private WebElement exitStrategyDisLike;
-	@FindBy(xpath = "(//span[text()='NEXT'])[3]")
+	
+	@FindBy(xpath = "(//span[text()='NEXT'])[4]")
 	private WebElement btnnext3;
 	
 	//----------------TrueNorth Angles Page------------//
-	@FindBy(xpath = "//div[text()=' Valuation ']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	@FindBy(xpath = "//label[text()='True North Angles']/following-sibling::ul")
 	private WebElement txtTrueNorthAngles;
 	@FindBy(xpath = "//span[text()='SUBMIT']")
 	private WebElement btnSubmit;
 	@FindBy(xpath = "//span[text()='VIEW ONE PAGER']")
 	private WebElement btnViewOnePager;
 	
+	//----------------TIC Page------------//
+	@FindBy(xpath = "//div[text()=' TIC ']/ancestor::div[2]//span[text()='NEXT']/parent::button")
+	private WebElement btnTICNext; 
+	
 	
 	public void enterOnePagerIndustry(RemoteWebDriver driver, String competitionWeLike, String competitionWeDisLike,String industryWeLike, String industryWeDisLike) throws Exception {
 		Actions action = new Actions(remoteDriver);
+		Thread.sleep(2000);
+		action.moveToElement(btnTICNext).click().build().perform();
 		do {
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
-		if(driver.findElements(By.xpath("(//span[text()='NEXT'])[1]/ancestor::form//div[text()=' Competition ']")).size()>0){
+		if(driver.findElements(By.xpath("(//span[text()='NEXT'])[2]/ancestor::form//span[text()='Competition']")).size()>0){
 		click(competitionLike, "What We Like");	
 		txtcompetitionLike.sendKeys(Keys.ENTER);
 		Thread.sleep(100);
@@ -107,7 +129,7 @@ public class OnePager extends PageBase{
 		action.moveToElement(competitionLikeIcon).click().build().perform();
 		}
 		//click(competitionLikeIcon, "Competition Like Icon");
-		if(driver.findElements(By.xpath("//div[text()=' Underlying industry growth ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Underlying industry growth']")).size()>0){
 		click(industryLike, "What We Like");	
 		Thread.sleep(100);
 		industryLike.sendKeys(Keys.ENTER);
@@ -124,7 +146,7 @@ public class OnePager extends PageBase{
 		Thread.sleep(100);
 		//click(industryDisLikeIcon, "Industry DisLike Icon");
 		Thread.sleep(1000);
-		if(driver.findElements(By.xpath("//div[text()=' Expected Industry Growth ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Expected Industry Growth']")).size()>0){
 		action.moveToElement(industryDisLikeIcon).click().build().perform();
 		}
 		action.moveToElement(btnnext).click().build().perform();
@@ -139,7 +161,7 @@ public class OnePager extends PageBase{
 	public void enterOnePagerCompany(RemoteWebDriver driver, String customenrWeLike, String customerWeDisLike, String leadershipWeLike, String leadershipWeDisLike, String financialWeLike, String financialWeDisLike) throws Exception {
 		Actions action = new Actions(remoteDriver);
 		//click(customerLike, "What We Like");
-		if(driver.findElements(By.xpath("//div[text()=' Customer Value Proposition & MOATS ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Customer Value Proposition & MOATS']")).size()>0){
 		action.moveToElement(customerLike).click().build().perform();
 	//	action.moveToElement(customerLike).sendKeys(customenrWeLike);
 		enterText(customerLike, customenrWeLike, "What We Like");
@@ -152,7 +174,7 @@ public class OnePager extends PageBase{
 		Thread.sleep(1000);
 	//	click(leadershipLike, "What We Like");	
 		}
-		if(driver.findElements(By.xpath("//div[text()=' Leadership ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Leadership']")).size()>0){
 		action.moveToElement(leadershipLike).click().build().perform();
 		enterText(leadershipLike, leadershipWeLike, "What We Like");
 		Thread.sleep(1000);
@@ -163,15 +185,15 @@ public class OnePager extends PageBase{
 	//	click(leadershipLikeIcon, "Leadership Like Icon");	
 		action.moveToElement(leadershipLikeIcon).click().build().perform();
 		Thread.sleep(1000);
-	//	click(financialLike, "What We Like");
+	//	click(compDynamicsLike, "What We Like");
 		}
-		if(driver.findElements(By.xpath("//div[text()=' Financial Outcomes ']")).size()>0){
-		action.moveToElement(financialLike).click().build().perform();
-		enterText(financialLike, financialWeLike, "What We Like");
+		if(driver.findElements(By.xpath("//span[text()='Financial Outcomes']")).size()>0){
+		action.moveToElement(compDynamicsLike).click().build().perform();
+		enterText(compDynamicsLike, financialWeLike, "What We Like");
 		Thread.sleep(1000);
-	//	click(financialDisLike, "What We Dislike");	
-		action.moveToElement(financialDisLike).click().build().perform();
-		enterText(financialDisLike, financialWeDisLike, "What We Dislike");
+	//	click(compDynamicsDislike, "What We Dislike");	
+		action.moveToElement(compDynamicsDislike).click().build().perform();
+		enterText(compDynamicsDislike, financialWeDisLike, "What We Dislike");
 		Thread.sleep(2000);
 		}
 	//	click(btnnext2, "NEXT");
@@ -185,7 +207,7 @@ public class OnePager extends PageBase{
 	public void enterOnePagerDealDynamics(RemoteWebDriver driver, String customenrWeLike, String customerWeDisLike, String leadershipWeLike, String leadershipWeDisLike, String financialWeLike, String financialWeDisLike) throws Exception {
 		//click(customerLike, "What We Like");
 		Actions action = new Actions(remoteDriver);
-		if(driver.findElements(By.xpath("//div[text()=' Valuation ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Valuation']")).size()>0){
 		action.moveToElement(valuationLike).click().build().perform();
 		enterText(valuationLike, customenrWeLike, "What We Like");
 		Thread.sleep(1000);
@@ -195,7 +217,7 @@ public class OnePager extends PageBase{
 		Thread.sleep(1000);
 	//	click(leadershipLike, "What We Like");	
 		}
-		if(driver.findElements(By.xpath("//div[text()=' Deal Dynamics ']/ancestor::div//div[text()=' Competition ']")).size()>0){
+		if(driver.findElements(By.xpath("(//div[text()=' Deal Dynamics ']/ancestor::div//span[text()='Competition'])[2]")).size()>0){
 		action.moveToElement(dealCompetitionLike).click().build().perform();
 		enterText(dealCompetitionLike, leadershipWeLike, "What We Like");
 		Thread.sleep(1000);
@@ -206,13 +228,13 @@ public class OnePager extends PageBase{
 	//	click(leadershipLikeIcon, "Leadership Like Icon");	
 		action.moveToElement(competition1LikeIcon).click().build().perform();
 		Thread.sleep(1000);
-	//	click(financialLike, "What We Like");	
+	//	click(compDynamicsLike, "What We Like");	
 		}
-		if(driver.findElements(By.xpath("//div[text()=' Exit strategy ']")).size()>0){
+		if(driver.findElements(By.xpath("//span[text()='Exit strategy']")).size()>0){
 		action.moveToElement(exitStrategyLike).click().build().perform();
 		enterText(exitStrategyLike, financialWeLike, "What We Like");
 		Thread.sleep(1000);
-	//	click(financialDisLike, "What We Dislike");	
+	//	click(compDynamicsDislike, "What We Dislike");	
 		action.moveToElement(exitStrategyDisLike).click().build().perform();
 		enterText(exitStrategyDisLike, financialWeDisLike, "What We Dislike");
 		Thread.sleep(1000);
