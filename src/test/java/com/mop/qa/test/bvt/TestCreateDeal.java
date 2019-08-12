@@ -63,7 +63,8 @@ public class TestCreateDeal extends TestBase {
 			 String pred5year = rds.getValue("DATA", currentTest, "Predicted5Year");
 			 String competitorName = rds.getValue("DATA", currentTest, "CompetitorName");
 			 String percent = rds.getValue("DATA", currentTest, "IndSharePercentage");
-			 industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent);
+			 String flows = rds.getValue("DATA", currentTest, "Flows");
+			 industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent, flows);
 		 }catch(Exception e){
 			 LOGGER.info(e);
 		 }

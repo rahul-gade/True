@@ -41,6 +41,8 @@ public class IndustryInformation extends PageBase{
 	private WebElement btnSubmit;
 	@FindBy(xpath = "//span[text()='DEAL PAGE']")
 	private WebElement btnDealPage;
+	@FindBy(xpath = "//span[text()='BACK TO PIPELINE']")
+	private WebElement btnBackToPipeline;
 	String verifySuccess = "//span[text()='PLACEHOLDER']";
 	@FindBy(xpath = "//a[@class='close-btn']")
 	private WebElement btnClose;
@@ -54,7 +56,7 @@ public class IndustryInformation extends PageBase{
 	private WebElement headerFinancial;
 	
 	
-	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent) throws Exception {
+	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent, String flow) throws Exception {
 		click(txtIndutrySize, "Industry Size");
 		enterText(txtIndutrySize, indSize, "Industry Size");
 		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
@@ -131,6 +133,19 @@ public class IndustryInformation extends PageBase{
 		do {
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		if(driver.findElements(By.xpath("//span[text()='DEAL PAGE']")).size()>0 && driver.findElements(By.xpath("//span[text()='BACK TO PIPELINE']")).size()>0){
+			assertTrue("Success Pop up is displayed succesfully");
+		}
+		if(flow.contains("Back")){
+			click(btnBackToPipeline, "Back to Pipeline");
+			Thread.sleep(1000);
+			do {
+				Thread.sleep(1000);
+	     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+			if(driver.findElements(By.xpath("//a[text()='My Deals']")).size()>0){
+				assertTrue("Deal is Successfully created");
+			}
+		}else{
 		click(btnDealPage, "Deal Page");
 		Thread.sleep(1000);
 		do {
@@ -141,6 +156,7 @@ public class IndustryInformation extends PageBase{
 		}else {
 			assertFalse("Deal is not created");
 		}
+	   }
 	}
 	public void verifyIndustryDetailsPage(RemoteWebDriver driver) throws Exception {
 		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
