@@ -46,28 +46,77 @@ public class IndustryInformation extends PageBase{
 	private WebElement btnClose;
 	@FindBy(xpath = "//a[text()='Deal Details']")
 	private WebElement tabDealDetails;
+	@FindBy(xpath = "//button[@class='step-btn prev mat-button']/span")
+	private WebElement btnNavigateBack;
+	@FindBy(xpath = "//button[@class='step-btn next mat-button']/span")
+	private WebElement btnNavigateForward;
+	@FindBy(xpath = "//div[contains(text(),'Financials')]")
+	private WebElement headerFinancial;
+	
 	
 	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent) throws Exception {
 		click(txtIndutrySize, "Industry Size");
 		enterText(txtIndutrySize, indSize, "Industry Size");
+		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
+		if(industrySize.length()>16){
+			assertFalse("Industry Size field accepts more than 16 characters");
+		}else{
+			assertTrue("Industry Size field do not accept more than 16 characters");
+		}
 		Thread.sleep(100);
 		click(txtTargetCompMarketShare, "Target Company Market Share");
 		enterText(txtTargetCompMarketShare, trgtMktShare, "Target Company Market Share");
+		String mrktSize = driver.findElement(By.xpath("//input[@formcontrolname='targetMarketSizePercent']")).getAttribute("value");
+		if(mrktSize.length()>2){
+			assertFalse("Target Company Market Share field accepts more than 2 characters");
+		}else{
+			assertTrue("Target Company Market Share field do not accept more than 2 characters");
+		}
 		Thread.sleep(100);
 		click(txtLast3Year, "Last 3 Year Growth");
 		enterText(txtLast3Year, last3year, "Last 3 Year Growth");
+		String last3Size = driver.findElement(By.xpath("//input[@formcontrolname='last3YearGrowthPercent']")).getAttribute("value");
+		if(last3Size.length()>2){
+			assertFalse("Last 3 Year Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Last 3 Year Growth field do not accept more than 2 characters");
+		}
 		Thread.sleep(100);
 		click(txtLast5Year, "Last 5 Year Growth");
 		enterText(txtLast5Year, last5year, "Last 5 Year Growth");
+		String last5Size = driver.findElement(By.xpath("//input[@formcontrolname='last5YearGrowthPercent']")).getAttribute("value");
+		if(last5Size.length()>2){
+			assertFalse("Last 5 Year Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Last 5 Year Growth field do not accept more than 2 characters");
+		}
 		Thread.sleep(100);
 		click(txtPredicted3Year, "Predicted 3 Year Growth");
 		enterText(txtPredicted3Year, pred3year, "Predicted 3 Year Growth");
+		String pred3Size = driver.findElement(By.xpath("//input[@formcontrolname='predicted3YearGrowthPercent']")).getAttribute("value");
+		if(pred3Size.length()>2){
+			assertFalse("Predicted 3 Year Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Predicted 3 Year Growth field do not accept more than 2 characters");
+		}
 		Thread.sleep(100);
 		click(txtPredicted5Year, "Predicted 5 Year Growth");
 		enterText(txtPredicted5Year, pred5year, "Predicted 5 Year Growth");
+		String pred5Size = driver.findElement(By.xpath("//input[@formcontrolname='predicted5YearGrowthPercent']")).getAttribute("value");
+		if(pred5Size.length()>2){
+			assertFalse("Predicted 5 Year Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Predicted 5 Year Growth field do not accept more than 2 characters");
+		}
 		Thread.sleep(100);
 		click(txtCompetitorName, "Competitor Name");
 		enterText(txtCompetitorName, competitorName, "Competitor Name");
+		String compSize = driver.findElement(By.xpath("(//input[@formcontrolname='stakeholdername'])[2]")).getAttribute("value");
+		if(compSize.length()>32){
+			assertFalse("Competitor name field accepts more than 32 characters");
+		}else{
+			assertTrue("Competitor name field do not accept more than 32 characters");
+		}
 		Thread.sleep(100);
 		click(txtCompetitorPercentage, "Share Percentage");
 		enterText(txtCompetitorPercentage, percent, "Share Percentage");
@@ -93,8 +142,115 @@ public class IndustryInformation extends PageBase{
 			assertFalse("Deal is not created");
 		}
 	}
+	public void verifyIndustryDetailsPage(RemoteWebDriver driver) throws Exception {
+		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
+		if(industrySize.length()>16){
+			assertFalse("Industry Size field accepts more than 16 characters");
+		}else{
+			assertTrue("Industry Size field do not accept more than 16 characters");
+		}
+		Thread.sleep(100);
+		String mrktSize = driver.findElement(By.xpath("//input[@formcontrolname='targetMarketSizePercent']")).getAttribute("value");
+		if(mrktSize.length()>2){
+			assertFalse("Target Company Market Share field accepts more than 2 characters");
+		}else{
+			assertTrue("Target Company Market Share field do not accept more than 2 characters");
+		}
+		String mrktSizePercent = driver.findElement(By.xpath("//input[@formcontrolname='targetMarketSizePercent']/parent::div/following-sibling::div/span")).getText();
+		if(mrktSizePercent.contains("%")){
+			assertTrue("Target Company Market Share is displayed as %");
+		}else{
+			assertFalse("Target Company Market Share is not displayed as %");
+		}
+		Thread.sleep(100);
+		String last3Size = driver.findElement(By.xpath("//input[@formcontrolname='last3YearGrowthPercent']")).getAttribute("value");
+		if(last3Size.length()>2){
+			assertFalse("Last 3 Years Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Last 3 Years Growth field do not accept more than 2 characters");
+		}
+		String last3Percent = driver.findElement(By.xpath("//input[@formcontrolname='last3YearGrowthPercent']/parent::div/following-sibling::div/span")).getText();
+		if(last3Percent.contains("%")){
+			assertTrue("Last 3 Years Growth is displayed as %");
+		}else{
+			assertFalse("Last 3 Years Growth is not displayed as %");
+		}
+		Thread.sleep(100);
+		String last5Size = driver.findElement(By.xpath("//input[@formcontrolname='last5YearGrowthPercent']")).getAttribute("value");
+		if(last5Size.length()>2){
+			assertFalse("Last 5 Years Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Last 5 Years Growth field do not accept more than 2 characters");
+		}
+		String last5Percent = driver.findElement(By.xpath("//input[@formcontrolname='last5YearGrowthPercent']/parent::div/following-sibling::div/span")).getText();
+		if(last5Percent.contains("%")){
+			assertTrue("Last 5 Years Growth is displayed as %");
+		}else{
+			assertFalse("Last 5 Years Growth is not displayed as %");
+		}
+		Thread.sleep(100);
+		String pred3Size = driver.findElement(By.xpath("//input[@formcontrolname='predicted3YearGrowthPercent']")).getAttribute("value");
+		if(pred3Size.length()>2){
+			assertFalse("Predicted 3 Years Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Predicted 3 Years Growth field do not accept more than 2 characters");
+		}
+		String predicted3Percent = driver.findElement(By.xpath("//input[@formcontrolname='predicted3YearGrowthPercent']/parent::div/following-sibling::div/span")).getText();
+		if(predicted3Percent.contains("%")){
+			assertTrue("Predicted 3 Years Growth is displayed as %");
+		}else{
+			assertFalse("Predicted 3 Years Growth is not displayed as %");
+		}
+		Thread.sleep(100);
+		String pred5Size = driver.findElement(By.xpath("//input[@formcontrolname='predicted5YearGrowthPercent']")).getAttribute("value");
+		if(pred5Size.length()>2){
+			assertFalse("Predicted 5 Year Growth field accepts more than 2 characters");
+		}else{
+			assertTrue("Predicted 5 Year Growth field do not accept more than 2 characters");
+		}
+		String predicted5Percent = driver.findElement(By.xpath("//input[@formcontrolname='predicted5YearGrowthPercent']/parent::div/following-sibling::div/span")).getText();
+		if(predicted5Percent.contains("%")){
+			assertTrue("Predicted 5 Years Growth is displayed as %");
+		}else{
+			assertFalse("Predicted 5 Years Growth is not displayed as %");
+		}
+		Thread.sleep(100);
+		String compSize = driver.findElement(By.xpath("(//input[@formcontrolname='stakeholdername'])[2]")).getAttribute("value");
+		if(compSize.length()>32){
+			assertFalse("Competitor name field accepts more than 32 characters");
+		}else{
+			assertTrue("Competitor name field do not accept more than 32 characters");
+		}
+		Thread.sleep(100);
+		String shareSize = driver.findElement(By.xpath("(//input[@formcontrolname='sharePercentage'])[2]")).getAttribute("value");
+		if(shareSize.length()>2){
+			assertFalse("Share Percentage field accepts more than 2 characters");
+		}else{
+			assertTrue("Share Percentage field do not accept more than 2 characters");
+		}
+		String sharePercent = driver.findElement(By.xpath("(//input[@formcontrolname='sharePercentage'])[2]/parent::div/following-sibling::div/span")).getText();
+		if(sharePercent.contains("%")){
+			assertTrue("Share Percentage is displayed as %");
+		}else{
+			assertFalse("Share Percentage is not displayed as %");
+		}
+		Thread.sleep(100);
+		int add = driver.findElements(By.xpath("//*[@name='Competitor Name']//a[text()='ADD ANOTHER']")).size();
+		int i=1;
+		if (add>0){
+			assertTrue("Add Another link is displayed");
+			do{
+				driver.findElement(By.xpath("//*[@name='Competitor Name']//a[text()='ADD ANOTHER']")).click();
+				i=i+1;
+				Thread.sleep(100);
+			}while(driver.findElements(By.xpath("//*[@name='Competitor Name']//a[@class='add-link link-disabled']")).size()!=1);
+				assertTrue("User is able to add "+i+" Competitors");
+		}else{
+			assertFalse("Add Another link is not displayed");
+		}
+	}
 	
-	public void editIndustryDetails(RemoteWebDriver driver, String projectName, String editprojectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent, String section) throws Exception {
+	public void editIndustryDetails(RemoteWebDriver driver, String projectName, String editprojectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent, String section, String navigate) throws Exception {
 		if(!indSize.equals("NA")) {
 			click(txtIndutrySize, "Industry Size");
 			driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).clear();
@@ -143,7 +299,76 @@ public class IndustryInformation extends PageBase{
 			enterText(txtCompetitorPercentage, percent, "Share Percentage");
 			Thread.sleep(2000);
 		}
-		
+		if(navigate.contains("Yes")){
+			navigateBack();
+			Thread.sleep(1000);
+			navigateForward();
+			Thread.sleep(1000);
+			if(!indSize.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
+				if(indSize.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!trgtMktShare.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='targetMarketSizePercent']")).getAttribute("value");
+				if(trgtMktShare.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!last3year.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='last3YearGrowthPercent']")).getAttribute("value");
+				if(last3year.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!last5year.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='last5YearGrowthPercent']")).getAttribute("value");
+				if(last5year.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!pred3year.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='predicted3YearGrowthPercent']")).getAttribute("value");
+				if(pred3year.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!pred5year.equals("NA")) {
+				String size = driver.findElement(By.xpath("//input[@formcontrolname='predicted5YearGrowthPercent']")).getAttribute("value");
+				if(pred5year.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!competitorName.equals("NA")) {
+				String size = driver.findElement(By.xpath("(//input[@formcontrolname='stakeholdername'])[2]")).getAttribute("value");
+				if(competitorName.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+			if(!percent.equals("NA")) {
+				String size = driver.findElement(By.xpath("(//input[@formcontrolname='sharePercentage'])[2]")).getAttribute("value");
+				if(percent.contains(size)){
+					assertTrue("Updated details are displayed as expected");
+				}else{
+					assertFalse("Updated details are not displayed as expected");
+				}
+			}
+		}
 		click(btnSubmit, "Submit");
 		Thread.sleep(2000);
 		click(btnDealPage, "Deal Page");
@@ -158,6 +383,26 @@ public class IndustryInformation extends PageBase{
 			assertTrue("Deal is Successfully edited");
 		}else {
 			assertFalse("Deal is not edited");
+		}
+	}
+	
+	public void navigateBack() throws Exception {
+		click(btnNavigateBack, "Back Button");
+		Thread.sleep(2000);
+		if(headerFinancial.isDisplayed()){
+			assertTrue("Back Button is clicked and user is navigated to Previous Page.");
+		}else{
+			assertFalse("Back Button is not clicked.");
+		}
+	}
+	
+	public void navigateForward() throws Exception {
+		click(btnNavigateForward, "Forward Button");
+		Thread.sleep(2000);
+		if(txtIndutrySize.isDisplayed()){
+			assertTrue("Forward Button is clicked and user is navigated to Next Page.");
+		}else{
+			assertFalse("Forward Button is not clicked.");
 		}
 	}
 }

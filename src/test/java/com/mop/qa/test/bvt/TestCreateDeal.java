@@ -41,9 +41,10 @@ public class TestCreateDeal extends TestBase {
 			 String source = rds.getValue("DATA", currentTest, "Source");
 			 String dealsize = rds.getValue("DATA", currentTest, "DealSize");
 			 String stake = rds.getValue("DATA", currentTest, "Stake");
+			 String stakePercent = rds.getValue("DATA", currentTest, "StakePercent");
 			// dealDetails.verifyDealDetails(projectName, companyName, sector);
 			 Thread.sleep(1000);
-			 dealDetails.enterDealDetails(remoteDriver, subsector, source, dealsize, stake);
+			 dealDetails.enterDealDetails(remoteDriver, subsector, source, dealsize, stake, stakePercent);
 			 Thread.sleep(1000);
 			 CompanyInformation companyInfo = new CompanyInformation(remoteDriver);
 			 String cmpInfo = rds.getValue("DATA", currentTest, "CompanyInfoBrief");

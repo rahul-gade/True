@@ -1,5 +1,9 @@
 package com.mop.qa.pageobject;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -98,11 +102,29 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 		}
 		click(txtProjectName, "Project Name");
 		enterText(txtProjectName, projectName, "Project Name");
+		String given = driver.findElement(By.xpath("//input[@name='projectName']")).getText();
+		if(given.length()>50)
+		{
+			assertFalse("Project name Accepts more than 50 characters");
+		}
+		else
+		{
+			assertTrue("Project name Accepts upto 50 characters."); 
+		}
 		click(txtCompanyName, "Company Name");
 		enterText(txtCompanyName, companyName, "Company Name");
 		Thread.sleep(2000);	
 		driver.findElement(By.xpath(selectCompanyName.replace("PLACEHOLDER", companyName))).click();
 		Thread.sleep(1000);	
+		String cName = driver.findElement(By.xpath("//input[@formcontrolname='companyName']")).getText(); 
+		if(cName.length()>50)
+		{
+			assertFalse("Company Name Accepts more than 50 characters");
+		}
+		else
+		{
+			assertTrue("Company Name Accepts upto 50 characters."); 
+		}
 		if(driver.findElements(By.xpath(rdBtnSector.replace("PLACEHOLDER", sector))).size()>0){
 		driver.findElement(By.xpath(rdBtnSector.replace("PLACEHOLDER", sector))).click();
 		}else if(driver.findElements(By.xpath("//mat-select[@formcontrolname='sector']")).size()>0){
@@ -111,8 +133,14 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 		}
 		Thread.sleep(1000);
 		click(fileUpload, "UPLOAD");
+		Thread.sleep(5000);
 		FileUpload file = new FileUpload(remoteDriver);
 		file.fileUpload(filePath);
+		/*Alert alert = driver.switchTo().alert();
+		alert.sendKeys(filePath);
+		Robot r = new Robot();
+		r.keyPress(KeyEvent.VK_ENTER);
+		r.keyRelease(KeyEvent.VK_ENTER);*/
 		waitForVisibilityOfElement(btnSubmit);
 		click(btnSubmit, "Submit");
 		do {

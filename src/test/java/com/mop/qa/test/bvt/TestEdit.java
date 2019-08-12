@@ -105,8 +105,9 @@ public class TestEdit extends TestBase {
 			  String pred5year = rds.getValue("DATA", currentTest, "EditPredicted5Year"); 
 			  String competitorName = rds.getValue("DATA", currentTest, "EditCompetitorName"); 
 			  String percent = rds.getValue("DATA", currentTest, "EditIndSharePercentage");
-			  String section = rds.getValue("DATA", currentTest, "EditSection");
-			  industryinfo.editIndustryDetails(remoteDriver, projectName, editProjectName, indSize,trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent, section);
+			  String section = rds.getValue("DATA", currentTest, "EditSection"); 
+			  String navigate = rds.getValue("DATA", currentTest, "Navigate");
+			  industryinfo.editIndustryDetails(remoteDriver, projectName, editProjectName, indSize,trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent, section, navigate);
 		 }catch(Exception e){ 
 			  LOGGER.info(e); 
 		 } 

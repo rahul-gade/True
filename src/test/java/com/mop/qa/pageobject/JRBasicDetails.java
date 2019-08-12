@@ -58,6 +58,17 @@ public class JRBasicDetails extends PageBase{
 				 Thread.sleep(10);
 			}
 		  driver.findElement(By.xpath("//span[contains(text(),'"+company+"')]")).click();
+		  if(driver.findElements(By.xpath("//mat-error")).size()>0){
+			  if(driver.findElement(By.xpath("(//mat-error)[1]")).getText().contains("Company")){
+			  assertFalse("Company Name Field is missing");
+			  }
+			  if(driver.findElement(By.xpath("(//mat-error)[2]")).getText().contains("Position")){
+				  assertFalse("Position Field is missing");
+				  }
+			  if(driver.findElement(By.xpath("(//mat-error)[3]")).getText().contains("Location")){
+				  assertFalse("Location Field is missing");
+				  }
+		  }
 		click(btnCreateJr, "Create JR");
 		Thread.sleep(1000);
 		/*do {

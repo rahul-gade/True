@@ -46,9 +46,14 @@ public class BasicDealDetails extends PageBase{
 	String verifySuccess = "//span[text()='PLACEHOLDER']";
 	@FindBy(xpath = "//div[contains(@class,'field-block')]//label[contains(@class,'field-label')]")
 	private WebElement label;
+	@FindBy(xpath = "//button[@class='step-btn next mat-button']/span")
+	private WebElement btnNavigateForward;
+	@FindBy(xpath = "//div[text()=' Company Information ']")
+	private WebElement titleCompInfo; 
+	@FindBy(xpath = "//input[@name='otherStake']")
+	private WebElement inputStake; 
 	
-	
-public void verifyDealDetails(RemoteWebDriver driver, String projectName, String companyName, String sector) throws Exception {
+public void verifyDealDetails(RemoteWebDriver driver, String projectName, String companyName, String sector, String navigate) throws Exception {
 	if(verifyText(pageTitle, "Basic Deal Details")){	
 	assertTrue("Page Title is as expected");
 	}
@@ -94,8 +99,17 @@ public void verifyDealDetails(RemoteWebDriver driver, String projectName, String
 		else {
 			assertFalse("Sector selected is not as expected");
 		}
+		if(navigate.contains("Yes")){
+			click(btnNavigateForward, "Forward Button");
+			Thread.sleep(2000);
+			if(titleCompInfo.isDisplayed()){
+				assertTrue("Forward Button is clicked and user is navigated to Next Page.");
+			}else{
+				assertFalse("Forward Button is not clicked.");
+			}
+		}
 }
-public void enterDealDetails(RemoteWebDriver driver, String subSector, String source, String dealSize, String stake) throws Exception {
+public void enterDealDetails(RemoteWebDriver driver, String subSector, String source, String dealSize, String stake, String stakePercent) throws Exception {
 	click(txtSubSector, "Sub Sector");
 	Thread.sleep(1000);
 	driver.findElement(By.xpath(selectSubsector.replace("PLACEHOLDER", subSector))).click();
@@ -112,6 +126,8 @@ public void enterDealDetails(RemoteWebDriver driver, String subSector, String so
 	driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
 	driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
 	Thread.sleep(1000);
+	click(inputStake, "Stake Percentage");
+	enterText(inputStake, stakePercent, "Stake Percentage");
 	click(btnNext, "Next");
 	do {
 		Thread.sleep(1000);
@@ -167,6 +183,7 @@ public void editBasicDealDetails(RemoteWebDriver driver, String projectName, Str
 		driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
 		Thread.sleep(2000);
 	}
+	
 	if(section.contains("Company Basic Details")) {
 	click(btnNext, "Next");
 	Thread.sleep(1000);

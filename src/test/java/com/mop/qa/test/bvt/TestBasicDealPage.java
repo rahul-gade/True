@@ -21,13 +21,14 @@ public class TestBasicDealPage extends TestBase {
 		  String projectName = rds.getValue("DATA", currentTest, "ProjectName"); 
 		  String companyName = rds.getValue("DATA", currentTest, "CompanyName"); 
 		  String sector = rds.getValue("DATA", currentTest, "Sector"); 
+		  String navigate = rds.getValue("DATA", currentTest, "Navigate");
 		  inst.findDeal(remoteDriver, projectName, companyName, sector);
 		  EditDealHomePage editdeal = new EditDealHomePage(remoteDriver); 
 			 String section = rds.getValue("DATA", currentTest, "EditSection");
 			 editdeal.editSection(remoteDriver,section); 
 			 inst.verifyNameAndTime(remoteDriver, projectName);
 		 BasicDealDetails basic = new BasicDealDetails(remoteDriver);
-		 basic.verifyDealDetails(remoteDriver, projectName, companyName, sector);
+		 basic.verifyDealDetails(remoteDriver, projectName, companyName, sector, navigate);
 	 }catch(Exception e){
 		 LOGGER.info(e);
 		 }

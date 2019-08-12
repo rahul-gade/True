@@ -47,6 +47,8 @@ public class InvestmentHome extends PageBase{
 	@FindBy(xpath = "//a[text()='Deal Details']")
 	private WebElement tabDealDetails;
 	
+	
+	
 	String txtProjectName = "(//h3[text()='PLACEHOLDER']/following-sibling::div/div)[1]/div[@class='card-header']";
 	String txtCompanytName = "(//h3[text()='PLACEHOLDER']/following-sibling::div/div)[1]//h4";
 	String txtSector = "(//h3[text()='PLACEHOLDER']/following-sibling::div/div)[1]//h5";
@@ -273,4 +275,5 @@ public class InvestmentHome extends PageBase{
 			}
 		}
 	}
+	
 }
