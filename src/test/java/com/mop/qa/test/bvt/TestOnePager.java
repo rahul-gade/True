@@ -38,6 +38,7 @@ public class TestOnePager extends TestBase {
 		 String competitionWeDisLike = rds.getValue("HYPOTHESIS", currentTest, "CompetitionDisLike");
 		 String industryWeLike = rds.getValue("HYPOTHESIS", currentTest, "IndustryLike");
 		 String industryWeDisLike = rds.getValue("HYPOTHESIS", currentTest, "IndustryDisLike");
+		 pager.enterOnePagerTIC(remoteDriver, competitionWeLike, competitionWeDisLike, industryWeLike, industryWeDisLike);
 		 pager.enterOnePagerIndustry(remoteDriver, competitionWeLike, competitionWeDisLike, industryWeLike, industryWeDisLike);
 		 pager.enterOnePagerCompany(remoteDriver, competitionWeLike, competitionWeDisLike, industryWeDisLike, industryWeLike, industryWeLike, industryWeLike);
 		 pager.enterOnePagerDealDynamics(remoteDriver, competitionWeLike, competitionWeLike, competitionWeLike, competitionWeLike, competitionWeLike, competitionWeLike);
