@@ -83,10 +83,12 @@ public class OnePager extends PageBase {
 	private WebElement btnnext2;
 
 	// ----------------DEAL DYNAMICS PAGE------------//
-	@FindBy(xpath = "//div[text()='Valuation']/following-sibling::div//label[text()='What We Like']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul")
 	private WebElement valuationLike;
-	@FindBy(xpath = "//div[text()='Valuation']/following-sibling::div//label[text()='What We Dislike']/following-sibling::ul")
+	@FindBy(xpath = "(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul")
 	private WebElement valuationDisLike;
+	@FindBy(xpath = "(//span[text()='Valuation']/parent::div//a[@class='link-dislike-btn'])[3]")
+	private WebElement valuationDislikeIcon; 
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[2]/following-sibling::ul")
 	private WebElement dealCompetitionLike;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[2]/following-sibling::ul")
@@ -260,6 +262,8 @@ public class OnePager extends PageBase {
 			Thread.sleep(1000);
 			action.moveToElement(valuationDisLike).click().build().perform();
 			enterText(valuationDisLike, customerWeDisLike, "What We Dislike");
+			Thread.sleep(1000);
+			action.moveToElement(valuationDislikeIcon).click().build().perform();
 			Thread.sleep(1000);
 		}
 		if (driver
