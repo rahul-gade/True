@@ -58,7 +58,8 @@ public class EditDealHomePage extends PageBase{
 	private WebElement labelPager;
 	@FindBy(xpath = "//div[text()='DMS']")
 	private WebElement tabDMS;
-	@FindBy(xpath = "//div[text()=' Custom DMS Document ']")
+//	@FindBy(xpath = "//div[text()=' Custom DMS Document ']")
+	@FindBy(xpath = "//span[text()=' test.jpg ']")
 	private WebElement labelCustom;
 	@FindBy(xpath = "//div[@class='mat-slider-thumb']")
 	private WebElement likeabilitySlider;
@@ -66,9 +67,10 @@ public class EditDealHomePage extends PageBase{
 //	private WebElement btnBack;
 	
 	public void editSection(RemoteWebDriver driver,String section) throws Exception {
-		do {
+		/*do {
 			Thread.sleep(1000);
-     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;*/
+		Thread.sleep(3000);
 		switch (section)
 		{
 		case "Company Basic Details":

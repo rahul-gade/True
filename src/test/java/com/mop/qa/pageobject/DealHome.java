@@ -133,9 +133,10 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 		}
 		Thread.sleep(1000);
 		click(fileUpload, "UPLOAD");
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		FileUpload file = new FileUpload(remoteDriver);
 		file.fileUpload(filePath);
+		Thread.sleep(2000);
 		/*Alert alert = driver.switchTo().alert();
 		alert.sendKeys(filePath);
 		Robot r = new Robot();

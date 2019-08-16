@@ -101,9 +101,10 @@ public class InvestmentHome extends PageBase{
 				Thread.sleep(2000);
 				driver.findElement(By.xpath(projectName.replace("PLACEHOLDER", projName))).click();
 				assertTrue("Project being edited is " +pName );
-				do {
+				Thread.sleep(3000);
+				/*do {
 					Thread.sleep(1000);
-		     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;*/
 				break;
 			}else {
 				assertFalse("Project Not Clicked");
