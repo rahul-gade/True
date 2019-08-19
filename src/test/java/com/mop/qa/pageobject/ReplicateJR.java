@@ -41,25 +41,28 @@ public class ReplicateJR extends PageBase{
 		Thread.sleep(1000);
 		waitForVisibilityOfElement(txtReplicate);
 		click(selectFilter, "Select Filter");
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", position))).click();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		click(btnSector, "Sector");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector))).click();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		click(btnLocation, "Location");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", location))).click();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		click(btnCompany, "Company");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", company))).click();
 		click(btnApply, "Apply");
 	}
 	
 	public void prieviewJR(RemoteWebDriver driver) throws Exception {	
-		Thread.sleep(1000);
+//		do {
+//			Thread.sleep(1000);
+//     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		Thread.sleep(5000);
 		click(linkPreviewJR, "Prieview JR");
 		if(driver.findElements(By.xpath("//div[@class='header' and contains(text(),'PREVIEW')]")).size()>0) {
 			assertTrue("Landed on Preview page");

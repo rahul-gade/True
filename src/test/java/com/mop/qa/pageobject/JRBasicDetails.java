@@ -79,10 +79,10 @@ public class JRBasicDetails extends PageBase{
 			Thread.sleep(2000);
 			click(btnFillForm, "Fill Form");
 		
-		/* do { Thread.sleep(1000); }
-		 while(driver.findElements(By.xpath("(//div/div/img)[1]")).size()>0) ;*/
+//		do { Thread.sleep(1000); }
+//		 while(driver.findElements(By.xpath("(//div/div/img)[1]")).size()>0) ;
 		 
-		Thread.sleep(10000);
+		Thread.sleep(2000);
 		click(btnNext, "Next");
 		Thread.sleep(1000);
 	}

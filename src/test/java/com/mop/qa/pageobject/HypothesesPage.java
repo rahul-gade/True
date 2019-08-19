@@ -8,10 +8,10 @@ import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
 
-public class HypothesesPage extends PageBase{
+public class HypothesesPage extends PageBase {
 	public HypothesesPage(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
-	} 
+	}
 	@FindBy(xpath = "//a[@routerlink='hypothesis']")
 	private WebElement tabHypotheses;
 	@FindBy(xpath = "(//a[@class='addnew-btn'])[1]")
@@ -49,33 +49,34 @@ public class HypothesesPage extends PageBase{
 	private WebElement btnBack;
 	@FindBy(xpath = "//li[@class='active']/a[@class='link']")
 	private WebElement btnBack1;
-	
+
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
-		Thread.sleep(1000);
+
+			Thread.sleep(1000);
 		click(tabHypotheses, "Hypotheses Tab");
 		assertTrue("Clicked on Hypotheses Tab");
 		Thread.sleep(1000);
 		click(btnAddNew, "Add New Button");
 		Thread.sleep(1000);
 		assertTrue("Clicked on Add new button");
-		if(driver.findElements(By.xpath("//div[@class='suggested-list']//li[1]")).size()>0) {
+		if (driver.findElements(By.xpath("//div[@class='suggested-list']//li[1]")).size() > 0) {
 			click(selectHypothesis, "Select Suggested Hypothesis");
-		}else {
-		click(drpdownCategory, "Category Dropdown");
-		Thread.sleep(200);
-		click(selectCategory, "Select Dropdown");
-		Thread.sleep(200);
-		if(driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size()>0) {
-		click(btnLibrary, "Library List");
-		Thread.sleep(1000);
-		click(selectList, "Select List");
-		Thread.sleep(1000);
-		}else {
-			click(inputHypothesis, "Hypothesis");
-			enterText(inputHypothesis, "New Hypothesis text", "Hypothesis");
+		} else {
+			click(drpdownCategory, "Category Dropdown");
+			Thread.sleep(200);
+			click(selectCategory, "Select Dropdown");
+			Thread.sleep(200);
+			if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0) {
+				click(btnLibrary, "Library List");
+				Thread.sleep(1000);
+				click(selectList, "Select List");
+				Thread.sleep(1000);
+			} else {
+				click(inputHypothesis, "Hypothesis");
+				enterText(inputHypothesis, "New Hypothesis text", "Hypothesis");
+			}
 		}
-		}
-		//div[@class="suggested-list"]//li[1]
+		// div[@class="suggested-list"]//li[1]
 		click(txtDescription, "Description");
 		Thread.sleep(2000);
 		enterText(txtDescription, "Hypotheses Description", "Description");
@@ -96,7 +97,7 @@ public class HypothesesPage extends PageBase{
 		Thread.sleep(2000);
 		click(btnPost, "Post Button");
 		Thread.sleep(2000);
-		if(Integer.parseInt(getText(countPost))>0) {
+		if (Integer.parseInt(getText(countPost)) > 0) {
 			assertTrue("Successfully created a Post");
 		}
 		click(txtComment, "Comment");
@@ -104,7 +105,7 @@ public class HypothesesPage extends PageBase{
 		enterText(txtComment, "Enter your Comments", "Comment");
 		txtComment.sendKeys(Keys.ENTER);
 		Thread.sleep(1000);
-		if(Integer.parseInt(getText(countComment))>0) {
+		if (Integer.parseInt(getText(countComment)) > 0) {
 			assertTrue("Successfully posted a Comment");
 		}
 		click(btnBack, "Back");
