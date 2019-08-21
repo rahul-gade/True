@@ -76,7 +76,7 @@ public class ReplicateJR extends PageBase{
 	}
 	
 	public void skipToForm() throws Exception {	
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		click(btnSkip, "SKIP TO FORM");
 	}
 	

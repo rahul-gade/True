@@ -61,7 +61,7 @@ public class TestJRPublishAndView extends TestBase {
 		mark.enterBenchmarkDetails(remoteDriver, minctc, maxctc, candidate, company, sectors, subsector);
 		mark.selectInterviewer(remoteDriver, candidate, choose);
 		JRNuancesAndChallenges challenge = new JRNuancesAndChallenges(remoteDriver);
-		challenge.enterNuancesandChallengesDetails();
+		challenge.enterNuancesandChallengesDetails(remoteDriver);
 		challenge.enterMissingField(remoteDriver, flow);
 		mark.enterInterviewer(remoteDriver, candidate);
 		challenge.selectJRFlow(remoteDriver, flow);

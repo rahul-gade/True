@@ -59,7 +59,7 @@ public class TestNewJR extends TestBase {
 		mark.enterBenchmarkDetails(remoteDriver, minctc, maxctc, candidate, company, sectors, subsector);
 		mark.selectInterviewer(remoteDriver, candidate, choose);
 		JRNuancesAndChallenges challenge = new JRNuancesAndChallenges(remoteDriver);
-		challenge.enterNuancesandChallengesDetails();
+		challenge.enterNuancesandChallengesDetails(remoteDriver);
 		challenge.selectJRFlow(remoteDriver, flow);
 	 }catch(Exception e){
 		 LOGGER.info(e);

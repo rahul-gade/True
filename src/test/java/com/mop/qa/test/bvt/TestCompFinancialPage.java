@@ -53,6 +53,7 @@ public class TestCompFinancialPage extends TestBase {
 //			compFin.checkDealTitle(remoteDriver, projectName);
 //			compFin.checkLastSaveTime(remoteDriver);
 			compFin.checkNavButtons(remoteDriver);
+			compFin.tableData(remoteDriver);
 //			compFin.enterCompanyDetails();
 		} catch (Exception e) {
 			LOGGER.info(e);

@@ -11,9 +11,9 @@ public class JRNuancesAndChallenges extends PageBase{
 	public JRNuancesAndChallenges(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	} 
-	@FindBy(xpath = "(//a[@class='add-more-btn'])[11]")
-	private WebElement libBusinessChallenges;
 	@FindBy(xpath = "(//a[@class='add-more-btn'])[12]")
+	private WebElement libBusinessChallenges;
+	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
 	private WebElement libCulturalNuances;
 	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
 	private WebElement libChallenges;
@@ -41,7 +41,7 @@ public class JRNuancesAndChallenges extends PageBase{
 	private WebElement btnSend;
 
 	
-	public void enterNuancesandChallengesDetails() throws Exception {	
+	public void enterNuancesandChallengesDetails(RemoteWebDriver driver) throws Exception {	
 		Thread.sleep(1000);
 		click(libBusinessChallenges, "Business Challenges");
 		Thread.sleep(1000);

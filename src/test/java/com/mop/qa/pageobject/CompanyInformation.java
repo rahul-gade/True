@@ -19,6 +19,7 @@ public class CompanyInformation extends PageBase {
 	private WebElement pageTitle;
 	@FindBy(xpath = "//textarea[@formcontrolname='companybg']")
 	private WebElement txtCompanyBackground;
+	String compBG = ""; 
 	@FindBy(xpath = "//textarea[@formcontrolname='brief']")
 	private WebElement txtProductBrief;
 	@FindBy(xpath = "//input[@formcontrolname='leadership']")
@@ -52,7 +53,8 @@ public class CompanyInformation extends PageBase {
 
 	public void enterCompanyDetails(RemoteWebDriver driver, String cmpInfo, String leader, String shareHolder, String percentage) throws Exception {
 		// click(txtCompanyBackground, "Company Background");
-		// enterText(txtCompanyBackground, cmpInfo, "Company Background");
+//		 enterText(txtCompanyBackground, cmpInfo, "Company Background");
+		compBG = txtCompanyBackground.getAttribute("value"); 
 		Thread.sleep(1000);
 		click(txtProductBrief, "Product/Service Brief");
 		enterText(txtProductBrief, cmpInfo, "Product/Service Brief");

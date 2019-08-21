@@ -9,11 +9,11 @@ import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
 
-public class JRBasicDetails extends PageBase{
+public class JRBasicDetails extends PageBase {
 	public JRBasicDetails(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
-	} 
-	
+	}
+
 	@FindBy(xpath = "//input[@id='company_name']")
 	private WebElement inputCompanyName;
 	@FindBy(xpath = "//input[@id='position']")
@@ -34,9 +34,10 @@ public class JRBasicDetails extends PageBase{
 	private WebElement txtReplicate;
 	@FindBy(xpath = "//span[text()='IN PROGRESS']")
 	private WebElement tabInProgress;
-	
-	public void enterBasicDetails(RemoteWebDriver driver, String companyName, String position, String location) throws Exception {
-		 String company = companyName.toUpperCase();
+
+	public void enterBasicDetails(RemoteWebDriver driver, String companyName, String position, String location)
+			throws Exception {
+		String company = companyName.toUpperCase();
 		Thread.sleep(1000);
 		click(inputCompanyName, "Company Name");
 		enterText(inputCompanyName, companyName, "Company Name");
@@ -51,83 +52,102 @@ public class JRBasicDetails extends PageBase{
 		enterText(inputLocation, location, "Location");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", location))).click();
-		  for (int i=0;i<companyName.length();i++) {
-				 char c = companyName.charAt(i);
-				 String s = new StringBuilder().append(c).toString();
-				 inputCompanyName.sendKeys(s);
-				 Thread.sleep(10);
+		for (int i = 0; i < companyName.length(); i++) {
+			char c = companyName.charAt(i);
+			String s = new StringBuilder().append(c).toString();
+			inputCompanyName.sendKeys(s);
+			Thread.sleep(10);
+		}
+		driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
+		if (driver.findElements(By.xpath("//mat-error")).size() > 0) {
+			if (driver.findElement(By.xpath("(//mat-error)[1]")).getText().contains("Company")) {
+				assertFalse("Company Name Field is missing");
 			}
-		  driver.findElement(By.xpath("//span[contains(text(),'"+company+"')]")).click();
-		  if(driver.findElements(By.xpath("//mat-error")).size()>0){
-			  if(driver.findElement(By.xpath("(//mat-error)[1]")).getText().contains("Company")){
-			  assertFalse("Company Name Field is missing");
-			  }
-			  if(driver.findElement(By.xpath("(//mat-error)[2]")).getText().contains("Position")){
-				  assertFalse("Position Field is missing");
-				  }
-			  if(driver.findElement(By.xpath("(//mat-error)[3]")).getText().contains("Location")){
-				  assertFalse("Location Field is missing");
-				  }
-		  }
+			if (driver.findElement(By.xpath("(//mat-error)[2]")).getText().contains("Position")) {
+				assertFalse("Position Field is missing");
+			}
+			if (driver.findElement(By.xpath("(//mat-error)[3]")).getText().contains("Location")) {
+				assertFalse("Location Field is missing");
+			}
+		}
 		click(btnCreateJr, "Create JR");
 		Thread.sleep(1000);
-		/*do {
-			Thread.sleep(1000);
-     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;*/
+		/*
+		 * do { Thread.sleep(1000); }
+		 * while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		 */
 	}
-		public void fillForm(RemoteWebDriver driver) throws Exception {
-			Thread.sleep(2000);
-			click(btnFillForm, "Fill Form");
-		
+
+	public void fillForm(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(2000);
+		click(btnFillForm, "Fill Form");
+
 //		do { Thread.sleep(1000); }
 //		 while(driver.findElements(By.xpath("(//div/div/img)[1]")).size()>0) ;
-		 
+
 		Thread.sleep(2000);
 		click(btnNext, "Next");
 		Thread.sleep(1000);
 	}
-		public void goToListing(RemoteWebDriver driver) throws Exception {
+
+	public void goToListing(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(1000);
+		click(btnGoToListing, "Go To Listing");
+		Thread.sleep(1000);
+		do {
 			Thread.sleep(1000);
-			click(btnGoToListing, "Go To Listing");
-			Thread.sleep(1000);
-			do {
-				Thread.sleep(1000);
-	     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
-		}
-		
-		public void verifyCreatedJR(RemoteWebDriver driver, String position, String company) throws Exception {
-			click(tabInProgress, "In Progress Tab");
-			Thread.sleep(3000);
-			int count = driver.findElements(By.xpath("//div[@class='drafts-list ng-star-inserted']")).size();
-			for(int i=1;i<=count;i++) {
-				String pos = driver.findElement(By.xpath("//div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='position']")).getText();
-				String comp = driver.findElement(By.xpath("//div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='data']")).getText();
-				if(pos.contains(position) && comp.contains(company)) {
-					if(driver.findElements(By.xpath("//div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='status']")).size()>0) {
-					String status =	driver.findElement(By.xpath("//div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='status']")).getText();
-						if(status.contains("Completed")) {
-							assertTrue("Status of new JR is "+status);
-							String[] completedCount = status.split("/");
-							int complete = Integer.parseInt(completedCount[0]);
-							int dot = driver.findElements(By.xpath("//div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='status']/parent::li//span[@class='blue-dot']")).size();
-								if(complete == dot) {
-									assertTrue("Blue dots and completed steps are equal i.e. " +dot);
-									driver.findElement(By.xpath("//div[contains(text(),'Drafts')]/following-sibling::div[@class='drafts-list ng-star-inserted']["+i+"]//div[@class='position']")).click();
-									Thread.sleep(5000);
-									click(btnNext, "Next");
-									Thread.sleep(1000);
-									break;
-								}else {
-									assertFalse("Bluedots and completed steps do not match");
-							}
-						}else {
-							assertFalse("Completed step is not displayed");
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+	}
+
+	public void verifyCreatedJR(RemoteWebDriver driver, String position, String company) throws Exception {
+		click(tabInProgress, "In Progress Tab");
+		Thread.sleep(3000);
+		int count = driver.findElements(By.xpath("//div[@class='drafts-list ng-star-inserted']")).size();
+		for (int i = 1; i <= count; i++) {
+			String pos = driver
+					.findElement(
+							By.xpath("//div[@class='drafts-list ng-star-inserted'][" + i + "]//div[@class='position']"))
+					.getText();
+			String comp = driver
+					.findElement(
+							By.xpath("//div[@class='drafts-list ng-star-inserted'][" + i + "]//div[@class='data']"))
+					.getText();
+			if (pos.contains(position) && comp.contains(company)) {
+				if (driver
+						.findElements(By
+								.xpath("//div[@class='drafts-list ng-star-inserted'][" + i + "]//div[@class='status']"))
+						.size() > 0) {
+					String status = driver
+							.findElement(By.xpath(
+									"//div[@class='drafts-list ng-star-inserted'][" + i + "]//div[@class='status']"))
+							.getText();
+					if (status.contains("Completed")) {
+						assertTrue("Status of new JR is " + status);
+						String[] completedCount = status.split("/");
+						int complete = Integer.parseInt(completedCount[0]);
+						int dot = driver.findElements(By.xpath("//div[@class='drafts-list ng-star-inserted'][" + i
+								+ "]//div[@class='status']/parent::li//span[@class='blue-dot']")).size();
+						if (complete == dot) {
+							assertTrue("Blue dots and completed steps are equal i.e. " + dot);
+							driver.findElement(By.xpath(
+									"//div[contains(text(),'Drafts')]/following-sibling::div[@class='drafts-list ng-star-inserted']["
+											+ i + "]//div[@class='position']"))
+									.click();
+							Thread.sleep(5000);
+							click(btnNext, "Next");
+							Thread.sleep(1000);
+							break;
+						} else {
+							assertFalse("Bluedots and completed steps do not match");
 						}
+					} else {
+						assertFalse("Completed step is not displayed");
 					}
-				}else {
-					assertFalse("Newly created JR is not displayed in drafts");
 				}
+			} else {
+				assertFalse("Newly created JR is not displayed in drafts");
 			}
 		}
-		
+	}
+
 }

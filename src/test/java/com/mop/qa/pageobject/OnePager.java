@@ -30,6 +30,13 @@ public class OnePager extends PageBase {
 	@FindBy(xpath = "//div[text()=' TIC ']/ancestor::div[2]//span[text()='NEXT']/parent::button")
 	private WebElement btnTICNext;
 
+	@FindBy(xpath = "(//span[text()='test1']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
+	private WebElement testLike;
+	@FindBy(xpath = "(//span[text()='test1']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
+	private WebElement testDislike;
+	@FindBy(xpath = "(//span[text()='test1']/parent::div//a[@class='link-dislike-btn'])[3]")
+	private WebElement testLikeBtn;
+	
 	// ----------------INDUSTRY PAGE------------//
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement competitionLike;
@@ -88,7 +95,7 @@ public class OnePager extends PageBase {
 	@FindBy(xpath = "(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul")
 	private WebElement valuationDisLike;
 	@FindBy(xpath = "(//span[text()='Valuation']/parent::div//a[@class='link-dislike-btn'])[3]")
-	private WebElement valuationDislikeIcon; 
+	private WebElement valuationDislikeIcon;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[2]/following-sibling::ul")
 	private WebElement dealCompetitionLike;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[2]/following-sibling::ul")
@@ -111,9 +118,8 @@ public class OnePager extends PageBase {
 	private WebElement btnSubmit;
 	@FindBy(xpath = "//span[text()='VIEW ONE PAGER']")
 	private WebElement btnViewOnePager;
-	
-	
-	//=================ACTIONS ON PAGE=================//
+
+	// =================ACTIONS ON PAGE=================//
 	// ----------------TIC PAGE ACTIONS----------------//
 	public void enterOnePagerTIC(RemoteWebDriver driver, String competitionWeLike, String competitionWeDislike,
 			String industryWeLike, String industryWeDislike) throws Exception {
@@ -122,11 +128,21 @@ public class OnePager extends PageBase {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		if (driver.findElements(By.xpath("//span[text()='test1']")).size() > 0) {
+			action.moveToElement(testLike).click().build().perform();
+			enterText(testLike, competitionWeLike, "What We Like");
+			Thread.sleep(1000);
+			action.moveToElement(testLike).click().build().perform();
+			enterText(testLike, competitionWeDislike, "What We Like");
+			Thread.sleep(1000);
+			action.moveToElement(testLikeBtn).click().build().perform();
+			Thread.sleep(1000);
+		}
 		if (driver.findElements(By.xpath("//span[text()='Performance']")).size() > 0) {
 			action.moveToElement(performanceLike).click().build().perform();
 			enterText(performanceLike, industryWeLike, "What We Like");
 			Thread.sleep(1000);
-						action.moveToElement(performanceDislike).click().build().perform();
+			action.moveToElement(performanceDislike).click().build().perform();
 			enterText(performanceDislike, industryWeDislike, "What We Dislike");
 			Thread.sleep(1000);
 			action.moveToElement(performanceLikeIcon).click().build().perform();
@@ -138,7 +154,7 @@ public class OnePager extends PageBase {
 			Thread.sleep(1000);
 			action.moveToElement(reviewDislike).click().build().perform();
 			enterText(reviewDislike, competitionWeLike, "What We Like");
-			Thread.sleep(1000);		
+			Thread.sleep(1000);
 			action.moveToElement(reviewDislikeIcon).click().build().perform();
 			Thread.sleep(1000);
 		}
@@ -149,7 +165,6 @@ public class OnePager extends PageBase {
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
 
-	
 	// ----------------INDUSTRY PAGE ACTIONS----------------//
 	public void enterOnePagerIndustry(RemoteWebDriver driver, String competitionWeLike, String competitionWeDisLike,
 			String industryWeLike, String industryWeDisLike) throws Exception {
@@ -197,7 +212,6 @@ public class OnePager extends PageBase {
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
 
-	
 	// ----------------COMPANY PAGE ACTIONS----------------//
 	public void enterOnePagerCompany(RemoteWebDriver driver, String customenrWeLike, String customerWeDisLike,
 			String leadershipWeLike, String leadershipWeDisLike, String financialWeLike, String financialWeDisLike)
@@ -250,7 +264,6 @@ public class OnePager extends PageBase {
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
 
-	
 	// ----------------DEAL DYNAMICS PAGE ACTIONS----------------//
 	public void enterOnePagerDealDynamics(RemoteWebDriver driver, String customenrWeLike, String customerWeDisLike,
 			String leadershipWeLike, String leadershipWeDisLike, String financialWeLike, String financialWeDisLike)
@@ -287,7 +300,7 @@ public class OnePager extends PageBase {
 			enterText(exitStrategyDisLike, financialWeDisLike, "What We Dislike");
 			Thread.sleep(1000);
 			action.moveToElement(exitStrategyLikeIcon).click().build().perform();
-			Thread.sleep(1000);		
+			Thread.sleep(1000);
 		}
 		action.moveToElement(btnnext3).click().build().perform();
 		Thread.sleep(1000);

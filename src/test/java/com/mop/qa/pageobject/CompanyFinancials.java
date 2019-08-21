@@ -22,6 +22,7 @@ public class CompanyFinancials extends PageBase {
 	private WebElement pageTitle;
 	@FindBy(xpath = "(//span[text()='NEXT'])[3]")
 	private WebElement btnNext;
+	String tableCell = "//tbody/tr[ROW]/td[COLUMN]";
 
 	public void checkDealTitle(RemoteWebDriver driver, String name) throws Exception {
 		if (driver.findElement(By.xpath("//h4")).getText().length() > 0) {
@@ -70,6 +71,36 @@ public class CompanyFinancials extends PageBase {
 			assertTrue("Previous arrow is clicked and 'Company Financials' Page is displayed.");
 		else
 			assertFalse("Previous arrow is clicked but 'Company Financials' Page is not displayed.");
+	}
+
+	public void tableData(RemoteWebDriver driver) throws Exception {
+		if (driver.findElements(By.xpath("//tbody")).size() > 0) {
+			int rows = driver.findElements(By.xpath("//tbody/tr")).size();
+			System.out.println(rows);
+//			int r = 1;
+			int i, j;
+			for (j = 1; j <= rows; j++) {
+//				System.out.println(r);
+				String row = tableCell.replace("ROW", String.valueOf(j));
+				for (i = 2; i <= 6; i++) {
+					if (!(driver.findElement(By.xpath(row.replace("COLUMN", String.valueOf(i)))).getText()
+							.contains("-"))) {
+						assertTrue("Prefilled Data found in the table.");
+						break;
+					}
+				}
+				if (i <= 6)
+					break;
+			}
+			if (j > rows) {
+				CompanyInformation BG = new CompanyInformation(driver); 
+				if(BG.compBG.isEmpty())
+					assertTrue("Empty table displayed");
+				else
+					assertFalse("Table not prepopulated with CMIE Data.");
+			}
+				
+		}
 	}
 
 	public void enterCompanyDetails() throws Exception {
