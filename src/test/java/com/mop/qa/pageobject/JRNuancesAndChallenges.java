@@ -11,11 +11,11 @@ public class JRNuancesAndChallenges extends PageBase{
 	public JRNuancesAndChallenges(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	} 
-	@FindBy(xpath = "(//a[@class='add-more-btn'])[12]")
+	@FindBy(xpath = "(//a[@class='add-more-btn'])[11]")
 	private WebElement libBusinessChallenges;
-	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
+	@FindBy(xpath = "(//a[@class='add-more-btn'])[12]")
 	private WebElement libCulturalNuances;
-	@FindBy(xpath = "(//a[@class='add-more-btn'])[14]")
+	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
 	private WebElement libChallenges;
 	@FindBy(xpath = "(//div[@class='search-values']//li[@class='ng-star-inserted'])[1]")
 	private WebElement select1;

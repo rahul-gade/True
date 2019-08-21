@@ -17,6 +17,10 @@ public class CompanyFinancials extends PageBase {
 	// private static final Logger LOGGER =
 	// Logger.getLogger(CnngoPageWebMobile.class.getName());
 
+	@FindBy(xpath = "//button[@class='step-btn prev mat-button']")
+	private WebElement arrowPrev;
+	@FindBy(xpath = "//button[@class='step-btn next mat-button']")
+	private WebElement arrowNext;
 	@FindBy(xpath = "//div[@class='popup-title']")
 	private WebElement pageTitle;
 	@FindBy(xpath = "(//span[text()='NEXT'])[3]")
@@ -27,7 +31,7 @@ public class CompanyFinancials extends PageBase {
 			assertTrue("Project Name is Displayed");
 			String projectName = driver.findElement(By.xpath("//h4")).getText();
 			if (projectName.equals(name))
-				assertTrue("Project Name Displayed is same as entered name - "+name);
+				assertTrue("Project Name Displayed is same as entered name - " + name);
 			else
 				assertFalse("Project Name Displayed is Different from Entered name.");
 		}
@@ -55,8 +59,21 @@ public class CompanyFinancials extends PageBase {
 			}
 		}
 	}
-	
-	
+
+	public void checkNavButtons(RemoteWebDriver driver) throws Exception {
+		click(arrowNext, "Next Arrow");
+		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//div[@class='popup-title' and text()=' Industry Information ']")).size() > 0)
+			assertTrue("Next arrow is clicked and 'Industry Information' Page is displayed.");
+		else
+			assertFalse("Next arrow is clicked but 'Industry Information' Page is not displayed.");
+		click(arrowPrev, "Previous Arrow");
+		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//div[@class='popup-title' and text()=' Company Financials ']")).size() > 0)
+			assertTrue("Previous arrow is clicked and 'Company Financials' Page is displayed.");
+		else
+			assertFalse("Previous arrow is clicked but 'Company Financials' Page is not displayed.");
+	}
 
 	public void enterCompanyDetails() throws Exception {
 		click(btnNext, "Next");
