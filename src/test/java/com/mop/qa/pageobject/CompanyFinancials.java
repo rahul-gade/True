@@ -1,12 +1,9 @@
 package com.mop.qa.pageobject;
 
 import org.openqa.selenium.By;
-//import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
-//import org.testng.annotations.Test;
-
 import com.mop.qa.testbase.PageBase;
 
 public class CompanyFinancials extends PageBase {

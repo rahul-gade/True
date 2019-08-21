@@ -9,11 +9,11 @@ import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
 
-
-public class JRBenchmark extends PageBase{
+public class JRBenchmark extends PageBase {
 	public JRBenchmark(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
-	} 
+	}
+
 	@FindBy(xpath = "//div[text()='INR']")
 	private WebElement selectCurrency;
 	@FindBy(xpath = "//span[text()='CTC Min']/ancestor::div[1]/input")
@@ -52,9 +52,9 @@ public class JRBenchmark extends PageBase{
 	private WebElement btnNext1;
 	@FindBy(xpath = "//button[@class='step-btn next mat-button']/span")
 	private WebElement arrowNext;
-	
-	
-	public void enterBenchmarkDetails(RemoteWebDriver driver, String min, String max, String candidate, String company, String sectors, String subsector) throws Exception {	
+
+	public void enterBenchmarkDetails(RemoteWebDriver driver, String min, String max, String candidate, String company,
+			String sectors, String subsector) throws Exception {
 		Thread.sleep(1000);
 		click(selectCurrency, "Currency");
 		Thread.sleep(1000);
@@ -77,48 +77,55 @@ public class JRBenchmark extends PageBase{
 		Thread.sleep(1000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", candidate))).click();
 		Thread.sleep(1000);
-		click(txtTargetCompany, "Target Company");
-		enterText(txtTargetCompany, company, "Target Company");
-		if(driver.findElements(By.xpath("//span[text()='Preferred Sector']/ancestor::div[1]//div[@class='mat-select-arrow']")).size()>0) {
+		if (driver.findElements(By.xpath("//input[@id='targetCompany']")).size() > 0) {
+			click(txtTargetCompany, "Target Company");
+			enterText(txtTargetCompany, company, "Target Company");
+		}
+
+		if (driver
+				.findElements(
+						By.xpath("//span[text()='Preferred Sector']/ancestor::div[1]//div[@class='mat-select-arrow']"))
+				.size() > 0) {
 			click(drpdownSector, "Desired Sector");
-			Thread.sleep(100);
+			Thread.sleep(500);
 			WebElement selectSector = driver.findElement(By.xpath(sector.replace("PLACEHOLDER", sectors)));
 			Actions action = new Actions(driver);
 			action.moveToElement(selectSector);
 			click(selectSector, "Sector");
-			Thread.sleep(100);
+			Thread.sleep(500);
 			click(inputSubSector, "SubSector");
 			Thread.sleep(500);
 			enterText(inputSubSector, subsector, "SubSector Text");
+			Thread.sleep(500);
 			WebElement selectSubSector = driver.findElement(By.xpath(subSector.replace("PLACEHOLDER", subsector)));
+			Thread.sleep(1000);
 			action.moveToElement(selectSubSector);
 			click(selectSubSector, "Select SubSector");
 		}
 		click(btnNext, "NEXT");
 		Thread.sleep(1000);
 	}
-	
-		public void selectInterviewer(RemoteWebDriver driver, String candidate, String choose) throws Exception {
-			if(!choose.contains("No")) {
-				enterInterviewer(remoteDriver, candidate);
-			}else {
+
+	public void selectInterviewer(RemoteWebDriver driver, String candidate, String choose) throws Exception {
+		if (!choose.contains("No")) {
+			enterInterviewer(remoteDriver, candidate);
+		} else {
 			click(arrowNext, "Arrow NEXT");
-			Thread.sleep(1000);	
-			}
-	}
-		
-		public void enterInterviewer(RemoteWebDriver driver, String candidate) throws Exception {
-			if(driver.findElements(By.xpath("(//div[@class='suggested-card ng-star-inserted'])[1]")).size()>0) {
-				click(selectInterviewers, "Interviewers");
-				Thread.sleep(1000);
-				}
-				else {
-					click(inputInterviewer, "Interviewer");
-					enterText(inputInterviewer, candidate, "Interviewer");
-					Thread.sleep(1000);
-					driver.findElement(By.xpath(interviewer.replace("PLACEHOLDER", candidate))).click();
-				}
-				click(btnNext1, "NEXT");
-				Thread.sleep(1000);
+			Thread.sleep(1000);
 		}
+	}
+
+	public void enterInterviewer(RemoteWebDriver driver, String candidate) throws Exception {
+		if (driver.findElements(By.xpath("(//div[@class='suggested-card ng-star-inserted'])[1]")).size() > 0) {
+			click(selectInterviewers, "Interviewers");
+			Thread.sleep(1000);
+		} else {
+			click(inputInterviewer, "Interviewer");
+			enterText(inputInterviewer, candidate, "Interviewer");
+			Thread.sleep(1000);
+			driver.findElement(By.xpath(interviewer.replace("PLACEHOLDER", candidate))).click();
+		}
+		click(btnNext1, "NEXT");
+		Thread.sleep(1000);
+	}
 }
