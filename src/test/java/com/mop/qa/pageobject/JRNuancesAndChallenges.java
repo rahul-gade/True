@@ -15,7 +15,7 @@ public class JRNuancesAndChallenges extends PageBase{
 	private WebElement libBusinessChallenges;
 	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
 	private WebElement libCulturalNuances;
-	@FindBy(xpath = "(//a[@class='add-more-btn'])[13]")
+	@FindBy(xpath = "(//a[@class='add-more-btn'])[14]")
 	private WebElement libChallenges;
 	@FindBy(xpath = "(//div[@class='search-values']//li[@class='ng-star-inserted'])[1]")
 	private WebElement select1;
