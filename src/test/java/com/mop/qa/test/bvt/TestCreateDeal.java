@@ -32,7 +32,8 @@ public class TestCreateDeal extends TestBase {
 			 String sector = rds.getValue("DATA", currentTest, "Sector");
 			 String flow = rds.getValue("DATA", currentTest, "Flow");
 			 String filepath = rds.getValue("DATA", currentTest, "FilePath");
-			 dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath);
+			 String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
+			 dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory);
 			 Thread.sleep(1000);
 			 dHome.selectFlow(remoteDriver, flow);
 			 Thread.sleep(1000);
@@ -44,14 +45,15 @@ public class TestCreateDeal extends TestBase {
 			 String stakePercent = rds.getValue("DATA", currentTest, "StakePercent");
 			// dealDetails.verifyDealDetails(projectName, companyName, sector);
 			 Thread.sleep(1000);
-			 dealDetails.enterDealDetails(remoteDriver, subsector, source, dealsize, stake, stakePercent);
+			 dealDetails.enterDealDetails(remoteDriver, companyName, companyName, subsector, source, dealsize, stake, stakePercent, mandatory);
 			 Thread.sleep(1000);
 			 CompanyInformation companyInfo = new CompanyInformation(remoteDriver);
 			 String cmpInfo = rds.getValue("DATA", currentTest, "CompanyInfoBrief");
 			 String leader = rds.getValue("DATA", currentTest, "CurrentLeaderhip");
 			 String shareHolder = rds.getValue("DATA", currentTest, "KeyShareHolders");
 			 String percentage = rds.getValue("DATA", currentTest, "SharePercentage");
-			 companyInfo.enterCompanyDetails(remoteDriver , cmpInfo, leader, shareHolder, percentage);
+			 
+			 companyInfo.enterCompanyDetails(remoteDriver , cmpInfo, leader, shareHolder, percentage, mandatory);
 			 CompanyFinancials compFin = new CompanyFinancials(remoteDriver);
 			 compFin.enterCompanyDetails();
 			 IndustryInformation industryInfo = new IndustryInformation(remoteDriver);
@@ -64,7 +66,7 @@ public class TestCreateDeal extends TestBase {
 			 String competitorName = rds.getValue("DATA", currentTest, "CompetitorName");
 			 String percent = rds.getValue("DATA", currentTest, "IndSharePercentage");
 			 String flows = rds.getValue("DATA", currentTest, "Flows");
-			 industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent, flows);
+			 industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year, pred3year, pred5year, competitorName, percent, flows, mandatory);
 		 }catch(Exception e){
 			 LOGGER.info(e);
 		 }

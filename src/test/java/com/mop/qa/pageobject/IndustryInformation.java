@@ -14,7 +14,22 @@ public class IndustryInformation extends PageBase{
 	public IndustryInformation(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	} 
-	//private static final Logger LOGGER = Logger.getLogger(CnngoPageWebMobile.class.getName());
+	@FindBy(xpath = "//*[@formcontrolname='industrySize']/parent::div//span/label")
+	private WebElement lblIndustrySize;
+	@FindBy(xpath = "//*[@formcontrolname='targetMarketSizePercent']/parent::div//span/label")
+	private WebElement lblTgtCompMktShare;
+	@FindBy(xpath = "//*[@formcontrolname='last3YearGrowthPercent']/parent::div//span/label")
+	private WebElement lblGrowthLast3;
+	@FindBy(xpath = "//*[@formcontrolname='last5YearGrowthPercent']/parent::div//span/label")
+	private WebElement lblGrowthLast5;
+	@FindBy(xpath = "//*[@formcontrolname='predicted3YearGrowthPercent']/parent::div//span/label")
+	private WebElement lblPredicted3;
+	@FindBy(xpath = "//*[@formcontrolname='predicted5YearGrowthPercent']/parent::div//span/label")
+	private WebElement lblPredicted5;
+	@FindBy(xpath = "(//*[@formcontrolname='stakeholdername']/parent::div//span/label)[2]")
+	private WebElement lblCompetitorName;
+	@FindBy(xpath = "(//*[@formcontrolname='sharePercentage']/parent::div//span/label)[2]")
+	private WebElement lblSharePercentage;
 	@FindBy(xpath = "//div[@class='popup-title']")
 	private WebElement pageTitle;
 	@FindBy(xpath = "//input[@formcontrolname='industrySize']")
@@ -54,9 +69,26 @@ public class IndustryInformation extends PageBase{
 	private WebElement btnNavigateForward;
 	@FindBy(xpath = "//div[contains(text(),'Financials')]")
 	private WebElement headerFinancial;
+	int i = 1;
 	
-	
-	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent, String flow) throws Exception {
+	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare, String last3year, String last5year, String pred3year, String pred5year, String competitorName, String percent, String flow, String mandatory) throws Exception {
+		if(i==2){
+			BasicDealDetails basic = new BasicDealDetails(remoteDriver);
+			mandatory="Yes";
+			basic.checkMandatoryField(lblIndustrySize, "Industry Size");
+			basic.checkMandatoryField(lblTgtCompMktShare, "Target Company Market Share");
+			basic.checkMandatoryField(lblGrowthLast3, "Growth In Last 3 Years");
+			basic.checkMandatoryField(lblGrowthLast5, "Growth In Last 5 Years");
+			basic.checkMandatoryField(lblPredicted3, "Predicted 3 Year Growth");
+			basic.checkMandatoryField(lblPredicted5, "Predicted 5 Year Growth");
+			basic.checkMandatoryField(lblCompetitorName, "Competitor Name");
+			basic.checkMandatoryField(lblSharePercentage, "Share Percentage");
+		}
+		if(mandatory.contains("No")){
+			click(btnSubmit, "Submit");
+			i++;
+			mandatory = "Yes";
+		}else{
 		click(txtIndutrySize, "Industry Size");
 		enterText(txtIndutrySize, indSize, "Industry Size");
 		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");
@@ -66,6 +98,7 @@ public class IndustryInformation extends PageBase{
 			assertTrue("Industry Size field do not accept more than 16 characters");
 		}
 		Thread.sleep(100);
+		if(driver.findElements(By.xpath("//input[@formcontrolname='targetMarketSizePercent']")).size()>0){
 		click(txtTargetCompMarketShare, "Target Company Market Share");
 		enterText(txtTargetCompMarketShare, trgtMktShare, "Target Company Market Share");
 		String mrktSize = driver.findElement(By.xpath("//input[@formcontrolname='targetMarketSizePercent']")).getAttribute("value");
@@ -73,6 +106,7 @@ public class IndustryInformation extends PageBase{
 			assertFalse("Target Company Market Share field accepts more than 2 characters");
 		}else{
 			assertTrue("Target Company Market Share field do not accept more than 2 characters");
+			}
 		}
 		Thread.sleep(100);
 		click(txtLast3Year, "Last 3 Year Growth");
@@ -126,13 +160,18 @@ public class IndustryInformation extends PageBase{
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
 		click(btnSubmit, "Submit");
+		}
 		/*if(driver.findElements(By.xpath("//span[text()='SUBMIT']")).size()>0) {
 		Actions action = new Actions(remoteDriver);
 		action.moveToElement(btnSubmit).click().build().perform();
 		}*/
-		do {
+	/*	do {
 			Thread.sleep(1000);
-     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;*/
+		if(driver.findElements(By.xpath("//span[text()='BACK TO FORM']")).size()>0){
+			driver.findElement(By.xpath("//span[text()='BACK TO FORM']")).click();
+			assertTrue("Mandatory fields are Missing and Back to form buton is clicked");
+		}else{
 		if(driver.findElements(By.xpath("//span[text()='DEAL PAGE']")).size()>0 && driver.findElements(By.xpath("//span[text()='BACK TO PIPELINE']")).size()>0){
 			assertTrue("Success Pop up is displayed succesfully");
 		}
@@ -155,8 +194,9 @@ public class IndustryInformation extends PageBase{
 			assertTrue("Deal is Successfully created");
 		}else {
 			assertFalse("Deal is not created");
+			}
+		  }
 		}
-	   }
 	}
 	public void verifyIndustryDetailsPage(RemoteWebDriver driver) throws Exception {
 		String industrySize = driver.findElement(By.xpath("//input[@formcontrolname='industrySize']")).getAttribute("value");

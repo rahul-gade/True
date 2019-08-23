@@ -29,7 +29,8 @@ public class TestRequestIB extends TestBase {
 			 String sector = rds.getValue("DATA", currentTest, "Sector");
 			 String flow = rds.getValue("DATA", currentTest, "Flow");
 			 String filepath = rds.getValue("DATA", currentTest, "FilePath");
-			 dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath);
+			 String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
+			 dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory);
 			 Thread.sleep(2000);
 			 dHome.selectFlow(remoteDriver, flow);
 			 Thread.sleep(2000);
