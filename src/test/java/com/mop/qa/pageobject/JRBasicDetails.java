@@ -45,9 +45,13 @@ public class JRBasicDetails extends PageBase {
 		click(inputPosition, "Position");
 		enterText(inputPosition, position, "Position");
 		Thread.sleep(2000);
-		WebElement pos = driver.findElement(By.xpath(select.replace("PLACEHOLDER", position)));
-		Actions action = new Actions(remoteDriver);
-		action.moveToElement(pos).click().build().perform();
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", position))).size() > 0) {
+			WebElement pos = driver.findElement(By.xpath(select.replace("PLACEHOLDER", position)));
+			Actions action = new Actions(remoteDriver);
+			action.moveToElement(pos).click().build().perform();
+		} else
+			assertFalse("Position Drop-down List Not Displayed.");
+
 		click(inputLocation, "Location");
 		enterText(inputLocation, location, "Location");
 		Thread.sleep(2000);
