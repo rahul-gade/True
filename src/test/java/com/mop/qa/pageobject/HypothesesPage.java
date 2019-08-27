@@ -12,6 +12,7 @@ public class HypothesesPage extends PageBase {
 	public HypothesesPage(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	}
+
 	@FindBy(xpath = "//a[@routerlink='hypothesis']")
 	private WebElement tabHypotheses;
 	@FindBy(xpath = "(//a[@class='addnew-btn'])[1]")
@@ -52,7 +53,7 @@ public class HypothesesPage extends PageBase {
 
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
 
-			Thread.sleep(1000);
+		Thread.sleep(1000);
 		click(tabHypotheses, "Hypotheses Tab");
 		assertTrue("Clicked on Hypotheses Tab");
 		Thread.sleep(1000);
