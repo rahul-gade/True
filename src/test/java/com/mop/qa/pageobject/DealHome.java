@@ -90,7 +90,8 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 		}
 	}
 	
-	public void createDealHomePage(RemoteWebDriver driver, String projectName, String companyName, String sector, String filePath, String mandatory) throws Exception {
+	public void createDealHomePage(RemoteWebDriver driver, String projectName, String companyName, String sector,
+			String filePath, String mandatory) throws Exception {
 		do {
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;

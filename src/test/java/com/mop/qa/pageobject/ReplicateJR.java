@@ -3,15 +3,17 @@ package com.mop.qa.pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
 
-public class ReplicateJR extends PageBase{
+public class ReplicateJR extends PageBase {
 	public ReplicateJR(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
-	} 
+	}
+
 	@FindBy(xpath = "//div[contains(text(),'You can')]")
 	private WebElement txtReplicate;
 	@FindBy(xpath = "//a[@class='filter-btn']")
@@ -35,10 +37,11 @@ public class ReplicateJR extends PageBase{
 	private WebElement btnReplicate;
 	@FindBy(xpath = "(//span[text()='REPLICATE'])[1]")
 	private WebElement btnReplicate1;
-	
-	public void selectFilter(RemoteWebDriver driver, String position, String sector, String location, String company) throws Exception {
-		
-		Thread.sleep(1000);
+
+	public void selectFilter(RemoteWebDriver driver, String position, String sector, String location, String company)
+			throws Exception {
+
+		Thread.sleep(5000);
 		waitForVisibilityOfElement(txtReplicate);
 		click(selectFilter, "Select Filter");
 		Thread.sleep(3000);
@@ -57,34 +60,36 @@ public class ReplicateJR extends PageBase{
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", company))).click();
 		click(btnApply, "Apply");
 	}
-	
-	public void prieviewJR(RemoteWebDriver driver) throws Exception {	
+
+	public void prieviewJR(RemoteWebDriver driver) throws Exception {
 //		do {
 //			Thread.sleep(1000);
 //     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
 		Thread.sleep(5000);
-		click(linkPreviewJR, "Prieview JR");
-		if(driver.findElements(By.xpath("//div[@class='header' and contains(text(),'PREVIEW')]")).size()>0) {
+		Actions action = new Actions(remoteDriver);
+		action.moveToElement(linkPreviewJR).click().build().perform();
+//		click(linkPreviewJR, "Prieview JR");
+		if (driver.findElements(By.xpath("//div[@class='header' and contains(text(),'PREVIEW')]")).size() > 0) {
 			assertTrue("Landed on Preview page");
-			click(btnReplicate, "Replicate");	
-		}else {
+			click(btnReplicate, "Replicate");
+		} else {
 			assertFalse("Unable to click Preview Link");
 		}
 		do {
 			Thread.sleep(1000);
-     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
-	
-	public void skipToForm() throws Exception {	
+
+	public void skipToForm() throws Exception {
 		Thread.sleep(2000);
 		click(btnSkip, "SKIP TO FORM");
 	}
-	
-	public void replicate(RemoteWebDriver driver) throws Exception {	
-		Thread.sleep(1000);
+
+	public void replicate(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(2000);
 		click(btnReplicate1, "Replicate");
 		do {
 			Thread.sleep(1000);
-     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
 }

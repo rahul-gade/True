@@ -24,7 +24,7 @@ public class JRBriefAgency extends PageBase{
 	@FindBy(xpath = "//input[@placeholder='To']")
 	private WebElement inputTo;
 	String selectto = "//div[text()=' PLACEHOLDER']";
-	@FindBy(xpath = "//input[@placeholder='Brief']")
+	@FindBy(xpath = "//*[@placeholder='Brief']")
 	private WebElement inputBrief;
 	@FindBy(xpath = "//span[text()='Agency Brief']")
 	private WebElement chkboxAgency;
@@ -52,8 +52,10 @@ public class JRBriefAgency extends PageBase{
 			click(chkboxAgency, "Agency CheckBox");
 			click(chkboxLongList, "Long List CheckBox");
 			click(btnSubmit, "Submit");
-			Thread.sleep(1000);
 		}
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(btnBriefClose, "Close Button");
 	}
 	

@@ -119,39 +119,6 @@ public class InvestmentHome extends PageBase {
 		}
 	}
 
-	public void findLiveDeal(RemoteWebDriver driver, String projName, String compName, String sect) throws Exception {
-		// verifyNameAndTime(remoteDriver, projName);
-		do {
-			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
-		int size = driver.findElements(By.xpath(("//h3[text()='LIVE DEALS']/following-sibling::div/div"))).size();
-		for (int i = 1; i <= size; i++) {
-			String pName = driver
-					.findElement(By.xpath(
-							"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
-					.getText();
-			String cName = driver
-					.findElement(By.xpath("(//h3[text()='LIVE DEALS']/following-sibling::div//h4)[" + i + "]"))
-					.getText();
-			String sec = driver
-					.findElement(By.xpath("(//h3[text()='LIVE DEALS']/following-sibling::div//h5)[" + i + "]"))
-					.getText();
-			String ownerImage = driver.findElement(By.xpath("(//div[@class='img']/img)[" + i + "]"))
-					.getAttribute("title");
-			if (pName.trim().equalsIgnoreCase(projName) && cName.trim().equalsIgnoreCase(compName)
-					&& sec.trim().equalsIgnoreCase(sect) && !ownerImage.isEmpty()) {
-				driver.findElement(By.xpath(
-						"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
-						.click();
-				assertTrue("Project being edited is " + pName);
-				do {
-					Thread.sleep(1000);
-				} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
-				break;
-			}
-		}
-	}
-
 	public void verifyNameAndTime(RemoteWebDriver driver, String projName) throws Exception {
 		String name = driver.findElement(By.xpath("//h4")).getText();
 		String time = driver.findElement(By.xpath("//h4/preceding-sibling::ul/li[@class='ng-star-inserted']"))
@@ -316,7 +283,6 @@ public class InvestmentHome extends PageBase {
 		}
 	}
 
-	// ================WORKING HERE================//
 	public void verifyListView(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1000);
 		click(viewListBtn, "List View Button");
@@ -328,13 +294,55 @@ public class InvestmentHome extends PageBase {
 		}
 		click(viewCardBtn, "Card View Button");
 		Thread.sleep(500);
-		if(driver.findElements(By.xpath("//div[@class='card ng-star-inserted']")).size() > 0) {
+		if (driver.findElements(By.xpath("//div[@class='card ng-star-inserted']")).size() > 0) {
 			assertTrue("Deals Displayed in Grid-View on clicking Grid-View Button.");
-		}
-		else {
+		} else {
 			assertFalse("Deals NOT Displayed in Grid-View on clicking Grid-View Button.");
 		}
-		
 	}
 
+	// ================WORKING HERE================//
+	public void findOnePagerDeal(RemoteWebDriver driver)
+			throws Exception {
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		WebElement onePagerDeal = driver.findElement(
+				By.xpath("((//div[text()=' One Pager ']/ancestor::div[@class='card ng-star-inserted'])[1])"));
+		click(onePagerDeal, "Deal with One Pager Created.");
+		Thread.sleep(1000);
+	}
+
+	public void findLiveDeal(RemoteWebDriver driver, String projName, String compName, String sect) throws Exception {
+		// verifyNameAndTime(remoteDriver, projName);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		int size = driver.findElements(By.xpath(("//h3[text()='LIVE DEALS']/following-sibling::div/div"))).size();
+		for (int i = 1; i <= size; i++) {
+			String pName = driver
+					.findElement(By.xpath(
+							"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
+					.getText();
+			String cName = driver
+					.findElement(By.xpath("(//h3[text()='LIVE DEALS']/following-sibling::div//h4)[" + i + "]"))
+					.getText();
+			String sec = driver
+					.findElement(By.xpath("(//h3[text()='LIVE DEALS']/following-sibling::div//h5)[" + i + "]"))
+					.getText();
+			String ownerImage = driver.findElement(By.xpath("(//div[@class='img']/img)[" + i + "]"))
+					.getAttribute("title");
+			if (pName.trim().equalsIgnoreCase(projName) && cName.trim().equalsIgnoreCase(compName)
+					&& sec.trim().equalsIgnoreCase(sect) && !ownerImage.isEmpty()) {
+				driver.findElement(By.xpath(
+						"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
+						.click();
+				assertTrue("Project being edited is " + pName);
+				do {
+					Thread.sleep(1000);
+				} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+				break;
+			}
+		}
+	}
 }

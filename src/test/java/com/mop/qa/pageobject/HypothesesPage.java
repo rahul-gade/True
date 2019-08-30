@@ -37,7 +37,7 @@ public class HypothesesPage extends PageBase {
 	@FindBy(xpath = "//span[text()='IN PROGRESS']")
 	private WebElement btnStatus;
 	@FindBy(xpath = "//span[text()=' VALIDATED ']")
-	private WebElement selectStatus;
+	private WebElement ststusValidated;
 	@FindBy(xpath = "//span[text()='POST']")
 	private WebElement btnPost;
 	@FindBy(xpath = "//div[text()=' Posts ']//span[@class='value']")
@@ -51,8 +51,10 @@ public class HypothesesPage extends PageBase {
 	@FindBy(xpath = "//li[@class='active']/a[@class='link']")
 	private WebElement btnBack1;
 
-	public void createHypothesis(RemoteWebDriver driver) throws Exception {
+	String hypothesisTitle = "New Hypothesis Title";
+	String hypothesisDesc = "New Hypotheses Description";
 
+	public void createHypothesis(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1000);
 		click(tabHypotheses, "Hypotheses Tab");
 		assertTrue("Clicked on Hypotheses Tab");
@@ -60,58 +62,100 @@ public class HypothesesPage extends PageBase {
 		click(btnAddNew, "Add New Button");
 		Thread.sleep(1000);
 		assertTrue("Clicked on Add new button");
-		if (driver.findElements(By.xpath("//div[@class='suggested-list']//li[1]")).size() > 0) {
-			click(selectHypothesis, "Select Suggested Hypothesis");
-		} else {
+
+		// check library option.
+		if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0)
+			assertTrue("Hypothesis with library option is available.");
+		else
+			assertFalse("Hypothesis with library option is not available.");
+
+		// check category dropdown for new hypothesis.
+		if (driver.findElements(By.xpath("(//div[@class='mat-form-field-flex'])[3]")).size() > 0) {
 			click(drpdownCategory, "Category Dropdown");
-			Thread.sleep(200);
+			Thread.sleep(1000);
+			assertTrue("Dropdown for categories is displayed.");
 			click(selectCategory, "Select Dropdown");
 			Thread.sleep(200);
-			if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0) {
-				click(btnLibrary, "Library List");
-				Thread.sleep(1000);
-				click(selectList, "Select List");
-				Thread.sleep(1000);
-			} else {
-				click(inputHypothesis, "Hypothesis");
-				enterText(inputHypothesis, "New Hypothesis text", "Hypothesis");
-			}
+		} else
+			assertFalse("Dropdown for categories is not displayed.");
+
+		// enter hypothesis title - check suggested list/through library.
+		if (driver.findElements(By.xpath("//div[@class='suggested-list']")).size() > 0) {
+			if (driver.findElements(By.xpath("//div[@class='suggested-list']//li")).size() == 3)
+				assertTrue("Suggested List displays 3 items.");
+			else
+				assertFalse("Suggested List does not display 3 items.");
+			click(selectHypothesis, "Select Suggested Hypothesis");
+			Thread.sleep(200);
+			this.hypothesisTitle = driver
+					.findElement(By.xpath("//input[@name='hypothesisTitle']/following-sibling::span/label")).getText()
+					.trim();
+			System.out.println("========:::::::<<  "+hypothesisTitle+"  >>:::::::========");
+		} else if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0) {
+			click(btnLibrary, "Library List");
+			Thread.sleep(1000);
+			click(selectList, "Select List");
+			Thread.sleep(200);
+			this.hypothesisTitle = driver
+					.findElement(By.xpath("//input[@name='hypothesisTitle']/following-sibling::span/label")).getText()
+					.trim();
+			System.out.println(hypothesisTitle);
+			Thread.sleep(1000);
+		} else {
+			click(inputHypothesis, "Hypothesis");
+			enterText(inputHypothesis, hypothesisTitle, "Hypothesis");
+			Thread.sleep(1000);
+			System.out.println(hypothesisTitle);
 		}
-		// div[@class="suggested-list"]//li[1]
+
+		// enter hypo details
 		click(txtDescription, "Description");
 		Thread.sleep(2000);
-		enterText(txtDescription, "Hypotheses Description", "Description");
+		enterText(txtDescription, hypothesisDesc, "Description");
 		Thread.sleep(1000);
 		click(btnAdd, "ADD");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		assertTrue("Successfully created a Hypotheses");
-		Thread.sleep(2000);
-		click(btnStatus, "STATUS");
-		Thread.sleep(100);
-		click(selectStatus, "STATUS");
 		Thread.sleep(1000);
-		click(btnAddNew, "Add New Button");
+		
+//		go back to hypothesis landing page.
+		click(btnBack, "Back to Hypothesis Landing Page");
 		Thread.sleep(1000);
-		click(txtDescription, "New Post");
-		Thread.sleep(1000);
-		enterText(txtDescription, "Post Description", "Post");
-		Thread.sleep(2000);
-		click(btnPost, "Post Button");
-		Thread.sleep(2000);
-		if (Integer.parseInt(getText(countPost)) > 0) {
-			assertTrue("Successfully created a Post");
-		}
-		click(txtComment, "Comment");
-		Thread.sleep(1000);
-		enterText(txtComment, "Enter your Comments", "Comment");
-		txtComment.sendKeys(Keys.ENTER);
-		Thread.sleep(1000);
-		if (Integer.parseInt(getText(countComment)) > 0) {
-			assertTrue("Successfully posted a Comment");
-		}
-		click(btnBack, "Back");
-		Thread.sleep(1500);
-		click(btnBack1, "Back");
+		click(btnBack1, "Back to Investment Home");
 		Thread.sleep(100);
 	}
+	
+	
+//	{
+//		// hypothesis page. ststus-post-comment.
+//				click(btnStatus, "STATUS");
+//				Thread.sleep(100);
+//				click(ststusValidated, "STATUS");
+//				Thread.sleep(1000);
+//				click(btnAddNew, "Add New Button");
+//				Thread.sleep(1000);
+//				click(txtDescription, "New Post");
+//				Thread.sleep(1000);
+//				enterText(txtDescription, "Post Description", "Post");
+//				Thread.sleep(2000);
+//				click(btnPost, "Post Button");
+//				Thread.sleep(2000);
+//				if (Integer.parseInt(getText(countPost)) > 0) {
+//					assertTrue("Successfully created a Post");
+//				}
+//				click(txtComment, "Comment");
+//				Thread.sleep(1000);
+//				enterText(txtComment, "Enter your Comments", "Comment");
+//				txtComment.sendKeys(Keys.ENTER);
+//				Thread.sleep(1000);
+//				if (Integer.parseInt(getText(countComment)) > 0) {
+//					assertTrue("Successfully posted a Comment");
+//				}
+//
+//				// go back to deal details page, then to all deals.
+//				click(btnBack, "Back");
+//				Thread.sleep(1500);
+//				click(btnBack1, "Back");
+//				Thread.sleep(100);
+//	}
 }

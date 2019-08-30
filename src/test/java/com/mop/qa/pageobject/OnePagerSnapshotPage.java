@@ -59,8 +59,9 @@ public class OnePagerSnapshotPage extends PageBase {
 
 		click(tabDealDynamics, "Deal Dynamics");
 		Thread.sleep(1000);
-		click(driver.findElement(By.xpath("//div[text()=' Valuation ']")), "Valuation");
 		click(driver.findElement(By.xpath("//div[text()=' Exit strategy ']")), " Exit strategy ");
+		Thread.sleep(200);
+		click(driver.findElement(By.xpath("//div[text()=' Valuation ']")), "Valuation");
 		listItems = driver.findElements(By.xpath("//ol")).size();
 		for (int i = 1; i <= listItems; i++) {
 			String text = driver.findElement(By.xpath("(//ol/li)[" + i + "]")).getText();
@@ -78,9 +79,10 @@ public class OnePagerSnapshotPage extends PageBase {
 		}
 		click(tabCompany, "Company");
 		Thread.sleep(1000);
+		click(driver.findElement(By.xpath("//div[text()=' Company Deal dynamics ']")), "Company Deal dynamics");
+		Thread.sleep(200);
 		click(driver.findElement(By.xpath("//div[text()=' Customer Value Proposition & MOATS ']")),
 				"Customer Value Proposition & MOATS");
-		click(driver.findElement(By.xpath("//div[text()=' Company Deal dynamics ']")), "Company Deal dynamics");
 		listItems = driver.findElements(By.xpath("//ol")).size();
 		for (int i = 1; i <= listItems; i++) {
 			String text = driver.findElement(By.xpath("(//ol/li)[" + i + "]")).getText();
@@ -98,10 +100,12 @@ public class OnePagerSnapshotPage extends PageBase {
 		}
 		click(tabIndustry, "Industry");
 		Thread.sleep(1000);
-		click(driver.findElement(By.xpath("//div[text()=' Competition ']")), "Competition");
+		click(driver.findElement(By.xpath("//div[text()=' Expected Industry Growth ']")), "Expected Industry Growth");
+		Thread.sleep(200);
 		click(driver.findElement(By.xpath("//div[text()=' Underlying industry growth ']")),
 				"Underlying industry growth");
-		click(driver.findElement(By.xpath("//div[text()=' Expected Industry Growth ']")), "Expected Industry Growth");
+		Thread.sleep(200);
+		click(driver.findElement(By.xpath("//div[text()=' Competition ']")), "Competition");
 		listItems = driver.findElements(By.xpath("//ol")).size();
 		for (int i = 1; i <= listItems; i++) {
 			String text = driver.findElement(By.xpath("(//ol/li)[" + i + "]")).getText();

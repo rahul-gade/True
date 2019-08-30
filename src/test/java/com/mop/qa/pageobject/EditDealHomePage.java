@@ -13,6 +13,7 @@ public class EditDealHomePage extends PageBase {
 	public EditDealHomePage(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	}
+
 	@FindBy(xpath = "(//a[@class='edit-icon'])[1]")
 	private WebElement editCompanyBasicDetails;
 	@FindBy(xpath = "//div[contains(text(),'Company')]/a[@class='edit-icon']")
@@ -140,7 +141,7 @@ public class EditDealHomePage extends PageBase {
 	}
 
 	public void editProbability(RemoteWebDriver driver, String probability, String reason) throws Exception {
-			Thread.sleep(1000);
+		Thread.sleep(1000);
 		click(inputProbability, "Probability");
 		waitForVisibilityOfElement(btnSubmit);
 		int pro = Integer.parseInt(probability);
@@ -159,7 +160,7 @@ public class EditDealHomePage extends PageBase {
 		if (driver.findElements(By.xpath("(//a[@class='action-btn'])[2]")).size() > 0) {
 			click(btnClose, "Close");
 		}
-		
+
 	}
 
 	public void addContact(RemoteWebDriver driver, String profile) throws Exception {
@@ -178,18 +179,30 @@ public class EditDealHomePage extends PageBase {
 	}
 
 	public void validateFolder(RemoteWebDriver driver, String project) throws Exception {
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(btnFolder, "Folder");
 		waitForVisibilityOfElement(labelPager);
 		if (labelPager.isDisplayed()) {
 			assertTrue("System tab is displayed");
 		}
-		Thread.sleep(1000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(tabDMS, "DMS");
 		Thread.sleep(1000);
 		waitForVisibilityOfElement(labelCustom);
 		if (labelCustom.isDisplayed()) {
 			assertTrue("DMS tab is Clicked");
 		}
+		// Added condition for Hypothesis test.
+		if (project.equals("Running Hypothesis"))
+			project = driver.findElement(By.xpath("//span[@class='dd-title']")).getText();
 		driver.findElement(By.xpath(btnBack.replace("PLACEHOLDER", project))).click();
+	}
+	
+	public void checkOnePager(RemoteWebDriver driver) throws Exception {
+		
 	}
 }
