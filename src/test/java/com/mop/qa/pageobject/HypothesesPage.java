@@ -54,6 +54,7 @@ public class HypothesesPage extends PageBase {
 	String hypothesisTitle = "New Hypothesis Title";
 	String hypothesisDesc = "New Hypotheses Description";
 
+	//THE CREATE HYPOTHESIS PAGE IS TERRIBLY DAMAGED, CORRECTING THIS IS PRIORITY ONE!
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1000);
 		click(tabHypotheses, "Hypotheses Tab");
@@ -125,9 +126,9 @@ public class HypothesesPage extends PageBase {
 		Thread.sleep(100);
 	}
 	
-	
+	//SOME WORK AS BEEN DEONE ON THE HYPOTHESIS, VERIFY WHAT'S DONE. 
+	// hypothesis page. ststus-post-comment.
 //	{
-//		// hypothesis page. ststus-post-comment.
 //				click(btnStatus, "STATUS");
 //				Thread.sleep(100);
 //				click(ststusValidated, "STATUS");
@@ -158,4 +159,5 @@ public class HypothesesPage extends PageBase {
 //				click(btnBack1, "Back");
 //				Thread.sleep(100);
 //	}
+	
 }
