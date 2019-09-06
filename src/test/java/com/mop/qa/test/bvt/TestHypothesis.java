@@ -26,30 +26,35 @@ public class TestHypothesis extends TestBase{
 			String pwd = rds.getValue("DATA", currentTest, "Password");
 			inst.launchApp(startURL, uname, pwd);
 			Thread.sleep(1000);
+			
 			//Hypothesis Work!
-			HypothesesPage hyppage = new HypothesesPage(remoteDriver);
+			HypothesesPage hypPage = new HypothesesPage(remoteDriver);
 			inst.findOnePagerDeal(remoteDriver);
 			
-			CreatedDealPage cdp = new CreatedDealPage(remoteDriver);
-			cdp.checkQuickActoinDDown(remoteDriver);
-			cdp.checkNewDocument(remoteDriver);
-			hyppage.createHypothesis(remoteDriver);
-			EditDealHomePage dealhome = new EditDealHomePage(remoteDriver);
-			String impact = rds.getValue("HYPOTHESIS", currentTest, "Impact");
-			String financial = rds.getValue("HYPOTHESIS", currentTest, "Financial");
-			String attraction = rds.getValue("HYPOTHESIS", currentTest, "Attraction");
-			String likeability = rds.getValue("HYPOTHESIS", currentTest, "Likeability");
-			String reason = rds.getValue("HYPOTHESIS", currentTest, "Reason");
-			String probability = rds.getValue("HYPOTHESIS", currentTest, "Probability");
-			String probreason = rds.getValue("HYPOTHESIS", currentTest, "ProbReason");
-			String profile = rds.getValue("HYPOTHESIS", currentTest, "Profile");
-			inst.findOnePagerDeal(remoteDriver);
-			dealhome.editLikeability(remoteDriver, impact, financial, attraction, likeability, reason);
-			dealhome.editProbability(remoteDriver, probability, probreason);
-			dealhome.addContact(remoteDriver, profile);
-			dealhome.validateFolder(remoteDriver, projectName);
-			DealPipelineAllDeals tabs = new DealPipelineAllDeals(remoteDriver);
-			tabs.navigateTabs();
+//			CreatedDealPage cdp = new CreatedDealPage(remoteDriver);
+//			cdp.checkQuickActoinDDown(remoteDriver);
+//			cdp.checkNewDocument(remoteDriver);
+			hypPage.createHypothesis(remoteDriver);
+//			EditDealHomePage dealhome = new EditDealHomePage(remoteDriver);
+//			String impact = rds.getValue("HYPOTHESIS", currentTest, "Impact");
+//			String financial = rds.getValue("HYPOTHESIS", currentTest, "Financial");
+//			String attraction = rds.getValue("HYPOTHESIS", currentTest, "Attraction");
+//			String likeability = rds.getValue("HYPOTHESIS", currentTest, "Likeability");
+//			String reason = rds.getValue("HYPOTHESIS", currentTest, "Reason");
+//			String probability = rds.getValue("HYPOTHESIS", currentTest, "Probability");
+//			String probreason = rds.getValue("HYPOTHESIS", currentTest, "ProbReason");
+//			String profile = rds.getValue("HYPOTHESIS", currentTest, "Profile");
+//			inst.findOnePagerDeal(remoteDriver);
+//			dealhome.editLikeability(remoteDriver, impact, financial, attraction, likeability, reason);
+//			dealhome.editProbability(remoteDriver, probability, probreason);
+//			dealhome.addContact(remoteDriver, profile);
+//			dealhome.validateFolder(remoteDriver, projectName);
+//			DealPipelineAllDeals tabs = new DealPipelineAllDeals(remoteDriver);
+//			tabs.navigateTabs();
+			hypPage.hypothesisDetails(remoteDriver);
+			hypPage.newPost(remoteDriver);
+			hypPage.newComment(remoteDriver);
+			hypPage.editHypothesis(remoteDriver);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

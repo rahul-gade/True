@@ -35,7 +35,7 @@ public class TestJRPublishAndView extends TestBase {
 		basic.goToListing(remoteDriver);
 		basic.verifyCreatedJR(remoteDriver, position, companyName);
 		ReplicateJR jr = new ReplicateJR(remoteDriver);
-		jr.skipToForm();
+		jr.skipToForm(remoteDriver);
 		JRAboutThePosition pos = new JRAboutThePosition(remoteDriver);
 		pos.enterPositionDetails();
 		JRTeamDetails team = new JRTeamDetails(remoteDriver);

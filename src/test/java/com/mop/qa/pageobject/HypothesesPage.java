@@ -1,8 +1,13 @@
 package com.mop.qa.pageobject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -13,121 +18,262 @@ public class HypothesesPage extends PageBase {
 		super(remoteDriver);
 	}
 
+	String hypothesisTitle = "Hypothesis-";
+	String hypothesisDesc = "New Hypotheses Description";
+
+	// =============New Hypothesis=============//
 	@FindBy(xpath = "//a[@routerlink='hypothesis']")
-	private WebElement tabHypotheses;
+	private WebElement hypothesisTab;
 	@FindBy(xpath = "(//a[@class='addnew-btn'])[1]")
 	private WebElement btnAddNew;
 	@FindBy(xpath = "(//div[@class='mat-form-field-flex'])[3]")
 	private WebElement drpdownCategory;
-//	@FindBy(xpath = "//span[text()=' LEADERSHIP ' ]")
+	@FindBy(xpath = "//a[contains(@class,'library-btn')]")
+	private WebElement hypoLibrary;
+	@FindBy(xpath = "//a[@class='back-btn']")
+	private WebElement hypoLibraryBack;
 	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
 	private WebElement selectCategory;
+	@FindBy(xpath = "//div[text()='Suggested Hypotheses']")
+	private WebElement suggestList;
 	@FindBy(xpath = "//div[@class='suggested-list']//li[1]")
 	private WebElement selectHypothesis;
-	@FindBy(xpath = "//a[@class='library-btn ng-star-inserted']")
-	private WebElement btnLibrary;
 	@FindBy(xpath = "(//div[@class='filtered-list']//li)[1]")
 	private WebElement selectList;
 	@FindBy(xpath = "//input[@name='hypothesisTitle']")
-	private WebElement inputHypothesis;
-	@FindBy(xpath = "//textarea")
-	private WebElement txtDescription;
+	private WebElement hypothesisTitleInput;
 	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement btnAdd;
-	@FindBy(xpath = "//span[text()='IN PROGRESS']")
-	private WebElement btnStatus;
-	@FindBy(xpath = "//span[text()=' VALIDATED ']")
-	private WebElement ststusValidated;
-	@FindBy(xpath = "//span[text()='POST']")
-	private WebElement btnPost;
-	@FindBy(xpath = "//div[text()=' Posts ']//span[@class='value']")
-	private WebElement countPost;
-	@FindBy(xpath = "//input[@formcontrolname='commentText']")
-	private WebElement txtComment;
-	@FindBy(xpath = "//div[text()=' Comments ']//span[@class='value']")
-	private WebElement countComment;
 	@FindBy(xpath = "//a[@class='link']")
 	private WebElement btnBack;
 	@FindBy(xpath = "//li[@class='active']/a[@class='link']")
 	private WebElement btnBack1;
+	String hypoVerify = "//p[contains(text(),'HypothesisTITLE')]";
 
-	String hypothesisTitle = "New Hypothesis Title";
-	String hypothesisDesc = "New Hypotheses Description";
+	// =============Hypothesis Details=============//
+	@FindBy(xpath = "//div[@class='description' and contains(text(),'New Hypotheses Description')]")
+	private WebElement hypDesc;
+	@FindBy(xpath = "//div[contains(text(),'Last modified')]")
+	private WebElement lastModDate;
+	@FindBy(xpath = "//span[text()='IN PROGRESS']")
+	private WebElement statusDDown;
+	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
+	private WebElement statusOpt1;
+	@FindBy(xpath = "//span[text()='ONLY TEAM']")
+	private WebElement visibDDown;
+	@FindBy(xpath = "(//span[@class='mat-option-text'])[3]")
+	private WebElement visibOpt3;
+	String hypoDetailsTitle = "//div[contains(text(),'HypothesisTITLE')]";
 
-	//THE CREATE HYPOTHESIS PAGE IS TERRIBLY DAMAGED, CORRECTING THIS IS PRIORITY ONE!
+	// =============POst & Comments=============//
+	@FindBy(xpath = "//a[text()='add new']")
+	private WebElement newPost;
+	@FindBy(xpath = "//textarea")
+	private WebElement txtDescription;
+	@FindBy(xpath = "//div[text()=' Posts ']//span[@class='value']")
+	private WebElement countPost;
+	@FindBy(xpath = "//span[text()='POST']")
+	private WebElement btnPost;
+	@FindBy(xpath = "//input[@formcontrolname='commentText']")
+	private WebElement txtComment;
+	@FindBy(xpath = "//div[text()=' Comments ']//span[@class='value']")
+	private WebElement countComment;
+	String postDescription = "Sample Description for post!";
+
+	// =============Post & Comments=============//
+	@FindBy(xpath = "//ul[contains(@class,'right-action')]/li[1]")
+	private WebElement editHypoBtn;
+	@FindBy(xpath = "//ul[contains(@class,'right-action')]/li[2]")
+	private WebElement deleteHypoBtn;
+
+	@FindBy(xpath = "//span[text()='UPDATE']")
+	private WebElement updateHypo;
+
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
+		Actions action = new Actions(remoteDriver);
 		Thread.sleep(1000);
-		click(tabHypotheses, "Hypotheses Tab");
+		click(hypothesisTab, "Hypotheses Tab");
 		assertTrue("Clicked on Hypotheses Tab");
 		Thread.sleep(1000);
 		click(btnAddNew, "Add New Button");
 		Thread.sleep(1000);
 		assertTrue("Clicked on Add new button");
 
-		// check library option.
-		if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0)
-			assertTrue("Hypothesis with library option is available.");
-		else
-			assertFalse("Hypothesis with library option is not available.");
+		if (driver.findElement(By.xpath("//span[text()='NEW HYPOTHESIS']")) != null) {
+			assertTrue("landed on New Hypothesis Page.");
 
-		// check category dropdown for new hypothesis.
-		if (driver.findElements(By.xpath("(//div[@class='mat-form-field-flex'])[3]")).size() > 0) {
-			click(drpdownCategory, "Category Dropdown");
+			// Testing Hypothesis Library
+			if (driver.findElements(By.xpath("//a[contains(@class,'library-btn')]")).size()>0) {
+				assertTrue("Hypothesis with Library Displayed");
+				click(hypoLibrary, "Hypothesis Library.");
+				Thread.sleep(500);
+				if (driver.findElement(By.xpath("//div[text()=' HYPOTHESIS LIBRARY ']")) != null) {
+					assertTrue("Landed on Hypothesis With Library.");
+					click(hypoLibraryBack, "Back Button");
+					Thread.sleep(500);
+				}
+			} else
+				assertTrue("Hypothesis With Library not Displayed.");
+
+			// Testing Hypothesis Category DropDown.
+			if (driver.findElement(By.xpath("//app-new-hypothesis//mat-select")) != null) {
+				click(driver.findElement(By.xpath("//app-new-hypothesis//mat-select")), "Category Dropdown.");
+				Thread.sleep(500);
+				click(selectCategory, "Category 1");
+				assertTrue("Category Dropdown is available.");
+			}
+
+			// Testing Suggested List & Enter Details from List/Manually
+			if (driver.findElements(By.xpath("//div[text()='Suggested Hypotheses']")).size() > 0) {
+				assertTrue("Suggeseted Hypothesis List is Available.");
+				if (driver.findElements(By.xpath("//div[@class='suggested-list']//li")).size() == 3) {
+					assertTrue("Suggested list shows 3 items.");
+				} else
+					assertFalse("suggested List does not show 3 items");
+				DateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
+				Date date = new Date();
+				String num = dateFormat.format(date);
+				hypothesisTitle = selectHypothesis.getText().trim() + "-" + num;
+				click(selectHypothesis, "Suggested Hypothesis 1");
+				Thread.sleep(1000);
+				click(hypothesisTitleInput, "Hypothesis Title");
+				Thread.sleep(1000);
+				enterText(hypothesisTitleInput, hypothesisTitle, "Hypothesis Title Text");
+				Thread.sleep(1000);
+				click(txtDescription, "Description");
+				Thread.sleep(1000);
+				enterText(txtDescription, hypothesisDesc, "Description Text.");
+				Thread.sleep(1000);
+			} else {
+				DateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
+				Date date = new Date();
+				String num = dateFormat.format(date);
+				hypothesisTitle = hypothesisTitle + num;
+				assertTrue("Suggested List Not Available; Filling Details Manually.");
+				click(hypothesisTitleInput, "Hypothesis Title");
+				Thread.sleep(1000);
+				enterText(hypothesisTitleInput, hypothesisTitle, "Hypothesis Title Text");
+				Thread.sleep(1000);
+				enterText(txtDescription, hypothesisDesc, "Description Text.");
+				Thread.sleep(1000);
+			}
+
+			click(btnAdd, "Submit Hypothesis");
 			Thread.sleep(1000);
-			assertTrue("Dropdown for categories is displayed.");
-			click(selectCategory, "Select Dropdown");
-			Thread.sleep(200);
+			click(btnBack, "Back to Hypothesis Landing Page.");
+			Thread.sleep(1000);
+
+			if (driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))) != null) {
+				action.moveToElement(
+						driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle)))).perform();
+				assertTrue("New Hypothesis is added to Hypothesis List");
+			} else
+				assertFalse("New Hypothesis is Not Saved.");
 		} else
-			assertFalse("Dropdown for categories is not displayed.");
+			assertFalse("Hypothesis Page not displayed.");
+	}
 
-		// enter hypothesis title - check suggested list/through library.
-		if (driver.findElements(By.xpath("//div[@class='suggested-list']")).size() > 0) {
-			if (driver.findElements(By.xpath("//div[@class='suggested-list']//li")).size() == 3)
-				assertTrue("Suggested List displays 3 items.");
+	public void hypothesisDetails(RemoteWebDriver driver) throws Exception {
+		Actions action = new Actions(remoteDriver);
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
+		if (driver.findElement(By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))) != null) {
+			assertTrue("Newly created Hypothesis details Page opened.");
+			if (hypDesc.isDisplayed())
+				assertTrue("Hypothesis Description is Displayed.");
 			else
-				assertFalse("Suggested List does not display 3 items.");
-			click(selectHypothesis, "Select Suggested Hypothesis");
-			Thread.sleep(200);
-			this.hypothesisTitle = driver
-					.findElement(By.xpath("//input[@name='hypothesisTitle']/following-sibling::span/label")).getText()
-					.trim();
-			System.out.println("========:::::::<<  "+hypothesisTitle+"  >>:::::::========");
-		} else if (driver.findElements(By.xpath("//a[@class='library-btn ng-star-inserted']")).size() > 0) {
-			click(btnLibrary, "Library List");
-			Thread.sleep(1000);
-			click(selectList, "Select List");
-			Thread.sleep(200);
-			this.hypothesisTitle = driver
-					.findElement(By.xpath("//input[@name='hypothesisTitle']/following-sibling::span/label")).getText()
-					.trim();
-			System.out.println(hypothesisTitle);
-			Thread.sleep(1000);
-		} else {
-			click(inputHypothesis, "Hypothesis");
-			enterText(inputHypothesis, hypothesisTitle, "Hypothesis");
-			Thread.sleep(1000);
-			System.out.println(hypothesisTitle);
-		}
+				assertFalse("Hypothesis Description is not Displayed.");
 
-		// enter hypo details
-		click(txtDescription, "Description");
-		Thread.sleep(2000);
-		enterText(txtDescription, hypothesisDesc, "Description");
-		Thread.sleep(1000);
-		click(btnAdd, "ADD");
-		Thread.sleep(1000);
-		assertTrue("Successfully created a Hypotheses");
-		Thread.sleep(1000);
-		
-//		go back to hypothesis landing page.
-		click(btnBack, "Back to Hypothesis Landing Page");
-		Thread.sleep(1000);
-		click(btnBack1, "Back to Investment Home");
+			if (lastModDate.isDisplayed())
+				assertTrue("Last Modified Date is Displayed.");
+			else
+				assertFalse("Last Modified Date is not Displayed.");
+
+			click(statusDDown, "Status DropDown");
+			Thread.sleep(500);
+			click(statusOpt1, "In Progress");
+			Thread.sleep(500);
+			click(visibDDown, "Visibility DropDown");
+			Thread.sleep(500);
+			click(visibOpt3, "Only Team");
+
+			if (driver.findElement(By.xpath("//section[@class='post-section']")) != null) {
+				action.moveToElement(driver.findElement(By.xpath("//section[@class='post-section']"))).perform();
+				assertTrue("Posts Section is Displayed");
+			} else
+				assertFalse("Posts Section is Not Present");
+
+			if (driver.findElement(By.xpath("//section[@class='comments-section']")) != null) {
+				action.moveToElement(driver.findElement(By.xpath("//section[@class='comments-section']"))).perform();
+				assertTrue("Comments Section is Displayed");
+			} else
+				assertFalse("Comments Section is Not Present");
+		} else
+			assertFalse("Newly created Hypothesis details Page not opened.");
+	}
+
+	public void newPost(RemoteWebDriver driver) throws Exception {
+		click(newPost, "Add New Post");
 		Thread.sleep(100);
+		if (driver.findElement(By.xpath("//span[text()='NEW POST']")) != null) {
+			int posts = Integer.parseInt(getText(countPost));
+			assertTrue("Landed on New Post Page");
+			click(txtDescription, "Post Description.");
+			enterText(txtDescription, postDescription, "Post Description");
+			click(btnPost, "Post Button");
+			Thread.sleep(1000);
+			if (Integer.parseInt(getText(countPost)) > posts) {
+				assertTrue("Successfully created a Post");
+			}
+			Thread.sleep(500);
+		} else
+			assertFalse("New Post Page did not open!");
+	}
+
+	public void newComment(RemoteWebDriver driver) throws Exception {
+		int comments = Integer.parseInt(getText(countComment));
+		click(txtComment, "Comment");
+		Thread.sleep(1000);
+		enterText(txtComment, "Enter your Comments", "Comment");
+		txtComment.sendKeys(Keys.ENTER);
+		Thread.sleep(1000);
+		if (Integer.parseInt(getText(countComment)) > comments) {
+			assertTrue("Successfully posted a Comment");
+		}
+		Thread.sleep(500);
+	}
+
+	public void editHypothesis(RemoteWebDriver driver) throws Exception {
+		hypothesisTitle += " - EDITED";
+		hypothesisDesc = hypothesisDesc.replace("New", "Edited");
+		Actions action = new Actions(remoteDriver);
+		click(editHypoBtn, "Edit Hypothesis Button");
+		Thread.sleep(1000);
+		if (driver.findElement(By.xpath("//span[text()='EDIT HYPOTHESIS']")) != null) {
+			assertTrue("Landed on Edit Hypothesis Page.");
+			enterText(hypothesisTitleInput, hypothesisTitle, "Edited Hypothesis Title");
+			Thread.sleep(500);
+			enterText(txtDescription, hypothesisDesc, "Description Text.");
+			Thread.sleep(5000);
+			click(updateHypo, "Update Button");
+			Thread.sleep(1000);
+
+			if (driver.findElement(By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))) != null) {
+				action.moveToElement(
+						driver.findElement(By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))))
+						.perform();
+				assertTrue("Hypothesis Successfully Updated.");
+			} else
+				assertFalse("Hypothesis Not Updated.");
+		}
 	}
 	
-	//SOME WORK AS BEEN DEONE ON THE HYPOTHESIS, VERIFY WHAT'S DONE. 
-	// hypothesis page. ststus-post-comment.
+	
+	
+	
+	
+//	Below stuff is porbably not relevant anymore.... advised to keep till the end of design. 
 //	{
 //				click(btnStatus, "STATUS");
 //				Thread.sleep(100);
@@ -144,14 +290,7 @@ public class HypothesesPage extends PageBase {
 //				if (Integer.parseInt(getText(countPost)) > 0) {
 //					assertTrue("Successfully created a Post");
 //				}
-//				click(txtComment, "Comment");
-//				Thread.sleep(1000);
-//				enterText(txtComment, "Enter your Comments", "Comment");
-//				txtComment.sendKeys(Keys.ENTER);
-//				Thread.sleep(1000);
-//				if (Integer.parseInt(getText(countComment)) > 0) {
-//					assertTrue("Successfully posted a Comment");
-//				}
+
 //
 //				// go back to deal details page, then to all deals.
 //				click(btnBack, "Back");
@@ -159,5 +298,5 @@ public class HypothesesPage extends PageBase {
 //				click(btnBack1, "Back");
 //				Thread.sleep(100);
 //	}
-	
+
 }

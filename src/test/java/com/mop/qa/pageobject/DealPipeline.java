@@ -51,8 +51,8 @@ public class DealPipeline extends PageBase {
 	public void dealPipeline(RemoteWebDriver driver) throws Exception {
 		click(dealPipelineTab, "Deal Pipeline Tab");
 		Thread.sleep(1000);
-//		click(summary, "Summary View");
-//		Thread.sleep(200);
+		click(summary, "Summary View");
+		Thread.sleep(200);
 	}
 
 	public void stageTest(RemoteWebDriver driver) throws Exception {
@@ -125,14 +125,21 @@ public class DealPipeline extends PageBase {
 		if (driver.findElement(By.xpath("//div[@class='summary-content']/ul[2]")) != null) {
 			assertTrue("List of Deal Progressed is displayed.");
 			if (driver.findElement(By.xpath("//li[text()=' progressed ']/span")).getText() != null) {
-				assertTrue("Count is displayed in Headers.");
+				int count = Integer
+						.parseInt(driver.findElement(By.xpath("//li[text()=' progressed ']/span")).getText());
+				assertTrue("Count is displayed in Header as: "+count);
+				if (driver.findElements(By.xpath("//div[@class='summary-content']/ul[2]/li")).size() == count) {
+					assertTrue("List contains " + count + " deals.");
+					if (driver.findElement(
+							By.xpath("//div[@class='summary-content']/ul[2]/li/span[@class='stage-content']")) != null)
+						assertTrue("Stage Change is shown.");
+					else
+						assertFalse("Stage Change is not shown.");
+				} else
+					assertFalse(
+							"Deals Progressed list contains different number of elements from that shown in header.");
 			} else
-				assertFalse("Count is not displayed in Headers.");
-			if (driver.findElement(
-					By.xpath("//div[@class='summary-content']/ul[2]/li/span[@class='stage-content']")) != null)
-				assertTrue("Stage Change is shown.");
-			else
-				assertFalse("Stage Change is not shown.");
+				assertFalse("Count is not displayed in Header.");
 		} else
 			assertFalse("List of Deal Progressed is not displayed.");
 	}

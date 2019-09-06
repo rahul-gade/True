@@ -89,7 +89,7 @@ public class JRBasicDetails extends PageBase {
 //		do { Thread.sleep(1000); }
 //		 while(driver.findElements(By.xpath("(//div/div/img)[1]")).size()>0) ;
 
-		Thread.sleep(2000);
+		Thread.sleep(4000);
 		click(btnNext, "Next");
 		Thread.sleep(1000);
 	}

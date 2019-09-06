@@ -80,13 +80,13 @@ public class ReplicateJR extends PageBase {
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 	}
 
-	public void skipToForm() throws Exception {
-		Thread.sleep(2000);
+	public void skipToForm(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(3000);
 		click(btnSkip, "SKIP TO FORM");
 	}
 
 	public void replicate(RemoteWebDriver driver) throws Exception {
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		click(btnReplicate1, "Replicate");
 		do {
 			Thread.sleep(1000);

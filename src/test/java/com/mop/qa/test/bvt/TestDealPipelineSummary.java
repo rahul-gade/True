@@ -26,6 +26,7 @@ public class TestDealPipelineSummary extends TestBase{
 			dP.summaryView(remoteDriver);
 			dP.newOnePagers(remoteDriver);
 			dP.dateRange(remoteDriver);
+			dP.dealsProgressed(remoteDriver);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}
