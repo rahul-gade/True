@@ -120,7 +120,8 @@ public class TestBase {
 			if (toolName.equalsIgnoreCase("Services")) {
 			} else if (toolName.equalsIgnoreCase("Appium")) {
 				deviceName = ctx.getCurrentXmlTest().getParameter("deviceName");
-				appiumPort = getPort();
+			//	appiumPort = getPort();
+				appiumPort = "4723";
 				appType = ctx.getCurrentXmlTest().getParameter("appType");
 				if(LOGGER.isDebugEnabled()) {
 					LOGGER.debug("App type is " + ctx.getCurrentXmlTest().getParameter("appType"));
@@ -131,7 +132,7 @@ public class TestBase {
 					startURL = rds.getValue("DATA", currentTest, "URL");
 				}
 				if (!localityType.equalsIgnoreCase("Cloud")) {
-					startAppiumServer(udid, appiumPort,platformName);
+				//	startAppiumServer(udid, appiumPort,platformName);
 				}
 				Thread.sleep(5000);
 				initiateDriver(localityType, appiumPort, browser, remoteUrl, platformName, toolName, appType,
@@ -264,7 +265,7 @@ public class TestBase {
 			command.addArgument("--chromedriver-port", false);
 			command.addArgument(chromePort);
 			command.addArgument("--chromedriver-executable",false);
-			command.addArgument("C:\\Users\\690239\\Desktop\\UpdatedUAF\\UAF\\UAF\\chromedriver.exe");
+			command.addArgument("C:\\Users\\689082\\Downloads\\Project\\Unified_Automation_Framework_User_Doc_V2.0\\UAF\\UAF\\chromedriver.exe");
 			if(platformName.equalsIgnoreCase("iOS"))
 			{
 				command.addArgument("--webdriveragent-port", false);
