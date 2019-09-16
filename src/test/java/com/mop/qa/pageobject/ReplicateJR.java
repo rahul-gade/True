@@ -41,23 +41,38 @@ public class ReplicateJR extends PageBase {
 	public void selectFilter(RemoteWebDriver driver, String position, String sector, String location, String company)
 			throws Exception {
 
-		Thread.sleep(5000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
 		waitForVisibilityOfElement(txtReplicate);
 		click(selectFilter, "Select Filter");
 		Thread.sleep(3000);
-		driver.findElement(By.xpath(select.replace("PLACEHOLDER", position))).click();
-		Thread.sleep(2000);
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", position))).size() > 0) {
+			driver.findElement(By.xpath(select.replace("PLACEHOLDER", position))).click();
+			Thread.sleep(2000);
+		} else
+			assertFalse("Position Option Not found.");
 		click(btnSector, "Sector");
 		Thread.sleep(2000);
-		driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector))).click();
-		Thread.sleep(2000);
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", sector))).size() > 0) {
+			driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector))).click();
+			Thread.sleep(2000);
+		} else
+			assertFalse("Sector Option Not found.");
 		click(btnLocation, "Location");
 		Thread.sleep(2000);
-		driver.findElement(By.xpath(select.replace("PLACEHOLDER", location))).click();
-		Thread.sleep(2000);
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", location))).size() > 0) {
+			driver.findElement(By.xpath(select.replace("PLACEHOLDER", location))).click();
+			Thread.sleep(2000);
+		} else
+			assertFalse("Location Option Not found.");
 		click(btnCompany, "Company");
 		Thread.sleep(2000);
-		driver.findElement(By.xpath(select.replace("PLACEHOLDER", company))).click();
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", company))).size() > 0) {
+			driver.findElement(By.xpath(select.replace("PLACEHOLDER", company))).click();
+			Thread.sleep(1000);
+		} else
+			assertFalse("Comapny Option Not found.");
 		click(btnApply, "Apply");
 	}
 
@@ -81,12 +96,16 @@ public class ReplicateJR extends PageBase {
 	}
 
 	public void skipToForm(RemoteWebDriver driver) throws Exception {
-		Thread.sleep(3000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
 		click(btnSkip, "SKIP TO FORM");
 	}
 
 	public void replicate(RemoteWebDriver driver) throws Exception {
-		Thread.sleep(3000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
 		click(btnReplicate1, "Replicate");
 		do {
 			Thread.sleep(1000);

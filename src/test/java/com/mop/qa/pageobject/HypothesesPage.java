@@ -2,6 +2,7 @@ package com.mop.qa.pageobject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.openqa.selenium.By;
@@ -18,6 +19,7 @@ public class HypothesesPage extends PageBase {
 		super(remoteDriver);
 	}
 
+	String proJectName = "";
 	String hypothesisTitle = "Hypothesis-";
 	String hypothesisDesc = "New Hypotheses Description";
 
@@ -65,7 +67,7 @@ public class HypothesesPage extends PageBase {
 	private WebElement visibOpt3;
 	String hypoDetailsTitle = "//div[contains(text(),'HypothesisTITLE')]";
 
-	// =============POst & Comments=============//
+	// =============Post & Comments=============//
 	@FindBy(xpath = "//a[text()='add new']")
 	private WebElement newPost;
 	@FindBy(xpath = "//textarea")
@@ -74,11 +76,26 @@ public class HypothesesPage extends PageBase {
 	private WebElement countPost;
 	@FindBy(xpath = "//span[text()='POST']")
 	private WebElement btnPost;
+	@FindBy(xpath = "//a[text()=' Attach Document ']")
+	private WebElement attachDoc;
+	@FindBy(xpath = "//div[@class='document-card']")
+	private WebElement postDoc;
+	@FindBy(xpath = "//div[@class='post-action']//ul/li[1]")
+	private WebElement editPost;
+	@FindBy(xpath = "//div[@class='post-action']//ul/li[2]")
+	private WebElement deletePost;
+	@FindBy(xpath = "//span[text()='Delete']")
+	private WebElement delete;
+	@FindBy(xpath = "//div[text()=' One Pager ']")
+	private WebElement postLink;
+	@FindBy(xpath = "//div[@class='one-pager-view-header']")
+	private WebElement onePagerNew;
+
+	String postDescription = "Sample Description for post!";
 	@FindBy(xpath = "//input[@formcontrolname='commentText']")
 	private WebElement txtComment;
 	@FindBy(xpath = "//div[text()=' Comments ']//span[@class='value']")
 	private WebElement countComment;
-	String postDescription = "Sample Description for post!";
 
 	// =============Post & Comments=============//
 	@FindBy(xpath = "//ul[contains(@class,'right-action')]/li[1]")
@@ -88,9 +105,20 @@ public class HypothesesPage extends PageBase {
 
 	@FindBy(xpath = "//span[text()='UPDATE']")
 	private WebElement updateHypo;
-
+	
+	// =============SUP Flow=============//
+	@FindBy(xpath = "//div[@class='note ng-star-inserted']/a")
+	private WebElement SUPcta;
+	@FindBy(xpath = "//a[contains(@class,'page-arrow')]")
+	private WebElement pageArrow;
+	@FindBy(xpath = "//p[@class='title']")
+	private WebElement pageTitle;
+	@FindBy(xpath = "//a[@class='close-btn']")
+	private WebElement supCloseBtn;
+	
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(remoteDriver);
+		proJectName = driver.findElement(By.xpath("//span[@class='dd-title']")).getText().trim();
 		Thread.sleep(1000);
 		click(hypothesisTab, "Hypotheses Tab");
 		assertTrue("Clicked on Hypotheses Tab");
@@ -103,7 +131,7 @@ public class HypothesesPage extends PageBase {
 			assertTrue("landed on New Hypothesis Page.");
 
 			// Testing Hypothesis Library
-			if (driver.findElements(By.xpath("//a[contains(@class,'library-btn')]")).size()>0) {
+			if (driver.findElements(By.xpath("//a[contains(@class,'library-btn')]")).size() > 0) {
 				assertTrue("Hypothesis with Library Displayed");
 				click(hypoLibrary, "Hypothesis Library.");
 				Thread.sleep(500);
@@ -221,6 +249,15 @@ public class HypothesesPage extends PageBase {
 			assertTrue("Landed on New Post Page");
 			click(txtDescription, "Post Description.");
 			enterText(txtDescription, postDescription, "Post Description");
+			click(attachDoc, "Attach Document Button");
+			Thread.sleep(500);
+			if (driver.findElements(By.xpath("//div[text()=' ATTACH A DOCUMENT TO THE POST ']")).size() > 0) {
+				assertTrue("Landed on Attach New Document Page.");
+				if (postDoc.isDisplayed())
+					click(postDoc, "Document OnePager for Post");
+				else
+					click(hypoLibraryBack, "Back Button");
+			}
 			click(btnPost, "Post Button");
 			Thread.sleep(1000);
 			if (Integer.parseInt(getText(countPost)) > posts) {
@@ -229,19 +266,42 @@ public class HypothesesPage extends PageBase {
 			Thread.sleep(500);
 		} else
 			assertFalse("New Post Page did not open!");
+
+		// ======Check postLink=======
+		click(postLink, "One Pager Post Link");
+		Thread.sleep(1000);
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		if (tabs.size() > 1) {
+			driver.switchTo().window(tabs.get(1));
+			Thread.sleep(1000);
+			if (driver.findElements(By.xpath("//div[@class='one-pager-view-header']")).size() > 0) {
+				assertTrue("One Pager Opened.");
+				driver.close();
+				driver.switchTo().window(tabs.get(0));
+			}
+		} else
+			assertFalse("Post Link did not open.");
 	}
 
 	public void newComment(RemoteWebDriver driver) throws Exception {
 		int comments = Integer.parseInt(getText(countComment));
 		click(txtComment, "Comment");
 		Thread.sleep(1000);
-		enterText(txtComment, "Enter your Comments", "Comment");
-		txtComment.sendKeys(Keys.ENTER);
-		Thread.sleep(1000);
-		if (Integer.parseInt(getText(countComment)) > comments) {
-			assertTrue("Successfully posted a Comment");
+		String longText = "Cupcake ipsum dolor. Sit amet marshmallow topping cheesecake muffin. Halvah croissant candy canes bonbon candy. Apple pie jelly beans topping carrot cake danish tart cake cheesecake. Muffin danish chocolate soufflé pastry icing bonbon oat cake. And A few more words.";
+		enterText(txtComment, longText, "Comment");
+
+		String sentText = driver.findElement(By.xpath("//input[@placeholder='New Comment']")).getAttribute("value");
+		if (sentText.length() > 250)
+			assertFalse("Comment Input accepts more than 250 characters");
+		else {
+			assertTrue("Comment Input accepts exactly 250 characters");
+			txtComment.sendKeys(Keys.ENTER);
+			Thread.sleep(1000);
+			if (Integer.parseInt(getText(countComment)) > comments) {
+				assertTrue("Successfully posted a Comment");
+			}
+			Thread.sleep(500);
 		}
-		Thread.sleep(500);
 	}
 
 	public void editHypothesis(RemoteWebDriver driver) throws Exception {
@@ -260,19 +320,75 @@ public class HypothesesPage extends PageBase {
 			Thread.sleep(1000);
 
 			if (driver.findElement(By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))) != null) {
-				action.moveToElement(
-						driver.findElement(By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))))
-						.perform();
 				assertTrue("Hypothesis Successfully Updated.");
 			} else
 				assertFalse("Hypothesis Not Updated.");
+
+			if (driver.findElements(By.xpath("//span[contains(text(),'Title has changed from')]")).size() > 0) {
+				action.moveToElement(driver.findElement(By.xpath("//span[contains(text(),'Title has changed from')]")))
+						.perform();
+				assertTrue("Change is recorded as a comment.");
+			}
 		}
 	}
-	
-	
-	
-	
-	
+
+	public void editPost(RemoteWebDriver driver) throws Exception {
+		postDescription += " - EDITED";
+		Actions action = new Actions(remoteDriver);
+		action.moveToElement(editPost).perform();
+		click(editPost, "Edit Post");
+		Thread.sleep(500);
+		click(txtDescription, "Post Description.");
+		enterText(txtDescription, postDescription, "Post Description");
+		click(btnPost, "Post Button");
+		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//div[@class='post-description' and contains(text(),' - EDITED')]"))
+				.size() > 0)
+			assertTrue("Post Successfully Updated.");
+	}
+
+	public void deletePost(RemoteWebDriver driver) throws Exception {
+		int posts = Integer.parseInt(getText(countPost));
+		click(deletePost, "Delete Post Button");
+		Thread.sleep(500);
+		click(delete, "Delete");
+		Thread.sleep(1000);
+		if (Integer.parseInt(getText(countPost)) == posts - 1) {
+			assertTrue("Post Successfully Deleted.");
+		}
+		Thread.sleep(1000);
+		click(btnBack, "Back");
+		Thread.sleep(100);
+	}
+
+	public void SUPverify(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(1000);
+		click(SUPcta, "SUP CTA");
+		Thread.sleep(1000);
+		if(driver.findElements(By.xpath("//p[@class='title']")).size()>0) {
+			assertTrue("Landed on SUP Landing page");
+			String title= driver.findElement(By.xpath("//p[@class='title']")).getText().trim();
+			if(title.equals(proJectName)) {
+				assertTrue("Project Name is displayed as: "+title);
+			}
+			if(driver.findElements(By.xpath("//div[contains(@class,'sup-step-1')]/section[@class='one-pager-panel']")).size()>0) {
+				assertTrue("Sup is at one Pager section");
+				click(pageArrow, "Next page Arrow");
+				Thread.sleep(500);
+				if(driver.findElements(By.xpath("//section[contains(@class,'hypotheses-section')]")).size()>0)
+					assertTrue("Hypothesis SUP Page Displayed.");
+				click(pageArrow, "Next page Arrow");
+				Thread.sleep(500);
+				if(driver.findElements(By.xpath("//div[contains(@class,'sup-step-1')]/section[@class='one-pager-panel']")).size()>0) 
+					assertTrue("landed back to SUP One Pager");
+			} else
+				assertFalse("Unexpected SUP Landing Page.");
+		} else
+			assertFalse("SUP Landing page Not Displayed");
+		click(supCloseBtn, "SUP Close Button");
+		Thread.sleep(500);
+	}
+
 //	Below stuff is porbably not relevant anymore.... advised to keep till the end of design. 
 //	{
 //				click(btnStatus, "STATUS");

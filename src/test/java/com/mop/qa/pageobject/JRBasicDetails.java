@@ -16,6 +16,8 @@ public class JRBasicDetails extends PageBase {
 
 	@FindBy(xpath = "//input[@id='company_name']")
 	private WebElement inputCompanyName;
+	@FindBy(xpath = "//input[@id='sector']")
+	private WebElement inputSector;
 	@FindBy(xpath = "//input[@id='position']")
 	private WebElement inputPosition;
 	String select = "//span[text()='PLACEHOLDER']";
@@ -35,19 +37,29 @@ public class JRBasicDetails extends PageBase {
 	@FindBy(xpath = "//span[text()='IN PROGRESS']")
 	private WebElement tabInProgress;
 
-	public void enterBasicDetails(RemoteWebDriver driver, String companyName, String position, String location)
-			throws Exception {
+	public void enterBasicDetails(RemoteWebDriver driver, String companyName, String position, String location,
+			String sector) throws Exception {
+		Actions action = new Actions(remoteDriver);
 		String company = companyName.toUpperCase();
 		Thread.sleep(1000);
 		click(inputCompanyName, "Company Name");
 		enterText(inputCompanyName, companyName, "Company Name");
 		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//input[@id='sector']")).size() > 0) {
+			click(inputSector, "Sector");
+			enterText(inputSector, sector, "Sector");
+			Thread.sleep(1000);
+		}
+		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", sector))).size() > 0) {
+			WebElement sect = driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector)));
+			action.moveToElement(sect).click().build().perform();
+		} // else
+			// assertFalse("Sector Drop-down List Not Displayed.");
 		click(inputPosition, "Position");
 		enterText(inputPosition, position, "Position");
 		Thread.sleep(2000);
 		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", position))).size() > 0) {
 			WebElement pos = driver.findElement(By.xpath(select.replace("PLACEHOLDER", position)));
-			Actions action = new Actions(remoteDriver);
 			action.moveToElement(pos).click().build().perform();
 		} else
 			assertFalse("Position Drop-down List Not Displayed.");
@@ -62,7 +74,10 @@ public class JRBasicDetails extends PageBase {
 			inputCompanyName.sendKeys(s);
 			Thread.sleep(10);
 		}
-		driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
+		if (driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")) != null) {
+			driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
+		} else
+			assertFalse("Company ddown not found.");
 		if (driver.findElements(By.xpath("//mat-error")).size() > 0) {
 			if (driver.findElement(By.xpath("(//mat-error)[1]")).getText().contains("Company")) {
 				assertFalse("Company Name Field is missing");
@@ -75,7 +90,7 @@ public class JRBasicDetails extends PageBase {
 			}
 		}
 		click(btnCreateJr, "Create JR");
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		/*
 		 * do { Thread.sleep(1000); }
 		 * while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
@@ -85,13 +100,12 @@ public class JRBasicDetails extends PageBase {
 	public void fillForm(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(2000);
 		click(btnFillForm, "Fill Form");
-
-//		do { Thread.sleep(1000); }
-//		 while(driver.findElements(By.xpath("(//div/div/img)[1]")).size()>0) ;
-
 		Thread.sleep(4000);
 		click(btnNext, "Next");
-		Thread.sleep(1000);
+//		do {
+//			Thread.sleep(1000);
+//		} while (driver.findElements(By.xpath("(//div/div/img)[1]")).size() > 0);
+		Thread.sleep(5000);
 	}
 
 	public void goToListing(RemoteWebDriver driver) throws Exception {

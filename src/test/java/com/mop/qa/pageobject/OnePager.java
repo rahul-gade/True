@@ -19,13 +19,13 @@ public class OnePager extends PageBase {
 	private WebElement performanceLike;
 	@FindBy(xpath = "(//span[text()='Performance']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement performanceDislike;
-	@FindBy(xpath = "(//span[text()='Performance']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Performance']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement performanceLikeIcon;
 	@FindBy(xpath = "(//span[text()='Review']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement reviewLike;
 	@FindBy(xpath = "(//span[text()='Review']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement reviewDislike;
-	@FindBy(xpath = "(//span[text()='Review']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Review']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement reviewDislikeIcon;
 	@FindBy(xpath = "//div[text()=' TIC ']/ancestor::div[2]//span[text()='NEXT']/parent::button")
 	private WebElement btnTICNext;
@@ -34,7 +34,7 @@ public class OnePager extends PageBase {
 	private WebElement testLike;
 	@FindBy(xpath = "(//span[text()='test1']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement testDislike;
-	@FindBy(xpath = "(//span[text()='test1']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='test1']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement testLikeBtn;
 
 	// ----------------INDUSTRY PAGE------------//
@@ -44,9 +44,9 @@ public class OnePager extends PageBase {
 	private WebElement txtcompetitionLike;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement competitionDisLike;
-	@FindBy(xpath = "(//span[text()='Competition']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Competition']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement competitionLikeIcon;
-	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement industryLikeIcon;
 	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement industryLike;
@@ -54,13 +54,13 @@ public class OnePager extends PageBase {
 	private WebElement industryDisLike;
 	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement txtindustryDisLike;
-	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Underlying industry growth']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement industryDisLikeIcon;
 	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement expectedIndustryLike;
 	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement expectedIndustryDislike;
-	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Expected Industry Growth']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement expectedIndustryDislikeIcon;
 	@FindBy(xpath = "(//span[text()='NEXT'])[2]/parent::button")
 	private WebElement btnnext;
@@ -72,19 +72,19 @@ public class OnePager extends PageBase {
 	private WebElement txtcustomerLike;
 	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement customerDisLike;
-	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Customer Value Proposition & MOATS']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement customerLikeIcon;
 	@FindBy(xpath = "(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement leadershipLike;
 	@FindBy(xpath = "(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement leadershipDisLike;
-	@FindBy(xpath = "(//span[text()='Leadership']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Leadership']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement leadershipLikeIcon;
 	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul")
 	private WebElement compDynamicsLike;
 	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul")
 	private WebElement compDynamicsDislike;
-	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Company Deal dynamics']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement companyDynamicsLikeIcon;
 	@FindBy(xpath = "(//span[text()='NEXT'])[3]/parent::button")
 	private WebElement btnnext2;
@@ -94,7 +94,7 @@ public class OnePager extends PageBase {
 	private WebElement valuationLike;
 	@FindBy(xpath = "(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul")
 	private WebElement valuationDisLike;
-	@FindBy(xpath = "(//span[text()='Valuation']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Valuation']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement valuationDislikeIcon;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[2]/following-sibling::ul")
 	private WebElement dealCompetitionLike;
@@ -102,7 +102,7 @@ public class OnePager extends PageBase {
 	private WebElement dealCompetitionDisLike;
 	@FindBy(xpath = "(//span[text()='Competition']/parent::div//a[@class='link-dislike-btn'])[6]")
 	private WebElement competition1LikeIcon;
-	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div//a[@class='link-dislike-btn'])[3]")
+	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div//a[@class='link-dislike-btn'])[1]")
 	private WebElement exitStrategyLikeIcon;
 	@FindBy(xpath = "(//span[text()='Exit strategy']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul")
 	private WebElement exitStrategyLike;

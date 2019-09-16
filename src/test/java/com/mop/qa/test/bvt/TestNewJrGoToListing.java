@@ -10,27 +10,28 @@ import com.mop.qa.testbase.TestBase;
 
 public class TestNewJrGoToListing extends TestBase {
 	private static final Logger LOGGER = Logger.getLogger(TestNewJrGoToListing.class.getName());
-	@Test
-	public void enterNewJRDetails() throws Exception  {
-	 try{
-		 InvestmentHome inst = new InvestmentHome(remoteDriver);
-		 String startURL = rds.getValue("TALENTACQUISITION", currentTest, "URL");
-		 String uname = rds.getValue("TALENTACQUISITION", currentTest, "UserName");
-		 String pwd = rds.getValue("TALENTACQUISITION", currentTest, "Password");
-		 inst.launchApp(startURL, uname, pwd);
-		 Thread.sleep(2000);
-		 TalentAcquisitionHome home = new TalentAcquisitionHome(remoteDriver);
-		home.clickNewJr(remoteDriver);
-		JRBasicDetails basic = new JRBasicDetails(remoteDriver);
-		 String companyName = rds.getValue("TALENTACQUISITION", currentTest, "CompanyName");
-		 String position = rds.getValue("TALENTACQUISITION", currentTest, "Position");
-		 String location = rds.getValue("TALENTACQUISITION", currentTest, "Location");
-		basic.enterBasicDetails(remoteDriver, companyName, position, location);
-		basic.goToListing(remoteDriver);
-	 }catch(Exception e){
-		 LOGGER.info(e);
-		 }
- }
 
+	@Test
+	public void enterNewJRDetails() throws Exception {
+		try {
+			InvestmentHome inst = new InvestmentHome(remoteDriver);
+			String startURL = rds.getValue("TALENTACQUISITION", currentTest, "URL");
+			String uname = rds.getValue("TALENTACQUISITION", currentTest, "UserName");
+			String pwd = rds.getValue("TALENTACQUISITION", currentTest, "Password");
+			inst.launchApp(startURL, uname, pwd);
+			Thread.sleep(2000);
+			TalentAcquisitionHome home = new TalentAcquisitionHome(remoteDriver);
+			home.clickNewJr(remoteDriver);
+			JRBasicDetails basic = new JRBasicDetails(remoteDriver);
+			String companyName = rds.getValue("TALENTACQUISITION", currentTest, "CompanyName");
+			String sector = rds.getValue("TALENTACQUISITION", currentTest, "SectorBasic");
+			String position = rds.getValue("TALENTACQUISITION", currentTest, "Position");
+			String location = rds.getValue("TALENTACQUISITION", currentTest, "Location");
+			basic.enterBasicDetails(remoteDriver, companyName, position, location, sector);
+			basic.goToListing(remoteDriver);
+		} catch (Exception e) {
+			LOGGER.info(e);
+		}
+	}
 
 }

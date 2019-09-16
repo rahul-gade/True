@@ -14,7 +14,7 @@ public class JRBenchmark extends PageBase {
 		super(remoteDriver);
 	}
 
-	@FindBy(xpath = "//div[text()='INR']")
+	@FindBy(xpath = "//div[text()=' INR ']")
 	private WebElement selectCurrency;
 	@FindBy(xpath = "//span[text()='CTC Min']/ancestor::div[1]/input")
 	private WebElement inputCTCMin;

@@ -25,15 +25,15 @@ public class DealPipeline extends PageBase {
 //	==========WebElements==========
 	@FindBy(xpath = "//a[text()='Deal Pipeline']")
 	private WebElement dealPipelineTab;
-	@FindBy(xpath = "//span[text()='STAGE A']")
+	@FindBy(xpath = "//span[text()='STAGE A']/parent::a[contains(@class,'disabled')]")
 	private WebElement stageA;
-	@FindBy(xpath = "//span[text()='STAGE B']")
+	@FindBy(xpath = "//span[text()='STAGE B']/parent::a[contains(@class,'disabled')]")
 	private WebElement stageB;
-	@FindBy(xpath = "//span[text()='STAGE C']")
+	@FindBy(xpath = "//span[text()='STAGE C']/parent::a[contains(@class,'disabled')]")
 	private WebElement stageC;
-	@FindBy(xpath = "//span[text()='STAGE D']")
+	@FindBy(xpath = "//span[text()='STAGE D']/parent::a[contains(@class,'disabled')]")
 	private WebElement stageD;
-	@FindBy(xpath = "//span[text()='IDEAS']")
+	@FindBy(xpath = "//span[text()='IDEAS']/parent::a[contains(@class,'disabled')]")
 	private WebElement ideas;
 	@FindBy(xpath = "//a[text()=' SUMMARY ']")
 	private WebElement summary;
@@ -45,20 +45,21 @@ public class DealPipeline extends PageBase {
 	private WebElement dateRange;
 
 	private String stage = "//span[text()='STAGENAME']";
+	private String disStage = "//span[text()='STAGENAME']/parent::a[contains(@class,'disabled')]";
 	// ====(//div[@class='summary-content']/ul)[1]/li/a/span[@class='document-icon']
 	// ====(//div[@class='summary-content']/ul)[1]/li
 
 	public void dealPipeline(RemoteWebDriver driver) throws Exception {
 		click(dealPipelineTab, "Deal Pipeline Tab");
 		Thread.sleep(1000);
-		click(summary, "Summary View");
-		Thread.sleep(200);
+//		click(summary, "Summary View");
+//		Thread.sleep(200);
 	}
 
 	public void stageTest(RemoteWebDriver driver) throws Exception {
 		String[] stageList = { "STAGE A", "STAGE B", "STAGE C", "STAGE D", "IDEAS" };
 		for (int i = 1; i <= 5; i++) {
-			if (driver.findElement(By.xpath(stage.replace("STAGENAME", stageList[i - 1]))) != null) {
+			if ((driver.findElements(By.xpath(disStage.replace("STAGENAME", stageList[i - 1]))).size() == 0)) {
 				click(driver.findElement(By.xpath(stage.replace("STAGENAME", stageList[i - 1]))), stageList[i - 1]);
 				Thread.sleep(500);
 			}
@@ -127,7 +128,7 @@ public class DealPipeline extends PageBase {
 			if (driver.findElement(By.xpath("//li[text()=' progressed ']/span")).getText() != null) {
 				int count = Integer
 						.parseInt(driver.findElement(By.xpath("//li[text()=' progressed ']/span")).getText());
-				assertTrue("Count is displayed in Header as: "+count);
+				assertTrue("Count is displayed in Header as: " + count);
 				if (driver.findElements(By.xpath("//div[@class='summary-content']/ul[2]/li")).size() == count) {
 					assertTrue("List contains " + count + " deals.");
 					if (driver.findElement(

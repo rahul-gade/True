@@ -18,23 +18,29 @@ public class TestHypothesis extends TestBase{
 		try {
 			//Loading HomePage
 			InvestmentHome inst = new InvestmentHome(remoteDriver);
-			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
-			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
-			String sector = rds.getValue("DATA", currentTest, "Sector");
+
 			String startURL = rds.getValue("DATA", currentTest, "URL");
 			String uname = rds.getValue("DATA", currentTest, "UserName");
 			String pwd = rds.getValue("DATA", currentTest, "Password");
 			inst.launchApp(startURL, uname, pwd);
 			Thread.sleep(1000);
+			inst.findOnePagerDeal(remoteDriver);
 			
 			//Hypothesis Work!
 			HypothesesPage hypPage = new HypothesesPage(remoteDriver);
-			inst.findOnePagerDeal(remoteDriver);
-			
-//			CreatedDealPage cdp = new CreatedDealPage(remoteDriver);
-//			cdp.checkQuickActoinDDown(remoteDriver);
-//			cdp.checkNewDocument(remoteDriver);
 			hypPage.createHypothesis(remoteDriver);
+			hypPage.hypothesisDetails(remoteDriver);
+			hypPage.newPost(remoteDriver);
+			hypPage.newComment(remoteDriver);
+			hypPage.editHypothesis(remoteDriver);
+			hypPage.editPost(remoteDriver);
+			hypPage.deletePost(remoteDriver);
+			hypPage.SUPverify(remoteDriver);
+			
+//=====================================================================================================FURTHER PROCESS ON DETAILS PAGE...
+//			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
+//			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
+//			String sector = rds.getValue("DATA", currentTest, "Sector");
 //			EditDealHomePage dealhome = new EditDealHomePage(remoteDriver);
 //			String impact = rds.getValue("HYPOTHESIS", currentTest, "Impact");
 //			String financial = rds.getValue("HYPOTHESIS", currentTest, "Financial");
@@ -51,10 +57,6 @@ public class TestHypothesis extends TestBase{
 //			dealhome.validateFolder(remoteDriver, projectName);
 //			DealPipelineAllDeals tabs = new DealPipelineAllDeals(remoteDriver);
 //			tabs.navigateTabs();
-			hypPage.hypothesisDetails(remoteDriver);
-			hypPage.newPost(remoteDriver);
-			hypPage.newComment(remoteDriver);
-			hypPage.editHypothesis(remoteDriver);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

@@ -146,7 +146,7 @@ public class InvestmentHome extends PageBase {
 	}
 
 	public void deleteDeal(RemoteWebDriver driver, String projName, String compName, String sect) throws Exception {
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		int size = driver.findElements(By.xpath(("//h3[text()='DRAFTS']/following-sibling::div/div"))).size();
 		for (int i = 1; i <= size; i++) {
 			String pName = driver
@@ -166,23 +166,27 @@ public class InvestmentHome extends PageBase {
 						.click();
 				assertTrue("Delete Button is clicked");
 				Thread.sleep(2000);
-				click(btnDeleteDeal, "Delete Deal");
-				Thread.sleep(2000);
-				pName = driver
-						.findElement(By.xpath(
-								"(//h3[text()='DRAFTS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
-						.getText();
-				cName = driver.findElement(By.xpath("(//h3[text()='DRAFTS']/following-sibling::div//h4)[" + i + "]"))
-						.getText();
-				sec = driver.findElement(By.xpath("(//h3[text()='DRAFTS']/following-sibling::div//h5)[" + i + "]"))
-						.getText();
-				if (pName.trim().equalsIgnoreCase(projName) && cName.trim().equalsIgnoreCase(compName)
-						&& sec.trim().equalsIgnoreCase(sect) && !ownerImage.isEmpty()) {
-					assertFalse("Project is not Deleted");
-				} else {
-					assertTrue("Project is Deleted");
-				}
-				break;
+				if (driver.findElements(By.xpath("//p[text()='Delete Deal?']")).size() > 0) {
+					assertTrue("Delete Deal Popup is displayed.");
+					click(btnDeleteDeal, "Delete Deal");
+					Thread.sleep(2000);
+					pName = driver.findElement(By.xpath(
+							"(//h3[text()='DRAFTS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
+							.getText();
+					cName = driver
+							.findElement(By.xpath("(//h3[text()='DRAFTS']/following-sibling::div//h4)[" + i + "]"))
+							.getText();
+					sec = driver.findElement(By.xpath("(//h3[text()='DRAFTS']/following-sibling::div//h5)[" + i + "]"))
+							.getText();
+					if (pName.trim().equalsIgnoreCase(projName) && cName.trim().equalsIgnoreCase(compName)
+							&& sec.trim().equalsIgnoreCase(sect) && !ownerImage.isEmpty()) {
+						assertFalse("Project is not Deleted");
+					} else {
+						assertTrue("Project is Deleted");
+					}
+					break;
+				} else
+					assertFalse("Delete Deal Popup Not Displayed.");
 			}
 		}
 
@@ -302,8 +306,7 @@ public class InvestmentHome extends PageBase {
 	}
 
 	// ================WORKING HERE================//
-	public void findOnePagerDeal(RemoteWebDriver driver)
-			throws Exception {
+	public void findOnePagerDeal(RemoteWebDriver driver) throws Exception {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);

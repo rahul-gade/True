@@ -157,6 +157,7 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 			Thread.sleep(1000);
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
 		verifyText(pageTitle, "Success!");
+		
 		if(flow.contains("Myself")) {
 			click(fillMyself, "FILL IN THE DETAILS MYSELF");
 			Thread.sleep(1000);
@@ -164,5 +165,20 @@ public void cancelDeal(RemoteWebDriver driver) throws Exception {
 			click(requestIB, "RequestIB");
 			Thread.sleep(1000);
 		}
+	}
+	
+	public void flowForDelete(RemoteWebDriver driver, String flow) throws Exception {
+		do {
+			Thread.sleep(1000);
+     	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+		verifyText(pageTitle, "Success!");
+		
+		click(fillMyself, "FILL IN THE DETAILS MYSELF");
+		Thread.sleep(1000);
+		
+		click(driver.findElement(By.xpath("//a[@class='close-btn']")), "Close Button");
+		Thread.sleep(1000);
+		click(driver.findElement(By.xpath("//a[contains(@routerlink,'my-deals')]")), "Back to Pipeline");
+		Thread.sleep(1000);
 	}
 }

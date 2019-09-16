@@ -25,9 +25,10 @@ public class TestReplicateJR extends TestBase {
 			home.clickNewJr(remoteDriver);
 			JRBasicDetails basic = new JRBasicDetails(remoteDriver);
 			String companyName = rds.getValue("TALENTACQUISITION", currentTest, "CompanyName");
+			String sector = rds.getValue("TALENTACQUISITION", currentTest, "SectorBasic");
 			String position = rds.getValue("TALENTACQUISITION", currentTest, "Position");
 			String location = rds.getValue("TALENTACQUISITION", currentTest, "Location");
-			basic.enterBasicDetails(remoteDriver, companyName, position, location);
+			basic.enterBasicDetails(remoteDriver, companyName, position, location,sector);
 			basic.fillForm(remoteDriver);
 			ReplicateJR jr = new ReplicateJR(remoteDriver);
 			jr.replicate(remoteDriver);
