@@ -26,7 +26,7 @@ public class JRBasicDetails extends PageBase {
 	private WebElement inputLocation;
 	@FindBy(xpath = "//span[text()='CREATE JR']")
 	private WebElement btnCreateJr;
-	@FindBy(xpath = "//span[text()='FILL FORM']")
+	@FindBy(xpath = "//span[text()='PROCEED TO FORM']")
 	private WebElement btnFillForm;
 	@FindBy(xpath = "//span[text()='GO TO LISTING']")
 	private WebElement btnGoToListing;
@@ -42,19 +42,32 @@ public class JRBasicDetails extends PageBase {
 		Actions action = new Actions(remoteDriver);
 		String company = companyName.toUpperCase();
 		Thread.sleep(1000);
-		click(inputCompanyName, "Company Name");
-		enterText(inputCompanyName, companyName, "Company Name");
-		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//input[@id='company_name']")).size() > 0) {
+			click(inputCompanyName, "Company Name");
+			for (int i = 0; i < companyName.length(); i++) {
+				char c = companyName.charAt(i);
+				String s = new StringBuilder().append(c).toString();
+				inputCompanyName.sendKeys(s);
+				Thread.sleep(5);
+			}
+			Thread.sleep(1500);
+			if (driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")) != null) {
+				driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
+			} else
+				assertFalse("Company ddown not found.");
+			Thread.sleep(1000);
+		}
 		if (driver.findElements(By.xpath("//input[@id='sector']")).size() > 0) {
 			click(inputSector, "Sector");
 			enterText(inputSector, sector, "Sector");
 			Thread.sleep(1000);
+			if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", sector))).size() > 0) {
+				WebElement sect = driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector)));
+				action.moveToElement(sect).click().build().perform();
+			} else
+				assertFalse("Sector Drop-down List Not Displayed.");
 		}
-		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", sector))).size() > 0) {
-			WebElement sect = driver.findElement(By.xpath(select.replace("PLACEHOLDER", sector)));
-			action.moveToElement(sect).click().build().perform();
-		} // else
-			// assertFalse("Sector Drop-down List Not Displayed.");
+
 		click(inputPosition, "Position");
 		enterText(inputPosition, position, "Position");
 		Thread.sleep(2000);
@@ -68,16 +81,7 @@ public class JRBasicDetails extends PageBase {
 		enterText(inputLocation, location, "Location");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath(select.replace("PLACEHOLDER", location))).click();
-		for (int i = 0; i < companyName.length(); i++) {
-			char c = companyName.charAt(i);
-			String s = new StringBuilder().append(c).toString();
-			inputCompanyName.sendKeys(s);
-			Thread.sleep(10);
-		}
-		if (driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")) != null) {
-			driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
-		} else
-			assertFalse("Company ddown not found.");
+
 		if (driver.findElements(By.xpath("//mat-error")).size() > 0) {
 			if (driver.findElement(By.xpath("(//mat-error)[1]")).getText().contains("Company")) {
 				assertFalse("Company Name Field is missing");

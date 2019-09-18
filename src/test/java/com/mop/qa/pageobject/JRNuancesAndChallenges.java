@@ -34,7 +34,7 @@ public class JRNuancesAndChallenges extends PageBase {
 	private WebElement txtReason;
 	@FindBy(xpath = "//span[text()='CONFIRM']")
 	private WebElement btnConfirm;
-	@FindBy(xpath = "//span[text()='JR DETAILS']")
+	@FindBy(xpath = "//span[text()='VIEW DETAILS']")
 	private WebElement btnJRDetails;
 	@FindBy(xpath = "//input[@placeholder='Reviewers']")
 	private WebElement inputReviewers;

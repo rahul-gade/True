@@ -13,6 +13,7 @@ public class CreatedDealPage extends PageBase {
 		super(remoteDriver);
 	}
 
+	int checkCount = 0;
 	// ==========WebElements Deal Details Page==========//
 	@FindBy(xpath = "(//a[@class='edit-icon'])[1]")
 	private WebElement companyBasicDetails;
@@ -50,6 +51,8 @@ public class CreatedDealPage extends PageBase {
 	private WebElement optClosed;
 	@FindBy(xpath = "//span[text()=' PASSED']")
 	private WebElement optPassed;
+	@FindBy(xpath = "//span[text()=' IDEAS']")
+	private WebElement optIdeas;
 
 	// ==========WebElements Quick Actions DropDown==========//
 	@FindBy(xpath = "//button[text()=' New Task ']")
@@ -80,6 +83,14 @@ public class CreatedDealPage extends PageBase {
 	private WebElement closeBtn;
 
 	String Option = "//mat-option[OPTION]";
+	
+	// ==========WebElements Recent Activities==========//
+	@FindBy(xpath = "//a[@title='Recent Activities']")
+	private WebElement recentActs;
+	@FindBy(xpath = "//span[contains(@class,'badge')]")
+	private WebElement recentActBadge;
+	//div[@class='activity-header']                         --RecentActivities Header
+	//div[@class='activity-header']/span					--Unread Activities Badge [getText for number]
 
 	public void checkDealPageElements(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(driver);
@@ -273,6 +284,40 @@ public class CreatedDealPage extends PageBase {
 				assertFalse("All " + items + " Options in Drop-Down List are not Disabled.");
 		} else
 			assertFalse("Passing Reason Pop-up Window is not displayed");
+	}
 
+	public void testRecentActivities(RemoteWebDriver driver) throws Exception {
+		Actions action = new Actions(remoteDriver);
+		if (checkCount == 0) {
+			Thread.sleep(1000);
+			action.moveToElement(recentActs).click().build().perform();
+			if (driver.findElements(By.xpath("//div[@class='activity-header']")).size() > 0) {
+				assertTrue("Recent Activities card displayed.");
+				assertTrue("Unread activities shown in badge: " + recentActBadge.getText().trim());
+				action.moveByOffset(200, 10).click().build().perform();
+				Thread.sleep(100);
+				action.moveToElement(recentActs).click().build().perform();
+				if (!(driver.findElements(By.xpath("//span[contains(@class,'badge')]")).size() > 0))
+					assertTrue("Unread activities badge becomes Nil on second viewing.");
+				action.moveByOffset(200, 10).click().build().perform();
+				Thread.sleep(200);
+				checkCount++;
+			} else
+				assertFalse("Recent Activities card NOT displayed.");
+		} else {
+			action.moveToElement(recentActs).click().build().perform();
+			Thread.sleep(200);
+			if(recentActBadge.getText().trim().equals("1"))
+				assertTrue("New Activity is reflected in Recent Activities.");
+			else
+				assertFalse("New Activity is NOT reflected in Recent Activities.");
+			action.moveByOffset(200, 10).click().build().perform();
+			Thread.sleep(200);
+			action.moveToElement(recentActs).click().build().perform();
+			Thread.sleep(200);
+			action.moveByOffset(200, 10).click().build().perform();
+			Thread.sleep(200);
+			
+		}
 	}
 }

@@ -11,7 +11,7 @@ public class TalentAcquisitionHome extends PageBase{
 	public TalentAcquisitionHome(RemoteWebDriver remoteDriver) {
 		super(remoteDriver);
 	} 
-	@FindBy(xpath = "//span[text()='NEW JR']")
+	@FindBy(xpath = "//span[text()='NEW REQUISITION']")
 	private WebElement btnNewJr;
 	
 	public void clickNewJr(RemoteWebDriver driver) throws Exception {
@@ -22,6 +22,6 @@ public class TalentAcquisitionHome extends PageBase{
      	} while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
 		
 		click(btnNewJr, "New JR");
-		assertTrue("Successfully Clicked on New JR");
+		assertTrue("Successfully Clicked on New REQUISITION");
 	}
 }

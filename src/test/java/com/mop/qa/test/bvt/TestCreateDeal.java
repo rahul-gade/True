@@ -8,6 +8,7 @@ import com.mop.qa.pageobject.BasicDealDetails;
 import com.mop.qa.pageobject.CompanyFinancials;
 import com.mop.qa.pageobject.CompanyInformation;
 import com.mop.qa.pageobject.DealHome;
+import com.mop.qa.pageobject.EditDealHomePage;
 import com.mop.qa.pageobject.IndustryInformation;
 import com.mop.qa.pageobject.InvestmentHome;
 import com.mop.qa.testbase.TestBase;
@@ -74,7 +75,6 @@ public class TestCreateDeal extends TestBase {
 			String flows = rds.getValue("DATA", currentTest, "Flows");
 			industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year,
 					pred3year, pred5year, competitorName, percent, flows, mandatory);
-			
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}
