@@ -132,8 +132,15 @@ public class EditDealHomePage extends PageBase {
 		Thread.sleep(1000);
 		click(txtReason, "Reason");
 		Thread.sleep(1000);
-		txtReason.sendKeys(Keys.ENTER);
-		enterText(txtReason, reason, "Reason");
+//		txtReason.sendKeys(Keys.ENTER);
+//		enterText(txtReason, reason, "Reason");
+		action.moveToElement(txtReason).click().build().perform();
+		action.sendKeys(Keys.ENTER).build().perform();
+		action.moveToElement(driver.findElement(By.xpath(
+				"//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
+				.click().build().perform();
+		action.sendKeys(reason).build().perform();
+		Thread.sleep(500);
 		click(btnSubmit, "Submit Button");
 		if (driver.findElements(By.xpath("(//a[@class='action-btn'])[2]")).size() > 0) {
 			click(btnClose, "Close");
@@ -151,11 +158,18 @@ public class EditDealHomePage extends PageBase {
 				.moveToElement(driver.findElement(By.xpath("//li/span[text()='" + pro + "']"))).release().build()
 				.perform();
 		Thread.sleep(1000);
-		click(txtReason, "Reason");
-		Thread.sleep(1000);
-		txtReason.sendKeys(Keys.ENTER);
-		enterText(txtReason, reason, "Reason");
-		txtReason.sendKeys(Keys.ENTER);
+//		click(txtReason, "Reason");
+//		Thread.sleep(1000);
+//		txtReason.sendKeys(Keys.ENTER);
+//		enterText(txtReason, reason, "Reason");
+//		txtReason.sendKeys(Keys.ENTER);
+		action.moveToElement(txtReason).click().build().perform();
+		action.sendKeys(Keys.ENTER).build().perform();
+		action.moveToElement(driver.findElement(By.xpath(
+				"//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
+				.click().build().perform();
+		action.sendKeys(reason).build().perform();
+		Thread.sleep(500);
 		click(btnSubmit, "Submit Button");
 		if (driver.findElements(By.xpath("(//a[@class='action-btn'])[2]")).size() > 0) {
 			click(btnClose, "Close");
@@ -183,18 +197,19 @@ public class EditDealHomePage extends PageBase {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(btnFolder, "Folder");
-		waitForVisibilityOfElement(labelPager);
-		if (labelPager.isDisplayed()) {
-			assertTrue("System tab is displayed");
-		}
-		do {
-			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		Thread.sleep(1000);
+//		waitForVisibilityOfElement(labelPager);
+//		if (labelPager.isDisplayed()) {
+//			assertTrue("System tab is displayed");
+//		}
+//		do {
+//			Thread.sleep(1000);
+//		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(tabDMS, "DMS");
 		Thread.sleep(1000);
 		waitForVisibilityOfElement(labelCustom);
 		if (labelCustom.isDisplayed()) {
-			assertTrue("DMS tab is Clicked");
+			assertTrue("Uploaded File is displayed.");
 		}
 		// Added condition for Hypothesis test.
 		if (project.equals("Running Hypothesis"))

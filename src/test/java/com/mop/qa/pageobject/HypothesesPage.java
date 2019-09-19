@@ -26,6 +26,8 @@ public class HypothesesPage extends PageBase {
 	// =============New Hypothesis=============//
 	@FindBy(xpath = "//a[@routerlink='hypothesis']")
 	private WebElement hypothesisTab;
+	@FindBy(xpath = "//a[@routerlink='summary']")
+	private WebElement dealSummaryTab;
 	@FindBy(xpath = "(//a[@class='addnew-btn'])[1]")
 	private WebElement btnAddNew;
 	@FindBy(xpath = "(//div[@class='mat-form-field-flex'])[3]")
@@ -59,7 +61,7 @@ public class HypothesesPage extends PageBase {
 	private WebElement lastModDate;
 	@FindBy(xpath = "//span[text()='IN PROGRESS']")
 	private WebElement statusDDown;
-	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
+	@FindBy(xpath = "(//span[@class='mat-option-text'])[2]")
 	private WebElement statusOpt1;
 	@FindBy(xpath = "//span[text()='ONLY TEAM']")
 	private WebElement visibDDown;
@@ -105,7 +107,7 @@ public class HypothesesPage extends PageBase {
 
 	@FindBy(xpath = "//span[text()='UPDATE']")
 	private WebElement updateHypo;
-	
+
 	// =============SUP Flow=============//
 	@FindBy(xpath = "//div[@class='note ng-star-inserted']/a")
 	private WebElement SUPcta;
@@ -115,7 +117,7 @@ public class HypothesesPage extends PageBase {
 	private WebElement pageTitle;
 	@FindBy(xpath = "//a[@class='close-btn']")
 	private WebElement supCloseBtn;
-	
+
 	public void createHypothesis(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(remoteDriver);
 		proJectName = driver.findElement(By.xpath("//span[@class='dd-title']")).getText().trim();
@@ -192,13 +194,11 @@ public class HypothesesPage extends PageBase {
 			Thread.sleep(1000);
 
 			if (driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))) != null) {
-				action.moveToElement(
-						driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle)))).perform();
 				assertTrue("New Hypothesis is added to Hypothesis List");
 			} else
 				assertFalse("New Hypothesis is Not Saved.");
 		} else
-			assertFalse("Hypothesis Page not displayed.");
+			assertFalse("New Hypothesis Page not displayed.");
 	}
 
 	public void hypothesisDetails(RemoteWebDriver driver) throws Exception {
@@ -237,11 +237,16 @@ public class HypothesesPage extends PageBase {
 				assertTrue("Comments Section is Displayed");
 			} else
 				assertFalse("Comments Section is Not Present");
+
+			click(btnBack, "Back to Hypothesis Landing Page.");
 		} else
 			assertFalse("Newly created Hypothesis details Page not opened.");
 	}
 
 	public void newPost(RemoteWebDriver driver) throws Exception {
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
 		click(newPost, "Add New Post");
 		Thread.sleep(100);
 		if (driver.findElement(By.xpath("//span[text()='NEW POST']")) != null) {
@@ -281,9 +286,14 @@ public class HypothesesPage extends PageBase {
 			}
 		} else
 			assertFalse("Post Link did not open.");
+
+		click(btnBack, "Back to Hypothesis Landing Page.");
 	}
 
 	public void newComment(RemoteWebDriver driver) throws Exception {
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
 		int comments = Integer.parseInt(getText(countComment));
 		click(txtComment, "Comment");
 		Thread.sleep(1000);
@@ -302,9 +312,14 @@ public class HypothesesPage extends PageBase {
 			}
 			Thread.sleep(500);
 		}
+
+		click(btnBack, "Back to Hypothesis Landing Page.");
 	}
 
 	public void editHypothesis(RemoteWebDriver driver) throws Exception {
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
 		hypothesisTitle += " - EDITED";
 		hypothesisDesc = hypothesisDesc.replace("New", "Edited");
 		Actions action = new Actions(remoteDriver);
@@ -330,9 +345,13 @@ public class HypothesesPage extends PageBase {
 				assertTrue("Change is recorded as a comment.");
 			}
 		}
+		click(btnBack, "Back to Hypothesis Landing Page.");
 	}
 
 	public void editPost(RemoteWebDriver driver) throws Exception {
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
 		postDescription += " - EDITED";
 		Actions action = new Actions(remoteDriver);
 		action.moveToElement(editPost).perform();
@@ -345,9 +364,13 @@ public class HypothesesPage extends PageBase {
 		if (driver.findElements(By.xpath("//div[@class='post-description' and contains(text(),' - EDITED')]"))
 				.size() > 0)
 			assertTrue("Post Successfully Updated.");
+		click(btnBack, "Back to Hypothesis Landing Page.");
 	}
 
 	public void deletePost(RemoteWebDriver driver) throws Exception {
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
 		int posts = Integer.parseInt(getText(countPost));
 		click(deletePost, "Delete Post Button");
 		Thread.sleep(500);
@@ -358,35 +381,60 @@ public class HypothesesPage extends PageBase {
 		}
 		Thread.sleep(1000);
 		click(btnBack, "Back");
-		Thread.sleep(100);
+		Thread.sleep(1000);
 	}
 
 	public void SUPverify(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1000);
 		click(SUPcta, "SUP CTA");
 		Thread.sleep(1000);
-		if(driver.findElements(By.xpath("//p[@class='title']")).size()>0) {
+		if (driver.findElements(By.xpath("//p[@class='title']")).size() > 0) {
 			assertTrue("Landed on SUP Landing page");
-			String title= driver.findElement(By.xpath("//p[@class='title']")).getText().trim();
-			if(title.equals(proJectName)) {
-				assertTrue("Project Name is displayed as: "+title);
+			String title = driver.findElement(By.xpath("//p[@class='title']")).getText().trim();
+			if (title.equals(proJectName)) {
+				assertTrue("Project Name is displayed as: " + title);
 			}
-			if(driver.findElements(By.xpath("//div[contains(@class,'sup-step-1')]/section[@class='one-pager-panel']")).size()>0) {
+			if (driver.findElements(By.xpath("//div[contains(@class,'sup-step-1')]/section[@class='one-pager-panel']"))
+					.size() > 0) {
 				assertTrue("Sup is at one Pager section");
 				click(pageArrow, "Next page Arrow");
 				Thread.sleep(500);
-				if(driver.findElements(By.xpath("//section[contains(@class,'hypotheses-section')]")).size()>0)
+				if (driver.findElements(By.xpath("//section[contains(@class,'hypotheses-section')]")).size() > 0) {
 					assertTrue("Hypothesis SUP Page Displayed.");
-				click(pageArrow, "Next page Arrow");
-				Thread.sleep(500);
-				if(driver.findElements(By.xpath("//div[contains(@class,'sup-step-1')]/section[@class='one-pager-panel']")).size()>0) 
-					assertTrue("landed back to SUP One Pager");
+					click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+							"Newly created Hypothesis");
+					Thread.sleep(1000);
+					if (driver.findElement(
+							By.xpath(hypoDetailsTitle.replace("HypothesisTITLE", hypothesisTitle))) != null) {
+						assertTrue("Landed on correct hypothesis page.");
+						click(btnBack, "Back Button.");
+					} else
+						assertFalse("Hypothesis Page is incorrect");
+				}
 			} else
 				assertFalse("Unexpected SUP Landing Page.");
 		} else
 			assertFalse("SUP Landing page Not Displayed");
+		click(SUPcta, "SUP CTA");
+		Thread.sleep(500);
 		click(supCloseBtn, "SUP Close Button");
 		Thread.sleep(500);
+		if (driver.findElement(By.xpath("//span[@class='dd-title']")).getText().trim().equals(proJectName))
+			assertTrue("Landed back to deal details page.");
+		else
+			assertFalse("deal details ppage not displayed.");
+		Thread.sleep(500);
+	}
+
+	public void deleteAnyHyp(RemoteWebDriver driver) throws Exception {
+		click(hypothesisTab, "Hypothesis Tab");
+		Thread.sleep(1000);
+		click(driver.findElement(By.xpath(hypoVerify.replace("HypothesisTITLE", hypothesisTitle))),
+				"Newly created Hypothesis");
+		Thread.sleep(1000);
+		click(deleteHypoBtn, "Delete Hypothesis");
+		Thread.sleep(1500);
+		click(dealSummaryTab, "Deal Details.");
 	}
 
 //	Below stuff is porbably not relevant anymore.... advised to keep till the end of design. 
