@@ -23,6 +23,19 @@ public class CompanyFinancials extends PageBase {
 	@FindBy(xpath = "(//span[text()='NEXT'])[3]")
 	private WebElement btnNext;
 	String tableCell = "//tbody/tr[ROW]/td[COLUMN]";
+	
+	//DOWNLOAD REPORT ELEMENTS: 
+	@FindBy(xpath = "//div[@class='action-list']//li[2]/a")
+	private WebElement reportMenu;
+	@FindBy(xpath = "//button[@title='Download CMIE Financial data']")
+	private WebElement downloadBtn;
+	//p[text()='Download CMIE Data']
+	@FindBy(xpath = "//span[text()='CANCEL']")
+	private WebElement cancelBtn;
+	@FindBy(xpath = "//a[@class='close-btn']")
+	private WebElement closeBtn;
+	@FindBy(xpath = "(//div[@class='dd-header clearfix']//a)[1]")
+	private WebElement backBtn;
 
 	public void checkDealTitle(RemoteWebDriver driver, String name) throws Exception {
 		if (driver.findElement(By.xpath("//h4")).getText().length() > 0) {
@@ -105,5 +118,21 @@ public class CompanyFinancials extends PageBase {
 
 	public void enterCompanyDetails() throws Exception {
 		click(btnNext, "Next");
+	}
+
+	public void testDownload(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(500);
+		click(reportMenu, "Menu Button");
+		Thread.sleep(500);
+		click(downloadBtn, "Download Financials");
+		Thread.sleep(500);
+		if(driver.findElements(By.xpath("//p[text()='Download CMIE Data']")).size()> 0) {
+			assertTrue("Download Confirmation Pop-Up Displayed.");
+			click(cancelBtn, "Cancel Download.");
+			click(closeBtn, "Close");
+			Thread.sleep(500);
+			click(backBtn, "back to MyDeals.");
+		} else
+			assertFalse("Download Confirmation Pop-Up NOT Displayed.");
 	}
 }

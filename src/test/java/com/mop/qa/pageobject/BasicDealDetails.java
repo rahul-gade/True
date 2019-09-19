@@ -163,6 +163,7 @@ public class BasicDealDetails extends PageBase {
 				enterText(txtTrueNorthName, trueNorthName, "TrueNorth Name");
 				Thread.sleep(2000);
 			}
+			
 			click(txtSubSector, "Sub Sector");
 			Thread.sleep(1000);
 			driver.findElement(By.xpath(selectSubsector.replace("PLACEHOLDER", subSector))).click();

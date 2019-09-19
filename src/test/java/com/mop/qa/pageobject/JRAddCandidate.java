@@ -19,7 +19,7 @@ public class JRAddCandidate extends PageBase {
 	WebElement tabLive;
 	@FindBy(xpath = "//span[text()='LIVE']/following-sibling::span")
 	WebElement countLive;
-	@FindBy(xpath = "//a[text()='Long List ']")
+	@FindBy(xpath = "//a[text()='Longlisted ']")
 	WebElement tabLongList;
 	@FindBy(xpath = "//a[text()=' Add Candidate ']")
 	WebElement addCandidate;

@@ -21,20 +21,19 @@ public class TestDeleteDeal extends TestBase {
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
+			String subsector = rds.getValue("DATA", currentTest, "SubSector");
+			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
+			String stake = rds.getValue("DATA", currentTest, "Stake");
+			String flow = rds.getValue("DATA", currentTest, "Flow");
+			String filepath = rds.getValue("DATA", currentTest, "FilePath");
+			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
 			
-			/*
-			 * The commented section creates a deal, then deletes it. 
-			 * If run without it, it'll look for the deal created by TestRequestIB - Test.
-			 */
-//			DealHome dHome = new DealHome(remoteDriver);
-//			String flow = rds.getValue("DATA", currentTest, "Flow");
-//			String filepath = rds.getValue("DATA", currentTest, "FilePath");
-//			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
-//			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory);
-//			Thread.sleep(1000);
-//			
-//			dHome.flowForDelete(remoteDriver, flow);
-//			Thread.sleep(1000);
+			DealHome dHome = new DealHome(remoteDriver);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake);
+			Thread.sleep(1000);
+			
+			dHome.flowForDelete(remoteDriver, flow);
+			Thread.sleep(1000);
 
 			inst.deleteDeal(remoteDriver, projectName, companyName, sector);
 		} catch (Exception e) {

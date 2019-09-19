@@ -33,18 +33,18 @@ public class TestCreateDeal extends TestBase {
 			String sector = rds.getValue("DATA", currentTest, "Sector");
 			String flow = rds.getValue("DATA", currentTest, "Flow");
 			String filepath = rds.getValue("DATA", currentTest, "FilePath");
+			String subsector = rds.getValue("DATA", currentTest, "SubSector");
+			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
+			String stake = rds.getValue("DATA", currentTest, "Stake");
 			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
-			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake);
 			Thread.sleep(1000);
 			
 			dHome.selectFlow(remoteDriver, flow);
 			Thread.sleep(1000);
 			
 			BasicDealDetails dealDetails = new BasicDealDetails(remoteDriver);
-			String subsector = rds.getValue("DATA", currentTest, "SubSector");
 			String source = rds.getValue("DATA", currentTest, "Source");
-			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
-			String stake = rds.getValue("DATA", currentTest, "Stake");
 			String stakePercent = rds.getValue("DATA", currentTest, "StakePercent");
 			// dealDetails.verifyDealDetails(projectName, companyName, sector);
 			Thread.sleep(1000);
@@ -75,6 +75,8 @@ public class TestCreateDeal extends TestBase {
 			String flows = rds.getValue("DATA", currentTest, "Flows");
 			industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year,
 					pred3year, pred5year, competitorName, percent, flows, mandatory);
+			
+			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

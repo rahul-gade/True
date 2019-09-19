@@ -29,19 +29,23 @@ public class TestDealPage extends TestBase {
 			String sector = rds.getValue("DATA", currentTest, "Sector");
 			String flow = rds.getValue("DATA", currentTest, "Flow");
 			String filepath = rds.getValue("DATA", currentTest, "FilePath");
+			String subsector = rds.getValue("DATA", currentTest, "SubSector");
+			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
+			String stake = rds.getValue("DATA", currentTest, "Stake");
 			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
-			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector,
+					dealsize, stake);
 			Thread.sleep(1000);
 			dHome.selectFlow(remoteDriver, flow);
 			Thread.sleep(1000);
 			BasicDealDetails dealDetails = new BasicDealDetails(remoteDriver);
-			String subsector = rds.getValue("DATA", currentTest, "SubSector");
+
 			String source = rds.getValue("DATA", currentTest, "Source");
-			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
-			String stake = rds.getValue("DATA", currentTest, "Stake");
+
 			String stakePercent = rds.getValue("DATA", currentTest, "StakePercent");
 			Thread.sleep(1000);
-			dealDetails.enterDealDetails(remoteDriver, companyName, companyName, subsector, source, dealsize, stake, stakePercent, mandatory);
+			dealDetails.enterDealDetails(remoteDriver, companyName, companyName, subsector, source, dealsize, stake,
+					stakePercent, mandatory);
 			Thread.sleep(1000);
 			CompanyInformation companyInfo = new CompanyInformation(remoteDriver);
 			String cmpInfo = rds.getValue("DATA", currentTest, "CompanyInfoBrief");

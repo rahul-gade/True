@@ -1,8 +1,10 @@
 package com.mop.qa.pageobject;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -143,5 +145,22 @@ public class DealPipeline extends PageBase {
 				assertFalse("Count is not displayed in Header.");
 		} else
 			assertFalse("List of Deal Progressed is not displayed.");
+	}
+
+	public void summaryBadge(RemoteWebDriver driver) throws Exception {
+		Date now = new Date();
+		SimpleDateFormat simpleDateformat = new SimpleDateFormat("E"); // the day of the week abbreviated
+		System.out.println(simpleDateformat.format(now));
+
+		// span[@class='red-circle ng-star-inserted']
+		if (driver.findElements(By.xpath("//span[@class='red-circle ng-star-inserted']")).size() > 0) {
+			if ((simpleDateformat.format(now).equals("Thu")) || (simpleDateformat.format(now).equals("Fri")))
+				assertTrue("Red Badge is displayed on Thursday or Friday only.");
+			else
+				assertFalse("Red Dot is seen on other days of the week.");
+		} else if (driver.findElements(By.xpath("//span[@class='red-circle ng-star-inserted']")).size() == 0) {
+			if (((simpleDateformat.format(now).equals("Thu")) || (simpleDateformat.format(now).equals("Fri"))))
+				assertTrue("Red Badge is not visible on Thursday/Friday.");
+		}
 	}
 }

@@ -24,7 +24,7 @@ public class EditDealHomePage extends PageBase {
 	private WebElement editCurrentLeadership;
 	@FindBy(xpath = "//span[contains(text(),'Key')]/preceding-sibling::a[@class='edit-icon']")
 	private WebElement editKeyShareHolders;
-	@FindBy(xpath = "//div[contains(text(),'Financials')]/a[@class='edit-icon']")
+	@FindBy(xpath = "//div[contains(text(),'Financials')]//a[@class='edit-icon']")
 	private WebElement editFinancials;
 	@FindBy(xpath = "//div[contains(text(),'Industry')]/a[@class='edit-icon']")
 	private WebElement editIndustrySpecifics;

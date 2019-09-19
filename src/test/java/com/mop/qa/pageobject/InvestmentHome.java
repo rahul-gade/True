@@ -49,7 +49,7 @@ public class InvestmentHome extends PageBase {
 	@FindBy(xpath = "//a[text()='Deal Details']")
 	private WebElement tabDealDetails;
 
-	// ==============Add Element===============//
+	// ==============List/Grid View Elements===============//
 	@FindBy(xpath = "//ul[contains(@class,'sorting-list')]/li[2]/a")
 	private WebElement viewListBtn;
 	@FindBy(xpath = "//ul[contains(@class,'sorting-list')]/li[1]/a")
@@ -305,7 +305,7 @@ public class InvestmentHome extends PageBase {
 		}
 	}
 
-	// ================WORKING HERE================//
+	// ================FIND OnePagerDeal================//
 	public void findOnePagerDeal(RemoteWebDriver driver) throws Exception {
 		do {
 			Thread.sleep(1000);
@@ -322,7 +322,8 @@ public class InvestmentHome extends PageBase {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		int size = driver.findElements(By.xpath(("//h3[text()='LIVE DEALS']/following-sibling::div/div"))).size();
-		for (int i = 1; i <= size; i++) {
+		int i;
+		for (i = 1; i <= size; i++) {
 			String pName = driver
 					.findElement(By.xpath(
 							"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
@@ -340,12 +341,14 @@ public class InvestmentHome extends PageBase {
 				driver.findElement(By.xpath(
 						"(//h3[text()='LIVE DEALS']/following-sibling::div//div[@class='card-header'])[" + i + "]"))
 						.click();
-				assertTrue("Project being edited is " + pName);
+				assertTrue("Project is found: " + pName);
 				do {
 					Thread.sleep(1000);
 				} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 				break;
 			}
 		}
+		if (i > size)
+			assertFalse("deal not found.");
 	}
 }

@@ -124,11 +124,11 @@ public class CreatedDealPage extends PageBase {
 			assertTrue("Industry Information is displayed");
 		} else
 			assertFalse("Industry Information is not Displayed");
-		if (rulesLink.isDisplayed()) {
-			action.moveToElement(rulesLink).perform();
-			assertTrue("Rules Passed/Failed HyperLink is displayed");
-		} else
-			assertFalse("Rules Passed/Failed HyperLink is not Displayed");
+//		if (rulesLink.isDisplayed()) {
+//			action.moveToElement(rulesLink).perform();
+//			assertTrue("Rules Passed/Failed HyperLink is displayed");
+//		} else
+//			assertFalse("Rules Passed/Failed HyperLink is not Displayed");
 		if (industryInfo.isDisplayed()) {
 			action.moveToElement(industryInfo).perform();
 			assertTrue("Industry Information is displayed");

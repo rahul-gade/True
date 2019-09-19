@@ -70,6 +70,7 @@ public class IndustryInformation extends PageBase {
 	private WebElement btnNavigateForward;
 	@FindBy(xpath = "//div[contains(text(),'Financials')]")
 	private WebElement headerFinancial;
+	
 	int i = 1;
 
 	public void enterIndustryDetails(RemoteWebDriver driver, String projectName, String indSize, String trgtMktShare,
@@ -216,6 +217,8 @@ public class IndustryInformation extends PageBase {
 				} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 				if (driver.findElement(By.xpath(verifySuccess.replace("PLACEHOLDER", projectName))).isDisplayed()) {
 					assertTrue("Deal is Successfully created");
+					click(driver.findElement(By.xpath("(//div[@class='dd-header clearfix']//a)[1]")), "Back Button");
+					Thread.sleep(1000);
 				} else {
 					assertFalse("Deal is not created");
 				}

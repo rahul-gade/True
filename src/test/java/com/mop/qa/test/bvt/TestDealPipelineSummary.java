@@ -23,10 +23,12 @@ public class TestDealPipelineSummary extends TestBase{
 			DealPipeline dP = new DealPipeline(remoteDriver);
 			dP.dealPipeline(remoteDriver);
 			dP.stageTest(remoteDriver);
+			dP.summaryBadge(remoteDriver);
 			dP.summaryView(remoteDriver);
 			dP.newOnePagers(remoteDriver);
 			dP.dateRange(remoteDriver);
 			dP.dealsProgressed(remoteDriver);
+			
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}
