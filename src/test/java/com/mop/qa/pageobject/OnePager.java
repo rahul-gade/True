@@ -120,7 +120,7 @@ public class OnePager extends PageBase {
 	private WebElement btnViewOnePager;
 
 	// =================ACTIONS ON PAGE=================//
-	
+
 	// ----------------TIC PAGE ACTIONS----------------//
 	public void enterOnePagerTIC(RemoteWebDriver driver, String competitionWeLike, String competitionWeDislike,
 			String industryWeLike, String industryWeDislike) throws Exception {
@@ -129,7 +129,13 @@ public class OnePager extends PageBase {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+
 		if (driver.findElements(By.xpath("//span[text()='test1']")).size() > 0) {
+			action.moveToElement(testLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='test1']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(testLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -138,6 +144,11 @@ public class OnePager extends PageBase {
 			action.sendKeys(competitionWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(testDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='test1']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(testDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -152,6 +163,11 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Performance']")).size() > 0) {
 			action.moveToElement(performanceLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Performance']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(performanceLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Performance']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
@@ -160,9 +176,14 @@ public class OnePager extends PageBase {
 
 			action.moveToElement(performanceDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Performance']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Performance']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
+			action.moveToElement(performanceDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.sendKeys(industryWeDislike).build().perform();
 			Thread.sleep(1000);
 
@@ -172,12 +193,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Review']")).size() > 0) {
 			action.moveToElement(reviewLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Review']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(reviewLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Review']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(competitionWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(reviewDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Review']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(reviewDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -205,13 +236,23 @@ public class OnePager extends PageBase {
 				.size() > 0) {
 			action.moveToElement(competitionLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(competitionLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(competitionWeLike).build().perform();
 			Thread.sleep(1000);
 
-			action.moveToElement(competitionLike).click().build().perform();
+			action.moveToElement(competitionDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(competitionDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Competition']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]")))
@@ -225,12 +266,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Underlying industry growth']")).size() > 0) {
 			action.moveToElement(industryLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(industryLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(industryWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(industryDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Underlying industry growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(industryDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -245,12 +296,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Expected Industry Growth']")).size() > 0) {
 			action.moveToElement(expectedIndustryLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(expectedIndustryLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(industryWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(expectedIndustryDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Expected Industry Growth']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(expectedIndustryDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -277,12 +338,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Customer Value Proposition & MOATS']")).size() > 0) {
 			action.moveToElement(customerLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(customerLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(customerDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Customer Value Proposition & MOATS']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(customerDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -297,12 +368,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Leadership']")).size() > 0) {
 			action.moveToElement(leadershipLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(leadershipLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(leadershipDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Leadership']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(leadershipDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -317,12 +398,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Financial Outcomes']")).size() > 0) {
 			action.moveToElement(compDynamicsLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(compDynamicsLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(compDynamicsDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(compDynamicsDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -337,12 +428,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Company Deal dynamics']")).size() > 0) {
 			action.moveToElement(compDynamicsLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(compDynamicsLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Like'])[1]/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(compDynamicsDislike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Company Deal dynamics']/parent::div/following-sibling::div//label[text()='What We Dislike'])[1]/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(compDynamicsDislike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -369,12 +470,22 @@ public class OnePager extends PageBase {
 		if (driver.findElements(By.xpath("//span[text()='Valuation']")).size() > 0) {
 			action.moveToElement(valuationLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul/li[1]"))
+					.clear();
+			action.moveToElement(valuationLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
 					"(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul/li[1]")))
 					.click().build().perform();
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(valuationDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath(
+					"(//span[text()='Valuation']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul/li[1]"))
+					.clear();
 			action.moveToElement(valuationDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -387,6 +498,7 @@ public class OnePager extends PageBase {
 			Thread.sleep(1000);
 		}
 		// NOT EDITED SINCE THE FIELD IS NOT AVAILABLE==============
+		//It will need heavy editing when this comes back
 		if (driver
 				.findElements(
 						By.xpath("(//div[text()=' Deal Dynamics ']/ancestor::div//span[text()='Competition'])[2]"))
@@ -400,8 +512,12 @@ public class OnePager extends PageBase {
 			action.moveToElement(competition1LikeIcon).click().build().perform();
 			Thread.sleep(1000);
 		}
+		
 		// =========================================================
 		if (driver.findElements(By.xpath("//span[text()='Exit strategy']")).size() > 0) {
+			action.moveToElement(exitStrategyLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath("(//span[text()='Exit strategy']/parent::div/following-sibling::div//label[text()='What We Like'])/following-sibling::ul/li[1]")).clear();
 			action.moveToElement(exitStrategyLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -410,6 +526,9 @@ public class OnePager extends PageBase {
 			action.sendKeys(customerWeLike).build().perform();
 			Thread.sleep(1000);
 
+			action.moveToElement(exitStrategyDisLike).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			driver.findElement(By.xpath("(//span[text()='Exit strategy']/parent::div/following-sibling::div//label[text()='What We Dislike'])/following-sibling::ul/li[1]")).clear();
 			action.moveToElement(exitStrategyDisLike).click().build().perform();
 			action.sendKeys(Keys.ENTER).build().perform();
 			action.moveToElement(driver.findElement(By.xpath(
@@ -445,8 +564,8 @@ public class OnePager extends PageBase {
 		assertTrue("Successfully clicked on View One Pager button");
 	}
 
-	//QUITE AN UNNECESSARY METHOD - REMOVE THIS! 
-	public void  openSnapshot(RemoteWebDriver driver) throws Exception {
+	// QUITE AN UNNECESSARY METHOD - REMOVE THIS!
+	public void openSnapshot(RemoteWebDriver driver) throws Exception {
 		click(driver.findElement(By.xpath("//span[text()='ONE-PAGER']")), "View One Pager");
 		Thread.sleep(1000);
 	}

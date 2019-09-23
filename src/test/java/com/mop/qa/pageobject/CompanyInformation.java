@@ -156,9 +156,7 @@ public class CompanyInformation extends PageBase {
 		if (section.contains("Company Basic Details") || section.contains("Company Background")
 				|| section.contains("Product Brief") || section.contains("Current Leadership")
 				|| section.contains("Key ShareHolders")) {
-			click(btnNext, "Next");
-			Thread.sleep(1000);
-			click(btnNext2, "Next");
+			click(btnNext, "Next 2");
 			Thread.sleep(1000);
 		}
 		/*

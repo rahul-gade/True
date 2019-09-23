@@ -159,7 +159,7 @@ public class DealHome extends PageBase {
 			enterText(txtDealSize, dealSize, "Deal Size");
 			Thread.sleep(1000);
 		}
-		
+
 		// click stake radio button.
 		if (driver.findElements(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).size() > 0) {
 			driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
@@ -201,11 +201,11 @@ public class DealHome extends PageBase {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
-		verifyText(pageTitle, "Add New Deal");
-
+		verifyText(dealPopup, "Add New Deal");
 		click(fillMyself, "FILL IN THE DETAILS MYSELF");
-		Thread.sleep(1000);
-
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(driver.findElement(By.xpath("//a[@class='close-btn']")), "Close Button");
 		Thread.sleep(1000);
 		click(driver.findElement(By.xpath("//a[contains(@routerlink,'my-deals')]")), "Back to Pipeline");

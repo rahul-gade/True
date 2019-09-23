@@ -42,6 +42,12 @@ public class JRAddCandidate extends PageBase {
 	WebElement loadImg;
 	@FindBy(xpath = "(//a[text()='SHORTLIST'])[1]")
 	WebElement linkShortlist;
+	@FindBy(xpath = "//textarea")
+	WebElement remarkText;
+	@FindBy(xpath = "//span[text()='DONE']")
+	WebElement doneBtn;
+	@FindBy(xpath = "//span[text()='SKIP']")
+	WebElement skipBtn;
 	@FindBy(xpath = "//span[text()='GO AHEAD']")
 	WebElement btnGoAhead;
 	@FindBy(xpath = "//span[text()='NO THANKS']")
@@ -200,7 +206,7 @@ public class JRAddCandidate extends PageBase {
 		}
 	}
 
-	public void shortlistCandidate(RemoteWebDriver driver) throws Exception {
+	public void shortlistCandidate(RemoteWebDriver driver, String remarks) throws Exception {
 		int count = 0;
 		if (driver.findElements(By.xpath("//a[text()='SHORTLIST']")).size() > 0) {
 			if (driver.findElements(By.xpath("//a[text()='Shortlisted ']/span")).size() > 0) {
@@ -211,9 +217,19 @@ public class JRAddCandidate extends PageBase {
 			click(linkShortlist, "ShortList");
 			Thread.sleep(100);
 			// click(btnGoAhead, "Go Ahead");
-			click(btnNoThanks, "No Thanks");
-			Thread.sleep(100);
+//			click(btnNoThanks, "No Thanks");
+//			Thread.sleep(100);
+			click(remarkText, "Remark");
+			enterText(remarkText, remarks, "Remarks Text");
+			click(doneBtn, "Done");
+			Thread.sleep(500);
+			if(driver.findElements(By.xpath("//div[text()='SUCCESS!']")).size()>0) {
+				assertTrue("Success PopUp displayed.");
+				click(skipBtn, "Skip Button");
+				Thread.sleep(1000);
+			}
 			click(tabShortListed, "ShortListed");
+//			Thread.sleep(1000);
 			String numbers = driver.findElement(By.xpath("//a[text()='Shortlisted ']/span")).getText();
 			int count1 = Integer.parseInt(numbers);
 			if (count1 > count) {
@@ -226,12 +242,16 @@ public class JRAddCandidate extends PageBase {
 		}
 	}
 
-	public void addToProspect(RemoteWebDriver driver) throws Exception {
+	public void addToProspect(RemoteWebDriver driver, String remark) throws Exception {
 		click(btnChoose, "Choose Button");
 		Thread.sleep(100);
 		click(linkAddToProspect, "Add To Prospect");
 		if (driver.findElements(By.xpath("//div[@class='header']")).size() > 0) {
 			assertTrue("Landed on Add Prospect Page");
+			click(remarkText, "Remarks");
+			enterText(remarkText, remark, "Remarks Text");
+			click(doneBtn, "Done");
+			Thread.sleep(500);
 		} else {
 			assertTrue("Choose Button not clicked");
 		}

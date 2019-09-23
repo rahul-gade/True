@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import com.mop.qa.pageobject.BasicDealDetails;
+import com.mop.qa.pageobject.CompanyFinancials;
 import com.mop.qa.pageobject.CompanyInformation;
 import com.mop.qa.pageobject.EditDealHomePage;
 import com.mop.qa.pageobject.IndustryInformation;
@@ -34,8 +35,9 @@ public class TestEdit extends TestBase {
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
-			// inst.findDeal(remoteDriver, projectName, companyName, sector);
-			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
+//			inst.findDeal(remoteDriver, projectName, companyName, sector);
+//			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
+			inst.firstLiveDeal(remoteDriver);
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			LOGGER.info(e);
@@ -49,7 +51,7 @@ public class TestEdit extends TestBase {
 			String section = rds.getValue("DATA", currentTest, "EditSection");
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			editdeal.editSection(remoteDriver, section);
-			inst.verifyNameAndTime(remoteDriver, projectName);
+//			inst.verifyNameAndTime(remoteDriver, projectName);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}
@@ -65,8 +67,8 @@ public class TestEdit extends TestBase {
 			String trueNorthName = rds.getValue("DATA", currentTest, "TrueNorthName");
 			String subSector = rds.getValue("DATA", currentTest, "SubSector");
 			String source = rds.getValue("DATA", currentTest, "Source");
-			String dealSize = rds.getValue("DATA", currentTest, "DealSize");
-			String stake = rds.getValue("DATA", currentTest, "Stake");
+			String dealSize = rds.getValue("DATA", currentTest, "EditDealSize");
+			String stake = rds.getValue("DATA", currentTest, "EditStake");
 			String otherSector = rds.getValue("DATA", currentTest, "OtherSector");
 			String section = rds.getValue("DATA", currentTest, "EditSection");
 			basicdeal.editBasicDealDetails(remoteDriver, editProjectName, editCompanyName, trueNorthName, editSector,
@@ -96,6 +98,12 @@ public class TestEdit extends TestBase {
 	}
 
 	@Test(priority = 6)
+	public void editCompanyFinancials() throws Exception {
+		CompanyFinancials cFin = new CompanyFinancials(remoteDriver);
+		cFin.enterCompanyDetails();//Edit this for Edit script separately. 
+	}
+	
+	@Test(priority = 7)
 	public void editIndustryInfo() throws Exception {
 		try {
 			IndustryInformation industryinfo = new IndustryInformation(remoteDriver);

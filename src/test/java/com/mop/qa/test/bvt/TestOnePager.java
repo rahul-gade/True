@@ -28,7 +28,9 @@ public class TestOnePager extends TestBase {
 			String pwd = rds.getValue("DATA", currentTest, "Password");
 			inst.launchApp(startURL, uname, pwd);
 			Thread.sleep(1000);
-			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
+//			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
+//			Above statement removed to make this class Independent. 
+			inst.firstLiveDeal(remoteDriver);
 			OnePager pager = new OnePager(remoteDriver);
 			CreatedDealPage cdp = new CreatedDealPage(remoteDriver);
 

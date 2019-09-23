@@ -26,8 +26,8 @@ public class TestReportDownload extends TestBase {
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
-			 inst.findDeal(remoteDriver, projectName, companyName, sector);
-			
+			inst.findDeal(remoteDriver, projectName, companyName, sector);
+
 			Thread.sleep(1000);
 
 			EditDealHomePage editdeal = new EditDealHomePage(remoteDriver);
@@ -36,7 +36,7 @@ public class TestReportDownload extends TestBase {
 
 			CompanyFinancials cFin = new CompanyFinancials(remoteDriver);
 			cFin.testDownload(remoteDriver);
-			
+
 //			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
 
 		} catch (Exception e) {

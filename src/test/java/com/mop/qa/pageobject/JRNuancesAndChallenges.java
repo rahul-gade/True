@@ -27,6 +27,8 @@ public class JRNuancesAndChallenges extends PageBase {
 	@FindBy(xpath = "//span[text()='SEND FOR REVIEW']")
 	private WebElement btnReview;
 	@FindBy(xpath = "//span[text()='PUBLISH JR']")
+	private WebElement btnPublishJR;
+	@FindBy(xpath = "//span[text()='PUBLISH']")
 	private WebElement btnPublish;
 //	@FindBy(xpath = "//span[text()='SEND FOR REVIEW']")
 //	private WebElement btnSendForReview;
@@ -35,6 +37,8 @@ public class JRNuancesAndChallenges extends PageBase {
 	@FindBy(xpath = "//span[text()='CONFIRM']")
 	private WebElement btnConfirm;
 	@FindBy(xpath = "//span[text()='VIEW DETAILS']")
+	private WebElement btnViewDetails;
+	@FindBy(xpath = "//span[text()='JR DETAILS']")
 	private WebElement btnJRDetails;
 	@FindBy(xpath = "//input[@placeholder='Reviewers']")
 	private WebElement inputReviewers;
@@ -43,37 +47,54 @@ public class JRNuancesAndChallenges extends PageBase {
 
 	public void enterNuancesandChallengesDetails(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1000);
-		click(libBusinessChallenges, "Business Challenges");
-		Thread.sleep(1000);
-		click(select1, "Business Challenges 1st Selection");
-		// click(select2, "Business Challenges 2nd Selection");
-		click(btnAdd, "ADD");
-		Thread.sleep(1000);
-		click(libCulturalNuances, "Cultural Nuances");
-		Thread.sleep(2000);
-		// click(select1, "Cultural Nuances 1st Selection");
-		click(select2, "Cultural Nuances 2nd Selection");
-		Thread.sleep(500);
-		click(btnAdd, "ADD");
-		Thread.sleep(1000);
-		click(libChallenges, "Challenges");
-		Thread.sleep(1000);
-		click(select1, "Challenges 1st Selection");
-		// click(select2, "Challenges 2nd Selection");
-		click(btnAdd, "ADD");
-		Thread.sleep(1000);
+		if (driver.findElements(By.xpath("//mat-label[text()='Business Challenges ']")).size() > 0) {
+			click(libBusinessChallenges, "Business Challenges");
+			Thread.sleep(1000);
+			click(select1, "Business Challenges 1st Selection");
+			click(select2, "Business Challenges 2nd Selection");
+			click(btnAdd, "ADD");
+			Thread.sleep(1000);
+		}
+		if (driver.findElements(By.xpath("//mat-label[text()='Cultural Nuances ']")).size() > 0) {
+			click(libCulturalNuances, "Cultural Nuances");
+			Thread.sleep(2000);
+			click(select1, "Cultural Nuances 1st Selection");
+			click(select2, "Cultural Nuances 2nd Selection");
+			Thread.sleep(500);
+			click(btnAdd, "ADD");
+			Thread.sleep(1000);
+		}
+		if (driver.findElements(By.xpath("//mat-label[text()='Challenges faced by role']")).size() > 0) {
+			click(libChallenges, "Challenges");
+			Thread.sleep(1000);
+			click(select1, "Challenges 1st Selection");
+			// click(select2, "Challenges 2nd Selection");
+			click(btnAdd, "ADD");
+			Thread.sleep(1000);
+		}
 	}
 
 	public void selectJRFlow(RemoteWebDriver driver, String flow) throws Exception {
 		if (flow.contains("publish")) {
-			click(btnPublish, "Publish JR");
+			if (driver.findElements(By.xpath("//span[text()='PUBLISH']")).size() > 0) {
+				click(btnPublish, "Publish JR");
+				Thread.sleep(100);
+			} else if (driver.findElements(By.xpath("//span[text()='PUBLISH JR']")).size() > 0) {
+				click(btnPublishJR, "Publish JR");
+				Thread.sleep(100);
+			}
 			click(txtReason, "Reason");
 			enterText(txtReason, "None", "Reason");
 			Thread.sleep(1000);
 			click(btnConfirm, "Confirm");
 			Thread.sleep(2000);
-			click(btnJRDetails, "JR Details");
-			Thread.sleep(2000);
+			if (driver.findElements(By.xpath("//span[text()='VIEW DETAILS']")).size()>0) {
+				click(btnViewDetails, "JR Details");
+				Thread.sleep(2000);
+			} else if(driver.findElements(By.xpath("//span[text()='JR DETAILS']")).size()>0) {
+				click(btnJRDetails, "JR Details");
+				Thread.sleep(2000);
+			}
 		} else {
 			click(btnReview, "Send for Review");
 			do {

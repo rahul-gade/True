@@ -26,9 +26,11 @@ public class JRBasicDetails extends PageBase {
 	private WebElement inputLocation;
 	@FindBy(xpath = "//span[text()='CREATE JR']")
 	private WebElement btnCreateJr;
+	@FindBy(xpath = "//span[text()='CREATE']")
+	private WebElement btnCreate;
 	@FindBy(xpath = "//span[text()='PROCEED TO FORM']")
 	private WebElement btnFillForm;
-	@FindBy(xpath = "//span[text()='GO TO LISTING']")
+	@FindBy(xpath = "//span[text()='BACK TO REQUISITIONS']")
 	private WebElement btnGoToListing;
 	@FindBy(xpath = "(//span[text()='NEXT'])[1]")
 	private WebElement btnNext;
@@ -50,7 +52,8 @@ public class JRBasicDetails extends PageBase {
 				inputCompanyName.sendKeys(s);
 				Thread.sleep(5);
 			}
-			Thread.sleep(1500);
+//			Thread.sleep(1500);
+			waitForVisibilityOfElement("//span[contains(text(),'" + company + "')]");
 			if (driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")) != null) {
 				driver.findElement(By.xpath("//span[contains(text(),'" + company + "')]")).click();
 			} else
@@ -93,12 +96,19 @@ public class JRBasicDetails extends PageBase {
 				assertFalse("Location Field is missing");
 			}
 		}
-		click(btnCreateJr, "Create JR");
-		Thread.sleep(2000);
-		/*
-		 * do { Thread.sleep(1000); }
-		 * while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
-		 */
+		
+		
+		if (driver.findElements(By.xpath("//span[text()='CREATE JR']")).size()>0) {
+			click(btnCreateJr, "Create JR");
+			Thread.sleep(2000);
+			/*
+			 * do { Thread.sleep(1000); }
+			 * while(driver.findElements(By.xpath("//div/div/img")).size()>0) ;
+			 */
+		} else if(driver.findElements(By.xpath("//span[text()='CREATE']")).size()>0) {
+			click(btnCreate, "Create JR");
+			Thread.sleep(2000);
+		}
 	}
 
 	public void fillForm(RemoteWebDriver driver) throws Exception {

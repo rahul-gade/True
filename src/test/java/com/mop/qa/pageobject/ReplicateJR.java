@@ -14,7 +14,7 @@ public class ReplicateJR extends PageBase {
 		super(remoteDriver);
 	}
 
-	@FindBy(xpath = "//div[contains(text(),'You can')]")
+	@FindBy(xpath = "//div[contains(text(),'Select an existing')]")
 	private WebElement txtReplicate;
 	@FindBy(xpath = "//a[@class='filter-btn']")
 	private WebElement selectFilter;
@@ -44,7 +44,7 @@ public class ReplicateJR extends PageBase {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
-		waitForVisibilityOfElement(txtReplicate);
+//		waitForVisibilityOfElement(txtReplicate);
 		click(selectFilter, "Select Filter");
 		Thread.sleep(3000);
 		if (driver.findElements(By.xpath(select.replace("PLACEHOLDER", position))).size() > 0) {

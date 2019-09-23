@@ -351,4 +351,9 @@ public class InvestmentHome extends PageBase {
 		if (i > size)
 			assertFalse("deal not found.");
 	}
+	
+	public void firstLiveDeal(RemoteWebDriver driver) throws Exception {
+		driver.findElement(By.xpath("(//h3[text()='LIVE DEALS']/following-sibling::div/div)[1]")).click();
+		Thread.sleep(1000);
+	}
 }

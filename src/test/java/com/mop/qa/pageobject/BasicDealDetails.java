@@ -164,22 +164,22 @@ public class BasicDealDetails extends PageBase {
 				Thread.sleep(2000);
 			}
 			
-			click(txtSubSector, "Sub Sector");
-			Thread.sleep(1000);
-			driver.findElement(By.xpath(selectSubsector.replace("PLACEHOLDER", subSector))).click();
-			// enterText(txtSubSector, subSector, "Sub Sector");
+//			click(txtSubSector, "Sub Sector");
+//			Thread.sleep(1000);
+//			driver.findElement(By.xpath(selectSubsector.replace("PLACEHOLDER", subSector))).click();
+// 			enterText(txtSubSector, subSector, "Sub Sector");
 			Actions action = new Actions(driver);
 			action.moveToElement(txtSourceName);
 			click(txtSourceName, "SourceName");
 			enterText(txtSourceName, source, "Source Name");
 			Thread.sleep(2000);
 			driver.findElement(By.xpath(selectSourceName.replace("PLACEHOLDER", source))).click();
-			click(txtDealSize, "Deal Size");
-			enterText(txtDealSize, dealSize, "Deal Size");
-			Thread.sleep(1000);
-			driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
-			driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
-			Thread.sleep(1000);
+//			click(txtDealSize, "Deal Size");
+//			enterText(txtDealSize, dealSize, "Deal Size");
+//			Thread.sleep(1000);
+//			driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
+//			driver.findElement(By.xpath(rdBtnStake.replace("PLACEHOLDER", stake))).click();
+//			Thread.sleep(1000);
 			click(inputStake, "Stake Percentage");
 			enterText(inputStake, stakePercent, "Stake Percentage");
 			click(btnNext, "Next");
@@ -230,6 +230,7 @@ public class BasicDealDetails extends PageBase {
 			Thread.sleep(2000);
 		}
 		if (!dealSize.equals("NA")) {
+			System.out.println(dealSize);
 			click(txtDealSize, "Deal size");
 			driver.findElement(By.xpath("//input[@formcontrolname='dealSize']")).clear();
 			enterText(txtDealSize, dealSize, "TrueNorth Name");
@@ -242,7 +243,7 @@ public class BasicDealDetails extends PageBase {
 		}
 
 		if (section.contains("Company Basic Details")) {
-			click(btnNext, "Next");
+			click(btnNext, "Next 1");
 			Thread.sleep(1000);
 		}
 	}

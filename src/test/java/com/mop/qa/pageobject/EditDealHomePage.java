@@ -67,6 +67,13 @@ public class EditDealHomePage extends PageBase {
 	String btnBack = "//span[text()='PLACEHOLDER']/ancestor::ul//a[@class='link']";
 //	private WebElement btnBack;
 
+	@FindBy(xpath = "(//div[@class='percentage'])[1]")
+	private WebElement likeabilityAmount;
+	@FindBy(xpath = "//li[@resourceuri='IM_LIKEABILITY_EDIT']/a")
+	private WebElement update;
+	@FindBy(xpath = "(//div[@class='percentage'])[2]")
+	private WebElement probabilityAmount;
+
 	public void editSection(RemoteWebDriver driver, String section) throws Exception {
 //		do {
 //			Thread.sleep(1000);
@@ -105,13 +112,39 @@ public class EditDealHomePage extends PageBase {
 
 	public void editLikeability(RemoteWebDriver driver, String impact, String financial, String attraction,
 			String likeability, String reason) throws Exception {
-		click(inputLikeability, "Likeability");
-		waitForVisibilityOfElement(btnSubmit);
+		boolean flag = true;
+		if (driver.findElements(By.xpath("(//a[text()='INPUT NOW'])[1]")).size() > 0) {
+			click(inputLikeability, "Likeability");
+			waitForVisibilityOfElement(btnSubmit);
+			flag = false;
+		} else {
+			click(likeabilityAmount, "Likeability Number.");
+			Thread.sleep(200);
+			click(update, "Update Likeability.");
+			Thread.sleep(500);
+		}
 		int imp = Integer.parseInt(impact);
 		int fin = Integer.parseInt(financial);
 		int att = Integer.parseInt(attraction);
 		int like = Integer.parseInt(likeability);
 
+		if (flag) {
+			for (int i = 0; i < 10; i++) {
+				driver.findElement(By.xpath("(//a[text()='-'])[1]")).click();
+			}
+			Thread.sleep(1000);
+			for (int i = 0; i < 10; i++) {
+				driver.findElement(By.xpath("(//a[text()='-'])[3]")).click();
+			}
+			Thread.sleep(1000);
+			for (int i = 0; i < 10; i++) {
+				driver.findElement(By.xpath("(//a[text()='-'])[2]")).click();
+			}
+			imp += 2;
+			fin += 2;
+			att -= 1;
+			like += 2;
+		}
 		for (int i = 0; i < imp; i++) {
 			driver.findElement(By.xpath("(//a[text()='+'])[1]")).click();
 		}
@@ -134,11 +167,24 @@ public class EditDealHomePage extends PageBase {
 		Thread.sleep(1000);
 //		txtReason.sendKeys(Keys.ENTER);
 //		enterText(txtReason, reason, "Reason");
-		action.moveToElement(txtReason).click().build().perform();
-		action.sendKeys(Keys.ENTER).build().perform();
-		action.moveToElement(driver.findElement(By.xpath(
-				"//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
-				.click().build().perform();
+		if (flag) {
+			int currentList = driver.findElements(By.xpath("//ul[@class='im-bullet-list']/li")).size();
+			action.moveToElement(txtReason).click().build().perform();
+			action.moveToElement(driver.findElement(
+					By.xpath("//label[text()='Reasons for the above']/following-sibling::ul/li[" + currentList + "]")))
+					.click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			currentList++;
+			action.moveToElement(driver.findElement(By.xpath(
+					"//label[text()='Reasons for the above']/following-sibling::ul/li[" + currentList + "]")))
+					.click().build().perform();
+		} else {
+			action.moveToElement(txtReason).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			action.moveToElement(
+					driver.findElement(By.xpath("//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
+					.click().build().perform();
+		}
 		action.sendKeys(reason).build().perform();
 		Thread.sleep(500);
 		click(btnSubmit, "Submit Button");
@@ -148,9 +194,18 @@ public class EditDealHomePage extends PageBase {
 	}
 
 	public void editProbability(RemoteWebDriver driver, String probability, String reason) throws Exception {
+		boolean flag = true;
 		Thread.sleep(1000);
-		click(inputProbability, "Probability");
-		waitForVisibilityOfElement(btnSubmit);
+		if (driver.findElements(By.xpath("//a[text()='INPUT NOW']")).size() > 0) {
+			click(inputProbability, "Probability");
+			waitForVisibilityOfElement(btnSubmit);
+			flag = false;
+		} else {
+			click(probabilityAmount, "Probability Number");
+			Thread.sleep(200);
+			click(update, "Update Probability.");
+			Thread.sleep(500);
+		}
 		int pro = Integer.parseInt(probability);
 		Thread.sleep(1000);
 		Actions action = new Actions(remoteDriver);
@@ -163,11 +218,24 @@ public class EditDealHomePage extends PageBase {
 //		txtReason.sendKeys(Keys.ENTER);
 //		enterText(txtReason, reason, "Reason");
 //		txtReason.sendKeys(Keys.ENTER);
-		action.moveToElement(txtReason).click().build().perform();
-		action.sendKeys(Keys.ENTER).build().perform();
-		action.moveToElement(driver.findElement(By.xpath(
-				"//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
-				.click().build().perform();
+		if (flag) {
+			int currentList = driver.findElements(By.xpath("//ul[@class='im-bullet-list']/li")).size();
+			action.moveToElement(txtReason).click().build().perform();
+			action.moveToElement(driver.findElement(
+					By.xpath("//label[text()='Reasons for the above']/following-sibling::ul/li[" + currentList + "]")))
+					.click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			currentList++;
+			action.moveToElement(driver.findElement(By.xpath(
+					"//label[text()='Reasons for the above']/following-sibling::ul/li[" + currentList + "]")))
+					.click().build().perform();
+		} else {
+			action.moveToElement(txtReason).click().build().perform();
+			action.sendKeys(Keys.ENTER).build().perform();
+			action.moveToElement(
+					driver.findElement(By.xpath("//label[text()='Reasons for the above']/following-sibling::ul/li[1]")))
+					.click().build().perform();
+		}
 		action.sendKeys(reason).build().perform();
 		Thread.sleep(500);
 		click(btnSubmit, "Submit Button");
@@ -197,14 +265,14 @@ public class EditDealHomePage extends PageBase {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(btnFolder, "Folder");
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 //		waitForVisibilityOfElement(labelPager);
 //		if (labelPager.isDisplayed()) {
 //			assertTrue("System tab is displayed");
 //		}
-//		do {
-//			Thread.sleep(1000);
-//		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		click(tabDMS, "DMS");
 		Thread.sleep(1000);
 		waitForVisibilityOfElement(labelCustom);
@@ -216,8 +284,8 @@ public class EditDealHomePage extends PageBase {
 			project = driver.findElement(By.xpath("//span[@class='dd-title']")).getText();
 		driver.findElement(By.xpath(btnBack.replace("PLACEHOLDER", project))).click();
 	}
-	
+
 	public void checkOnePager(RemoteWebDriver driver) throws Exception {
-		
+
 	}
 }

@@ -30,8 +30,9 @@ public class TestAddCandidate extends TestBase {
 			 add.addCandidate(remoteDriver);
 			 String company1 = rds.getValue("TALENTACQUISITION", currentTest, "Company");
 			 add.enterCandidateDetails(remoteDriver, name, company1, position, email, contact);
-			 add.shortlistCandidate(remoteDriver);
-			 add.addToProspect(remoteDriver);
+			 String remark = rds.getValue("TALENTACQUISITION", currentTest, "Remarks");
+			 add.shortlistCandidate(remoteDriver, remark);
+			 add.addToProspect(remoteDriver, remark);
 		 }catch(Exception e){
 			 LOGGER.info(e);
 		 }
