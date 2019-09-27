@@ -114,7 +114,9 @@ public class JRBasicDetails extends PageBase {
 	public void fillForm(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(2000);
 		click(btnFillForm, "Fill Form");
-		Thread.sleep(4000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
 		click(btnNext, "Next");
 //		do {
 //			Thread.sleep(1000);

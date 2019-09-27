@@ -60,7 +60,7 @@ public class TestHypothesis extends TestBase{
 			dealhome.editLikeability(remoteDriver, impact, financial, attraction, likeability, reason);
 			dealhome.editProbability(remoteDriver, probability, probreason);
 			dealhome.addContact(remoteDriver, profile);
-			dealhome.validateFolder(remoteDriver, projectName);
+//			dealhome.validateFolder(remoteDriver, projectName);
 //=====================================================================================================FURTHER PROCESS ON DETAILS PAGE...
 			
 //			String companyName = rds.getValue("DATA", currentTest, "CompanyName");

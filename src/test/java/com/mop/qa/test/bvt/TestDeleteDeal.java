@@ -20,6 +20,7 @@ public class TestDeleteDeal extends TestBase {
 			inst.launchApp(startURL, uname, pwd);
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
+			String indName = rds.getValue("DATA", currentTest, "IndustryName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
 			String subsector = rds.getValue("DATA", currentTest, "SubSector");
 			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
@@ -29,7 +30,7 @@ public class TestDeleteDeal extends TestBase {
 			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
 			
 			DealHome dHome = new DealHome(remoteDriver);
-			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake, indName);
 			Thread.sleep(1000);
 			
 			dHome.flowForDelete(remoteDriver, flow);

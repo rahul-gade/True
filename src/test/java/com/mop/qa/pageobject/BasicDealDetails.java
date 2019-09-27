@@ -71,6 +71,11 @@ public class BasicDealDetails extends PageBase {
 	private WebElement titleCompInfo;
 	@FindBy(xpath = "//input[@name='otherStake']")
 	private WebElement inputStake;
+
+	@FindBy(xpath = "//label[text()='PULL CMIE DATA']")
+	private WebElement CMIELabel;
+	@FindBy(xpath = "//a[@class='close-btn']")
+	private WebElement close;
 	int i = 1;
 
 	public void verifyDealDetails(RemoteWebDriver driver, String projectName, String companyName, String sector,
@@ -163,7 +168,7 @@ public class BasicDealDetails extends PageBase {
 				enterText(txtTrueNorthName, trueNorthName, "TrueNorth Name");
 				Thread.sleep(2000);
 			}
-			
+
 //			click(txtSubSector, "Sub Sector");
 //			Thread.sleep(1000);
 //			driver.findElement(By.xpath(selectSubsector.replace("PLACEHOLDER", subSector))).click();
@@ -255,6 +260,35 @@ public class BasicDealDetails extends PageBase {
 			assertTrue("" + field + " is a Mandatory Field and highlighted in Red");
 		else
 			assertFalse("" + field + " is a Mandatory Field but not highlighted in Red");
+	}
+
+	public void checkCMIE(RemoteWebDriver driver, String mandatory, String companyName) throws Exception {
+		if (mandatory.contains("No") && driver.findElements(By.xpath("//label[text()='PULL CMIE DATA']")).size() > 0) {
+			click(txtCompanyName, "Company Name");
+			enterText(txtCompanyName, companyName, "Company Name");
+			Thread.sleep(3000);
+			driver.findElement(By.xpath(selectCompanyName.replace("PLACEHOLDER", companyName))).click();
+			Thread.sleep(2000);
+			assertTrue("PULL CMIE DATA option available as the company is entered.");
+			click(CMIELabel, "Pull CMIE Data");
+			Thread.sleep(1000);
+			if (driver.findElements(By.xpath("//p[text()='Pull CMIE Data']")).size() > 0) {
+				assertTrue("Confirm CMIE pull pop-up displayed.");
+				click(driver.findElement(By.xpath("//span[text()='CONFIRM']")), "Confirm");
+				do {
+					Thread.sleep(1000);
+				} while (driver.findElements(By.xpath("//div/div/img[contains(@src,'spinner')]")).size() > 0);
+				click(close, "Close Button");
+			}
+		} else if (mandatory.contains("NA")
+				&& driver.findElements(By.xpath("//label[text()='PULL CMIE DATA']")).size() > 0)
+			assertFalse("PULL CMIE DATA shown even as the company is already filled.");
+		else if (mandatory.contains("NA")
+				&& driver.findElements(By.xpath("//label[text()='PULL CMIE DATA']")).size() == 0) {
+			assertTrue("PULL CMIE DATA not shown for already filled company.");
+			click(close, "Close Button");
+		} else
+			assertFalse("PULL CMIE DATA option NOT available as the company is entered.");
 	}
 
 }

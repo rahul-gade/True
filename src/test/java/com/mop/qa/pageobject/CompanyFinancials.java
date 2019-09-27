@@ -36,6 +36,8 @@ public class CompanyFinancials extends PageBase {
 	private WebElement closeBtn;
 	@FindBy(xpath = "(//div[@class='dd-header clearfix']//a)[1]")
 	private WebElement backBtn;
+	
+	String editCell = "//tbody[@class='ui-treetable-tbody']/tr[1]/td[COL]/p-treetablecelleditor"; //input
 
 	public void checkDealTitle(RemoteWebDriver driver, String name) throws Exception {
 		if (driver.findElement(By.xpath("//h4")).getText().length() > 0) {
@@ -89,7 +91,8 @@ public class CompanyFinancials extends PageBase {
 	public void tableData(RemoteWebDriver driver) throws Exception {
 		if (driver.findElements(By.xpath("//tbody")).size() > 0) {
 			int rows = driver.findElements(By.xpath("//tbody/tr")).size();
-			System.out.println(rows);
+			if(rows>0)
+				assertTrue("Prefilld Parameters are available for manual filling.");
 //			int r = 1;
 			int i, j;
 			for (j = 1; j <= rows; j++) {
@@ -107,9 +110,9 @@ public class CompanyFinancials extends PageBase {
 			}
 			if (j > rows) {
 				CompanyInformation BG = new CompanyInformation(driver);
-				if (BG.compBG.isEmpty())
+				if (BG.compBG.isEmpty()) {
 					assertTrue("Empty table displayed");
-				else
+				} else
 					assertFalse("Table not prepopulated with CMIE Data.");
 			}
 
@@ -137,5 +140,14 @@ public class CompanyFinancials extends PageBase {
 				assertFalse("Download Confirmation Pop-Up NOT Displayed.");
 		} else
 			assertTrue("Table is either empty or data is not available.");
+	}
+
+	public void fillTable(RemoteWebDriver driver) throws Exception {
+		for(int col=2; col<=6; col++) {
+			String currentCell = editCell.replace("COL", String.valueOf(col));
+			click(driver.findElement(By.xpath(currentCell)), "Cell: "+(col-1));
+			enterText(driver.findElement(By.xpath(currentCell+"/input")), String.valueOf(col+4), "Input: "+(col-1));
+			Thread.sleep(500);
+		}
 	}
 }

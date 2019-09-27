@@ -25,6 +25,7 @@ public class TestCompFinancialPage extends TestBase {
 			DealHome dHome = new DealHome(remoteDriver);
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
+			String indName = rds.getValue("DATA", currentTest, "IndustryName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
 			String flow = rds.getValue("DATA", currentTest, "Flow");
 			String filepath = rds.getValue("DATA", currentTest, "FilePath");
@@ -32,7 +33,7 @@ public class TestCompFinancialPage extends TestBase {
 			String subsector = rds.getValue("DATA", currentTest, "SubSector");
 			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
 			String stake = rds.getValue("DATA", currentTest, "Stake");
-			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake, indName);
 			Thread.sleep(1000);
 			dHome.selectFlow(remoteDriver, flow);
 			Thread.sleep(1000);

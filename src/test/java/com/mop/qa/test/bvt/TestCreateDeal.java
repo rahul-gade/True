@@ -30,6 +30,7 @@ public class TestCreateDeal extends TestBase {
 			DealHome dHome = new DealHome(remoteDriver);
 			String projectName = rds.getValue("DATA", currentTest, "ProjectName");
 			String companyName = rds.getValue("DATA", currentTest, "CompanyName");
+			String indName = rds.getValue("DATA", currentTest, "IndustryName");
 			String sector = rds.getValue("DATA", currentTest, "Sector");
 			String flow = rds.getValue("DATA", currentTest, "Flow");
 			String filepath = rds.getValue("DATA", currentTest, "FilePath");
@@ -37,7 +38,7 @@ public class TestCreateDeal extends TestBase {
 			String dealsize = rds.getValue("DATA", currentTest, "DealSize");
 			String stake = rds.getValue("DATA", currentTest, "Stake");
 			String mandatory = rds.getValue("DATA", currentTest, "Mandatory");
-			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake);
+			dHome.createDealHomePage(remoteDriver, projectName, companyName, sector, filepath, mandatory, subsector, dealsize, stake, indName);
 			Thread.sleep(1000);
 			
 			dHome.selectFlow(remoteDriver, flow);
@@ -46,7 +47,6 @@ public class TestCreateDeal extends TestBase {
 			BasicDealDetails dealDetails = new BasicDealDetails(remoteDriver);
 			String source = rds.getValue("DATA", currentTest, "Source");
 			String stakePercent = rds.getValue("DATA", currentTest, "StakePercent");
-			// dealDetails.verifyDealDetails(projectName, companyName, sector);
 			Thread.sleep(1000);
 			dealDetails.enterDealDetails(remoteDriver, companyName, companyName, subsector, source, dealsize, stake,
 					stakePercent, mandatory);
@@ -76,7 +76,10 @@ public class TestCreateDeal extends TestBase {
 			industryInfo.enterIndustryDetails(remoteDriver, projectName, indSize, trgtMktShare, last3year, last5year,
 					pred3year, pred5year, competitorName, percent, flows, mandatory);
 			
+//			DISABLE EVERYTHING ABOVE FOR BETTER EXPERIENCE DURING FOLDER TESTING - - - BUT RUN EVERYTHING AT LEAST ONCE!!
 			inst.findLiveDeal(remoteDriver, projectName, companyName, sector);
+			EditDealHomePage dealHome = new EditDealHomePage(remoteDriver);
+			dealHome.validateFolder(remoteDriver, projectName);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

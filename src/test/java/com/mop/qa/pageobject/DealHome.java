@@ -33,7 +33,7 @@ public class DealHome extends PageBase {
 	String rdBtnSector = "//div[text()='PLACEHOLDER']";
 	@FindBy(xpath = "//label[text()='UPLOAD']")
 	private WebElement linkUpload;
-	@FindBy(xpath = "//span[text()='SUBMIT']")
+	@FindBy(xpath = "//span[text()='SUBMIT']") // span[contains('SUBMIT')]
 	private WebElement btnSubmit;
 	@FindBy(xpath = "//span[text()='Create the Deal anyway']")
 	private WebElement fillMyself;
@@ -50,7 +50,9 @@ public class DealHome extends PageBase {
 	@FindBy(xpath = "//a[text()='My Deals']")
 	private WebElement txtMyDeals;
 	String owner = "//*[contains(text(),'PLACEHOLDER')]";
-
+	@FindBy(xpath = "//mat-select[@formcontrolname='industry']")
+	private WebElement industryName; 
+	String selectInd = "//span[text()='PLACEHOLDER']";
 	@FindBy(xpath = "//*[@formcontrolname='subSector']")
 	private WebElement txtSubSector;
 	String selectSubsector = "//span[text()=' PLACEHOLDER ']";
@@ -101,14 +103,16 @@ public class DealHome extends PageBase {
 	}
 
 	public void createDealHomePage(RemoteWebDriver driver, String projectName, String companyName, String sector,
-			String filePath, String mandatory, String subSector, String dealSize, String stake) throws Exception {
+			String filePath, String mandatory, String subSector, String dealSize, String stake, String indName) throws Exception {
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 
 		// check page title.
 		click(btnNewDeal, "New Deal");
-		Thread.sleep(1000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 		verifyText(pageTitle, "Deal Specifics");
 		if (pageTitle.getText().contains("Deal Specifics")) {
 			assertTrue("PageTitle is as expected");
@@ -137,6 +141,13 @@ public class DealHome extends PageBase {
 			} else {
 				assertTrue("Company Name Accepts upto 50 characters.");
 			}
+		}
+		
+		//enter industryName
+		if(driver.findElements(By.xpath("//mat-select[@formcontrolname='industry']")).size()>0) {
+			click(industryName, "Industry Name");
+			Thread.sleep(1000);
+			driver.findElement(By.xpath(selectInd.replace("PLACEHOLDER", indName))).click();
 		}
 
 		// enter sector
@@ -190,7 +201,7 @@ public class DealHome extends PageBase {
 
 		if (flow.contains("Myself")) {
 			click(fillMyself, "Create Deal Anyway");
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} else {
 			click(requestIB, "RequestIB");
 			Thread.sleep(1000);

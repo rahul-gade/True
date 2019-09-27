@@ -73,6 +73,16 @@ public class EditDealHomePage extends PageBase {
 	private WebElement update;
 	@FindBy(xpath = "(//div[@class='percentage'])[2]")
 	private WebElement probabilityAmount;
+	
+	//=========FolderGallery View==========
+	@FindBy(xpath = "//li[@title='Create Folder']/a")
+	private WebElement createFolder;
+	@FindBy(xpath = "//input[@formcontrolname='folderName']")
+	private WebElement folderName; 
+	@FindBy(xpath = "//span[text()='CREATE']")
+	private WebElement create;
+	@FindBy(xpath = "//span[text()=' Automated Folder ']")
+	private WebElement folder;
 
 	public void editSection(RemoteWebDriver driver, String section) throws Exception {
 //		do {
@@ -279,13 +289,24 @@ public class EditDealHomePage extends PageBase {
 		if (labelCustom.isDisplayed()) {
 			assertTrue("Uploaded File is displayed.");
 		}
-		// Added condition for Hypothesis test.
-		if (project.equals("Running Hypothesis"))
-			project = driver.findElement(By.xpath("//span[@class='dd-title']")).getText();
+		
+		//CREATING FOLDER
+		String folName = "Automated Folder";
+		click(createFolder, "Create Folder");
+		Thread.sleep(500);
+		enterText(folderName, folName, "Folder Name");
+		Thread.sleep(500);
+		click(create, "CREATE");
+		do {
+			Thread.sleep(1000);
+		}while(driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		if (driver.findElements(By.xpath("//span[text()=' Automated Folder ']")).size()>0) {
+			assertTrue("Folder Created Successfully.");
+			Thread.sleep(1000);
+			//MORE HERE!!!
+		} else
+			assertFalse("Folder Not Created.");
+		//VALIDATE - - DO THIS BEFORE RUNNING SANITY TOMORROW> 
 		driver.findElement(By.xpath(btnBack.replace("PLACEHOLDER", project))).click();
-	}
-
-	public void checkOnePager(RemoteWebDriver driver) throws Exception {
-
 	}
 }
