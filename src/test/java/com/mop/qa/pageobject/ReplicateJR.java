@@ -29,7 +29,7 @@ public class ReplicateJR extends PageBase {
 	private WebElement btnCompany;
 	@FindBy(xpath = "//a[text()='SKIP TO FORM']")
 	private WebElement btnSkip;
-	@FindBy(xpath = "//span[text()='PREVIEW JR']")
+	@FindBy(xpath = "//span[contains(text(),'PREVIEW')]") //span[contains(text(),'PREVIEW')]
 	private WebElement linkPreviewJR;
 	@FindBy(xpath = "//div[@class='header' and contains(text(),'PREVIEW')]")
 	private WebElement headerPreviewJR;

@@ -83,13 +83,14 @@ public class InvestmentHome extends PageBase {
 		click(no, "Dont keep Signed-in");
 		Thread.sleep(3000);
 		waitForPageLoad();
-		click(dropdown, "Module Dropdown");
 		String module;
 		if (url.contains("Talent-Acquisition")) {
+			click(dropdown, "Module Dropdown");
 			module = "TA";
 			click(talent, "Talent Acquisition");
 			Thread.sleep(5000);
 		} else if (url.contains("Investment-Management")) {
+			click(dropdown, "Module Dropdown");
 			module = "IM";
 			click(investment, "Investment");
 			Thread.sleep(5000);

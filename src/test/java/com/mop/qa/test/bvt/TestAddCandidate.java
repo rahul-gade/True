@@ -29,7 +29,8 @@ public class TestAddCandidate extends TestBase {
 			 add.navigateLongList(remoteDriver, position, company);
 			 add.addCandidate(remoteDriver);
 			 String company1 = rds.getValue("TALENTACQUISITION", currentTest, "Company");
-			 add.enterCandidateDetails(remoteDriver, name, company1, position, email, contact);
+			 String sector = rds.getValue("TALENTACQUISITION", currentTest, "Sector");
+			 add.enterCandidateDetails(remoteDriver, name, company1, position, email, contact, sector);
 			 String remark = rds.getValue("TALENTACQUISITION", currentTest, "Remarks");
 			 add.shortlistCandidate(remoteDriver, remark);
 			 add.addToProspect(remoteDriver, remark);

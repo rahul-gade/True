@@ -36,9 +36,9 @@ public class JRNuancesAndChallenges extends PageBase {
 	private WebElement txtReason;
 	@FindBy(xpath = "//span[text()='CONFIRM']")
 	private WebElement btnConfirm;
-	@FindBy(xpath = "//span[text()='VIEW DETAILS']")
-	private WebElement btnViewDetails;
-	@FindBy(xpath = "//span[text()='JR DETAILS']")
+//	@FindBy(xpath = "//span[text()='VIEW DETAILS']")
+//	private WebElement btnViewDetails;
+	@FindBy(xpath = "//span[contains(text(),'DETAILS')]") //span[contains(text(),'DETAILS')]
 	private WebElement btnJRDetails;
 	@FindBy(xpath = "//input[@placeholder='Reviewers']")
 	private WebElement inputReviewers;
@@ -89,7 +89,7 @@ public class JRNuancesAndChallenges extends PageBase {
 			click(btnConfirm, "Confirm");
 			Thread.sleep(2000);
 			if (driver.findElements(By.xpath("//span[text()='VIEW DETAILS']")).size()>0) {
-				click(btnViewDetails, "JR Details");
+				click(btnJRDetails, "JR Details");
 				Thread.sleep(2000);
 			} else if(driver.findElements(By.xpath("//span[text()='JR DETAILS']")).size()>0) {
 				click(btnJRDetails, "JR Details");

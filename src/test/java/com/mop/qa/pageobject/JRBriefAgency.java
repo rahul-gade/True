@@ -27,9 +27,9 @@ public class JRBriefAgency extends PageBase {
 	String selectto = "//div[text()=' PLACEHOLDER']";
 	@FindBy(xpath = "//*[@placeholder='Brief']")
 	private WebElement inputBrief;
-	@FindBy(xpath = "//label[text()='Shareables']/parent::div//mat-checkbox[2]")
+	@FindBy(xpath = "//label[text()='Shareables']/parent::div//mat-checkbox[1]")
 	private WebElement chkboxShareables;
-	@FindBy(xpath = "//label[text()='Deliverables']/parent::div//mat-checkbox[3]")
+	@FindBy(xpath = "//label[text()='Deliverables']/parent::div//mat-radio-button[1]")
 	private WebElement chkboxLongList;
 	@FindBy(xpath = "//span[text()='Submit']")
 	private WebElement btnSubmit;
@@ -45,8 +45,8 @@ public class JRBriefAgency extends PageBase {
 			click(inputTo, "To");
 			enterText(inputTo, to, "To");
 			Thread.sleep(1000);
-//			driver.findElement(By.xpath(selectto.replace("PLACEHOLDER", to))).click();
-			driver.findElement(By.xpath("//mat-option[1]")).click();
+			driver.findElement(By.xpath(selectto.replace("PLACEHOLDER", to))).click();
+//			driver.findElement(By.xpath("//mat-option[1]")).click();
 			Thread.sleep(100);
 			if (driver.findElements(By.xpath("//*[@placeholder='Brief']")).size() > 0) {
 				click(inputBrief, "Brief");

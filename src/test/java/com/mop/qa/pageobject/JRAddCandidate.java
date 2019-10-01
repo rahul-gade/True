@@ -32,6 +32,8 @@ public class JRAddCandidate extends PageBase {
 	@FindBy(xpath = "//input[@formcontrolname='positionData']")
 	WebElement txtPosition;
 	String selectPosition = "//span[text()=' PLACEHOLDER ']";
+	@FindBy(xpath = "//input[@formcontrolname='sectorData']")
+	WebElement candidateSector;
 	@FindBy(xpath = "//input[@formcontrolname='emailIDData']")
 	WebElement txtEmailId;
 	@FindBy(xpath = "//input[@formcontrolname='contactNoData']")
@@ -129,7 +131,7 @@ public class JRAddCandidate extends PageBase {
 	}
 
 	public void enterCandidateDetails(RemoteWebDriver driver, String name, String company, String position,
-			String email, String contact) throws Exception {
+			String email, String contact, String sector) throws Exception {
 		if (driver.findElements(By.xpath("//p[contains(text(),'Candidate')]")).size() > 0) {
 			assertTrue("Candidate details page is displayed");
 			DateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
@@ -143,13 +145,22 @@ public class JRAddCandidate extends PageBase {
 			} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
 			click(txtCompany, "Company");
 			enterText(txtCompany, company, "Company");
-			do {
-				Thread.sleep(1000);
-			} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+//			do {
+//				Thread.sleep(1000);
+//			} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+			Thread.sleep(1500);
 			driver.findElement(By.xpath(selectPosition.replace("PLACEHOLDER", company))).click();
 			do {
 				Thread.sleep(1000);
 			} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+			if (driver.findElements(By.xpath("//input[@formcontrolname='sectorData']")).size() > 0) {
+				click(candidateSector, "Sector");
+				enterText(candidateSector, sector, "Sector Data");
+				waitForVisibilityOfElement("//span[text()=' " + sector + " ']");
+				driver.findElement(By.xpath("//span[text()=' " + sector + " ']")).click(); // span[text()='']
+				Thread.sleep(500);
+			}
+			// Thread.sleep(1000);
 			click(txtPosition, "Position");
 			enterText(txtPosition, position, "Position");
 			do {
@@ -223,7 +234,7 @@ public class JRAddCandidate extends PageBase {
 			enterText(remarkText, remarks, "Remarks Text");
 			click(doneBtn, "Done");
 			Thread.sleep(500);
-			if(driver.findElements(By.xpath("//div[text()='SUCCESS!']")).size()>0) {
+			if (driver.findElements(By.xpath("//div[text()='SUCCESS!']")).size() > 0) {
 				assertTrue("Success PopUp displayed.");
 				click(skipBtn, "Skip Button");
 				Thread.sleep(1000);
