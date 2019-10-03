@@ -24,7 +24,7 @@ public class JRDesiredProfile extends PageBase{
 	private WebElement libCompetency;
 	@FindBy(xpath = "(//div[@class='search-values']//li[@class='ng-star-inserted'])[1]//label")
 	private WebElement select1;
-	@FindBy(xpath = "(//div[@class='search-values']//li[@class='ng-star-inserted'])[3]")
+	@FindBy(xpath = "(//div[@class='search-values']//li[@class='ng-star-inserted'])[2]")
 	private WebElement select2;
 	@FindBy(xpath = "//span[text()='ADD']")
 	private WebElement btnAdd;

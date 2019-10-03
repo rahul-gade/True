@@ -64,11 +64,11 @@ public class JRNuancesAndChallenges extends PageBase {
 			click(btnAdd, "ADD");
 			Thread.sleep(1000);
 		}
-		if (driver.findElements(By.xpath("//mat-label[text()='Challenges faced by role']")).size() > 0) {
+		if (driver.findElements(By.xpath("//mat-label[text()='Challenges faced by role ']")).size() > 0) {
 			click(libChallenges, "Challenges");
 			Thread.sleep(1000);
 			click(select1, "Challenges 1st Selection");
-			// click(select2, "Challenges 2nd Selection");
+			//click(select2, "Challenges 2nd Selection");
 			click(btnAdd, "ADD");
 			Thread.sleep(1000);
 		}
