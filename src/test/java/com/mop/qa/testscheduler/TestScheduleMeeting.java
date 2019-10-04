@@ -8,6 +8,7 @@ import com.mop.qa.SchedulerPages.SchedulerAttendees;
 import com.mop.qa.SchedulerPages.SchedulerDateAndTime;
 import com.mop.qa.SchedulerPages.SchedulerLocation;
 import com.mop.qa.SchedulerPages.SchedulerMeetingTitle;
+import com.mop.qa.SchedulerPages.SchedulerScheduleMeeting;
 import com.mop.qa.testbase.TestBase;
 
 public class TestScheduleMeeting extends TestBase {
@@ -33,15 +34,20 @@ public class TestScheduleMeeting extends TestBase {
 			sAttend.enterAttendees(remoteDriver, attend, addAttend);
 
 			SchedulerDateAndTime sDateTime = new SchedulerDateAndTime(remoteDriver);
-			String date = rds.getValue("SCHEDULER", currentTest, "Date");
 			String duration = rds.getValue("SCHEDULER", currentTest, "Duration");
-			String timeSlot = rds.getValue("SCHEDULER", currentTest, "Time Slot");
-			sDateTime.enterDateAndTime(remoteDriver, date, duration, timeSlot);
-//
-//			SchedulerLocation sLoc = new SchedulerLocation(remoteDriver);
-//			String Location;
-//			String bridgeNumber;
+			sDateTime.enterDateAndTime(remoteDriver, duration);
 
+			SchedulerLocation sLoc = new SchedulerLocation(remoteDriver);
+			String location = rds.getValue("SCHEDULER", currentTest, "Location");
+			String bridgeNumber = rds.getValue("SCHEDULER", currentTest, "BridgeNumber");
+			System.out.println(bridgeNumber);
+			sLoc.enterLocation(remoteDriver, location, bridgeNumber);
+			
+			SchedulerScheduleMeeting sMeeting = new SchedulerScheduleMeeting(remoteDriver);
+			String flexibility = rds.getValue("SCHEDULER", currentTest, "Flexibility");
+			String agenda = rds.getValue("SCHEDULER", currentTest, "Agenda");
+			sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber, sLoc.selectedLocation);
+			sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
 			
 		} catch (Exception e) {
 			LOGGER.info(e);
