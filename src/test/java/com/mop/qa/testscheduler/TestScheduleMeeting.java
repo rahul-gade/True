@@ -49,6 +49,7 @@ public class TestScheduleMeeting extends TestBase {
 			sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber, sLoc.selectedLocation);
 			sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
 			
+			
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

@@ -32,7 +32,6 @@ import org.testng.annotations.BeforeTest;
 
 import com.mop.qa.Utilities.ExtentUtility;
 import com.mop.qa.Utilities.ReadDataSheet;
-
 import io.appium.java_client.AppiumDriver;
 
 /**
