@@ -51,5 +51,11 @@ public class SchedulerHome extends PageBase {
 			assertFalse("Top Header is displayed.");
 	}
 
-
+	public void testMeetingInvit(RemoteWebDriver driver) {
+		//TODO
+	}
+	
+	public void testCreatedMeeting (RemoteWebDriver driver, String m_Title) {
+		//TODO
+	}
 }

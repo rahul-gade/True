@@ -35,18 +35,18 @@ public class SchedulerAttendees extends PageBase {
 
 	public void enterAttendees(RemoteWebDriver driver, String attend, String addAttend) throws Exception{
 		//Attendee by Search
-		click(inputAttendees, "Attendees Input");
-		Thread.sleep(500);
-		String att = "//div[text()='HOLDER']";
-		enterText(inputAttendees, attend, "User Name");
-		if(driver.findElements(By.xpath(att.replace("HOLDER", attend))).size()>0) {
-			click(driver.findElement(By.xpath(att.replace("HOLDER", attend))), attend);
-			if(driver.findElement(By.xpath("//mat-chip/span")).getText().trim().equals(attend))
-				assertTrue("attendee added");
-		}
-		else
-			assertFalse(attend+ " User Not Found");
-		Thread.sleep(500);
+//		click(inputAttendees, "Attendees Input");
+//		Thread.sleep(500);
+//		String att = "//div[text()='HOLDER']";
+//		enterText(inputAttendees, attend, "User Name");
+//		if(driver.findElements(By.xpath(att.replace("HOLDER", attend))).size()>0) {
+//			click(driver.findElement(By.xpath(att.replace("HOLDER", attend))), attend);
+//			if(driver.findElement(By.xpath("//mat-chip/span")).getText().trim().equals(attend))
+//				assertTrue("attendee added");
+//		}
+//		else
+//			assertFalse(attend+ " User Not Found");
+//		Thread.sleep(500);
 		
 		//Attendee by contact Cards
 		click(contactCard_1, "Contact Card 1");
@@ -57,17 +57,17 @@ public class SchedulerAttendees extends PageBase {
 			assertFalse("Attendee not added by Contact Card");
 		
 		//Attendee by 'add project team'
-		click(linkAddProjectTeam, "Add Project Team"); 
-		Thread.sleep(100);
-		if(driver.findElements(By.xpath("//mat-chip")).size()>2)
-			assertTrue("Attendee added by Add Project Team");
-		else
-			assertTrue("Attendee not added by Add Project Team");
+//		click(linkAddProjectTeam, "Add Project Team"); 
+//		Thread.sleep(100);
+//		if(driver.findElements(By.xpath("//mat-chip")).size()>2)
+//			assertTrue("Attendee added by Add Project Team");
+//		else
+//			assertTrue("Attendee not added by Add Project Team");
 		
 		//plus button.
-		for (int i = 1; i <= Integer.parseInt(addAttend); i++) {
-			click(btnPlus, "+ Attendee");
-		}
+//		for (int i = 1; i <= Integer.parseInt(addAttend); i++) {
+//			click(btnPlus, "+ Attendee");
+//		}
 		click(btnNext, "Next");
 		Thread.sleep(1000);
 	}

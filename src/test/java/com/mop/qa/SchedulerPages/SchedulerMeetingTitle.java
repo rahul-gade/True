@@ -1,5 +1,8 @@
 package com.mop.qa.SchedulerPages;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -30,6 +33,7 @@ public class SchedulerMeetingTitle extends PageBase{
 	@FindBy(css = "span.icon")
 	WebElement newSchedule;
 	
+	public String m_Title = "";
 	
 	public void enterTitleandProject(RemoteWebDriver driver, String meetingTitle, String projectName) throws Exception{
 		Thread.sleep(1000);
@@ -37,8 +41,11 @@ public class SchedulerMeetingTitle extends PageBase{
 		Thread.sleep(500);
 		if(newMeetingHeader.getText().trim().equals("NEW MEETING")) {
 			assertTrue("Landed on New Meeting Screen");
+			Date date = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+			m_Title = meetingTitle + " - "+ formatter.format(date);
 			click(inputMeetingTitle, "MeetingTitle");
-			enterText(inputMeetingTitle, meetingTitle, "MeetingTitle");
+			enterText(inputMeetingTitle, m_Title, "MeetingTitle");
 			Thread.sleep(200);
 			click(drpdwnProject, "Project DropDown");
 			Thread.sleep(500);
