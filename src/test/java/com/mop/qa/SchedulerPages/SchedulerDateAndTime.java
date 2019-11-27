@@ -50,7 +50,7 @@ public class SchedulerDateAndTime extends PageBase {
 	public String selectedDate = "";
 	public String selectedTime = "";
 
-	public void enterDateAndTime(RemoteWebDriver driver, String duration) throws Exception {
+	public void selectTimeSlot(RemoteWebDriver driver, String duration) throws Exception {
 //		duration
 		click(drpdwnDuration, "Duration Dropdown");
 		Thread.sleep(500);

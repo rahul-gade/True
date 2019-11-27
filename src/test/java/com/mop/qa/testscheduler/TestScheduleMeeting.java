@@ -25,80 +25,60 @@ public class TestScheduleMeeting extends TestBase {
 			String uname = rds.getValue("SCHEDULER", currentTest, "UserName");
 			String pwd = rds.getValue("SCHEDULER", currentTest, "Password");
 			inst.launchApp(startURL, uname, pwd);
-			
+
+			// COLLECTING DATA AND CREATING OBJECTS
+			// Scheduler HomePage
+			SchedulerHome sHome = new SchedulerHome(remoteDriver);
+			// Title Page Details
+			SchedulerMeetingTitle sTitle = new SchedulerMeetingTitle(remoteDriver);
+			String meetingTitle = rds.getValue("SCHEDULER", currentTest, "MeetingTitle");
+			String projectName = rds.getValue("SCHEDULER", currentTest, "ProjectName");
+			// Attendees Page Details
+			SchedulerAttendees sAttend = new SchedulerAttendees(remoteDriver);
+			String attend = rds.getValue("SCHEDULER", currentTest, "Attendee");
+			String addAttend = rds.getValue("SCHEDULER", currentTest, "AdditionalAttendees");
+			// Date Time Page Object
+			SchedulerDateAndTime sDateTime = new SchedulerDateAndTime(remoteDriver);
+			// Location Page
+			SchedulerLocation sLoc = new SchedulerLocation(remoteDriver);
+			String location = rds.getValue("SCHEDULER", currentTest, "Location");
+			String bridgeNumber = rds.getValue("SCHEDULER", currentTest, "BridgeNumber");
+			// Schedule Page
+			SchedulerScheduleMeeting sMeeting = new SchedulerScheduleMeeting(remoteDriver);
+			String agenda = rds.getValue("SCHEDULER", currentTest, "Agenda");
+			String flexibility = rds.getValue("SCHEDULER", currentTest, "Flexibility");
+
 			switch (scheduleType) {
-			case "Full Journey": 
-				try {
-					SchedulerMeetingTitle sTitle = new SchedulerMeetingTitle(remoteDriver);
-					String meetingTitle = rds.getValue("SCHEDULER", currentTest, "MeetingTitle");
-					String projectName = rds.getValue("SCHEDULER", currentTest, "ProjectName");
-					sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
+			case "Full Journey":
+				sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
+				sAttend.enterAttendees(remoteDriver, attend, addAttend);
+				String duration = rds.getValue("SCHEDULER", currentTest, "Duration");
+				sDateTime.selectTimeSlot(remoteDriver, duration);
+				sLoc.enterLocation(remoteDriver, location, bridgeNumber);
+				sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber,
+						sLoc.selectedLocation);
+				sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
+				sMeeting.scheduleMeeting(remoteDriver);
+				sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
 
-					SchedulerAttendees sAttend = new SchedulerAttendees(remoteDriver);
-					String attend = rds.getValue("SCHEDULER", currentTest, "Attendee");
-					String addAttend = rds.getValue("SCHEDULER", currentTest, "AdditionalAttendees");
-					sAttend.enterAttendees(remoteDriver, attend, addAttend);
-
-					SchedulerDateAndTime sDateTime = new SchedulerDateAndTime(remoteDriver);
-					String duration = rds.getValue("SCHEDULER", currentTest, "Duration");
-					sDateTime.enterDateAndTime(remoteDriver, duration);
-
-					SchedulerLocation sLoc = new SchedulerLocation(remoteDriver);
-					String location = rds.getValue("SCHEDULER", currentTest, "Location");
-					String bridgeNumber = rds.getValue("SCHEDULER", currentTest, "BridgeNumber");
-					System.out.println(bridgeNumber);
-					sLoc.enterLocation(remoteDriver, location, bridgeNumber);
-
-					SchedulerScheduleMeeting sMeeting = new SchedulerScheduleMeeting(remoteDriver);
-					String flexibility = rds.getValue("SCHEDULER", currentTest, "Flexibility");
-					String agenda = rds.getValue("SCHEDULER", currentTest, "Agenda");
-					sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime,
-							bridgeNumber, sLoc.selectedLocation);
-					sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
-				} catch (Exception e) {
-					LOGGER.info(e);
-				}
-				
 			case "Customize":
-				try {
-					SchedulerMeetingTitle sTitle = new SchedulerMeetingTitle(remoteDriver);
-					String meetingTitle = rds.getValue("SCHEDULER", currentTest, "MeetingTitle");
-					String projectName = rds.getValue("SCHEDULER", currentTest, "ProjectName");
-					sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
+				sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
+				sAttend.enterAttendees(remoteDriver, attend, addAttend);
+				String startTime = rds.getValue("SCHEDULER", currentTest, "BeginTime");
+				String endTime = rds.getValue("SCHEDULER", currentTest, "EndTime");
+				sDateTime.enterCustomeDateTime(remoteDriver, startTime, endTime);
+				sLoc.enterLocation(remoteDriver, location, bridgeNumber);
+				sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber,
+						sLoc.selectedLocation);
+				sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
+				sMeeting.scheduleMeeting(remoteDriver);
+				sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
 
-					SchedulerAttendees sAttend = new SchedulerAttendees(remoteDriver);
-					String attend = rds.getValue("SCHEDULER", currentTest, "Attendee");
-					String addAttend = rds.getValue("SCHEDULER", currentTest, "AdditionalAttendees");
-					sAttend.enterAttendees(remoteDriver, attend, addAttend);
-
-					SchedulerDateAndTime sDateTime = new SchedulerDateAndTime(remoteDriver);
-					String startTime = rds.getValue("SCHEDULER", currentTest, "BeginTime");
-					String endTime = rds.getValue("SCHEDULER", currentTest, "EndTime");
-					sDateTime.enterCustomeDateTime(remoteDriver, startTime, endTime);
-
-					SchedulerLocation sLoc = new SchedulerLocation(remoteDriver);
-					String location = rds.getValue("SCHEDULER", currentTest, "Location");
-					String bridgeNumber = rds.getValue("SCHEDULER", currentTest, "BridgeNumber");
-					System.out.println(bridgeNumber);
-					sLoc.enterLocation(remoteDriver, location, bridgeNumber);
-
-					SchedulerScheduleMeeting sMeeting = new SchedulerScheduleMeeting(remoteDriver);
-					String flexibility = rds.getValue("SCHEDULER", currentTest, "Flexibility");
-					String agenda = rds.getValue("SCHEDULER", currentTest, "Agenda");
-					sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime,
-							bridgeNumber, sLoc.selectedLocation);
-					sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
-					sMeeting.scheduleMeeting(remoteDriver);
-					
-					SchedulerHome sHome = new SchedulerHome(remoteDriver);
-					sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
-				} catch (Exception e) {
-					LOGGER.info(e);
-				}
+			case "From Slot":
+				sHome.findSlot(remoteDriver);
 			}
-			
-		} catch (Exception e1) {
-			LOGGER.info(e1);
+		} catch (Exception e) {
+			LOGGER.info(e);
 		}
 	}
 }
