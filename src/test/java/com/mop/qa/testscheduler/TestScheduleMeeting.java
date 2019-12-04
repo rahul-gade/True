@@ -50,6 +50,7 @@ public class TestScheduleMeeting extends TestBase {
 
 			switch (scheduleType) {
 			case "Full Journey":
+				sHome.startScheduleJourney(remoteDriver);
 				sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
 				sAttend.enterAttendees(remoteDriver, attend, addAttend);
 				String duration = rds.getValue("SCHEDULER", currentTest, "Duration");
@@ -58,10 +59,12 @@ public class TestScheduleMeeting extends TestBase {
 				sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber,
 						sLoc.selectedLocation);
 				sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
-				sMeeting.scheduleMeeting(remoteDriver);
+//				sMeeting.scheduleMeeting(remoteDriver);
 				sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
+				break;
 
 			case "Customize":
+				sHome.startScheduleJourney(remoteDriver);
 				sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
 				sAttend.enterAttendees(remoteDriver, attend, addAttend);
 				String startTime = rds.getValue("SCHEDULER", currentTest, "BeginTime");
@@ -71,11 +74,21 @@ public class TestScheduleMeeting extends TestBase {
 				sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber,
 						sLoc.selectedLocation);
 				sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
-				sMeeting.scheduleMeeting(remoteDriver);
+//				sMeeting.scheduleMeeting(remoteDriver);
 				sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
+				break;
 
 			case "From Slot":
 				sHome.findSlot(remoteDriver);
+				sTitle.enterTitleandProject(remoteDriver, meetingTitle, projectName);
+				sAttend.enterAttendees(remoteDriver, attend, addAttend);
+				sLoc.enterLocation(remoteDriver, location, bridgeNumber);
+				sMeeting.checkMeetingDetails(remoteDriver, sDateTime.selectedDate, sDateTime.selectedTime, bridgeNumber,
+						sLoc.selectedLocation);
+				sMeeting.enterFlexibilityAgenda(remoteDriver, flexibility, agenda);
+//				sMeeting.scheduleMeeting(remoteDriver);
+				sHome.testCreatedMeeting(remoteDriver, sTitle.m_Title);
+				break;
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);

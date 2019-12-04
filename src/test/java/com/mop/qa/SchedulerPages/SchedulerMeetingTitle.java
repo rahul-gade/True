@@ -32,15 +32,12 @@ public class SchedulerMeetingTitle extends PageBase{
 	WebElement popUpClose;
 	@FindBy(css = "span.icon")
 	WebElement newSchedule;
+	@FindBy(css = "div.sectionTitle")
+	WebElement sectionTitle;
 	
 	public String m_Title = "";
 	
 	public void enterTitleandProject(RemoteWebDriver driver, String meetingTitle, String projectName) throws Exception{
-		Thread.sleep(1000);
-		click(newSchedule, "Schedule");
-		Thread.sleep(500);
-		if(newMeetingHeader.getText().trim().equals("NEW MEETING")) {
-			assertTrue("Landed on New Meeting Screen");
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
 			m_Title = meetingTitle + " - "+ formatter.format(date);
@@ -53,8 +50,10 @@ public class SchedulerMeetingTitle extends PageBase{
 			Thread.sleep(500);
 			click(btnNext, "NEXT button");
 			Thread.sleep(1000);
-		} else
-			assertFalse("New Meeting Screen did not open.");
+			if(sectionTitle.getText().trim().equalsIgnoreCase("Attendees"))
+				assertTrue("Landed on Attendees Page");
+			else
+				assertFalse("Attendees Page Not Displayed.");
 	}
 	
 	

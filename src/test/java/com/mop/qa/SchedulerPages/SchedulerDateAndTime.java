@@ -14,6 +14,8 @@ public class SchedulerDateAndTime extends PageBase {
 		super(remoteDriver);
 	}
 
+	@FindBy(css = "div.sectionTitle")
+	WebElement sectionTitle;
 	@FindBy(xpath = "//div[contains(text(),'Date and Time')]")
 	WebElement subHeaderDateAndTime;
 	@FindBy(xpath = "//mat-select[contains(@panelclass,'durationDropdown')]")
@@ -42,7 +44,7 @@ public class SchedulerDateAndTime extends PageBase {
 	WebElement startTime;
 	@FindBy(xpath = "//div[@class='endDateTimeOptions']")
 	WebElement finishTime;
-	
+
 	String selectDuration = "//mat-option[contains(@class,'datTeime1')]//span[contains(text(),'PLACEHOLDER')]";
 	String selectTimeSlot = "//div[contains(@class,'autoSuggestedSlots')]//div[contains(text(),'PLACEHOLDER')]";
 	String timeOption = "//span[text()=' PLACEHOLDER ']";
@@ -63,7 +65,7 @@ public class SchedulerDateAndTime extends PageBase {
 		} else
 			assertFalse("Duration option not found");
 		Thread.sleep(200);
-		
+
 //		time slot [find no. of slots, if more than 1, select last! ;)]
 		int slots = driver.findElements(By.xpath("//div[@class='autoSuggestedSlots']//*[contains(text(),'M')]")).size();
 		if (slots > 1)
@@ -71,26 +73,22 @@ public class SchedulerDateAndTime extends PageBase {
 					By.xpath("(//div[@class='autoSuggestedSlots']//*[contains(text(),'M')])[" + slots + "]")),
 					"Last Available Time Slot.");
 		else {
-			while(slots<1) {
+			while (slots < 1) {
 				click(slotRightArrow, "Next Slot Set.");
-				slots = driver.findElements(By.xpath("//div[@class='autoSuggestedSlots']//*[contains(text(),'M')]")).size();
+				slots = driver.findElements(By.xpath("//div[@class='autoSuggestedSlots']//*[contains(text(),'M')]"))
+						.size();
 			}
 			click(driver.findElement(
 					By.xpath("(//div[@class='autoSuggestedSlots']//*[contains(text(),'M')])[" + slots + "]")),
 					"Last Available Time Slot.");
 		}
 		Thread.sleep(500);
-
-		String fDate = driver.findElement(By.cssSelector("div.dateReflector")).getText().trim();
-		String fTime = driver.findElement(By.cssSelector("div.timeReflector")).getText().trim();
-		selectedDate = fDate.replaceAll("[^0-9A-Za-z]", "").replace("st", "").replace("nd", "").replace("rd", "")
-				.replace("th", "");
-		System.out.println("LOG============SCHEDULER DATE AND TIME============\nDATE:   "+selectedDate);
-//		selectedTime = fTime.replaceAll("[^0-9A-Z]", "");
-		System.out.println("LOG============SCHEDULER DATE AND TIME============\nTIME:   "+fTime);
-
 		click(btnNext, "Next Button");
 		Thread.sleep(1000);
+		if(sectionTitle.getText().trim().equalsIgnoreCase("Location"))
+			assertTrue("Landed on Attendees Page");
+		else
+			assertFalse("Attendees Page Not Displayed.");
 	}
 
 	public void enterCustomeDateTime(RemoteWebDriver driver, String beginTime, String endTime) throws Exception {
@@ -98,26 +96,30 @@ public class SchedulerDateAndTime extends PageBase {
 		Thread.sleep(200);
 		click(startDatePicker, "Date Picker Start Date.");
 		Thread.sleep(100);
-		
-		//DATE - next date of month.
+
+		// DATE - next date of month.
 		Integer lastDay = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
 		Integer defDate = Integer.parseInt(defaultDate.getText().trim());
-		if(defDate==lastDay) {
+		if (defDate == lastDay) {
 			click(nextMonthArrow, "Next Month");
-			click(driver.findElement(By.xpath("(//div[text()=' 1 '])[1]")),"First Date of Next Month.");
+			click(driver.findElement(By.xpath("(//div[text()=' 1 '])[1]")), "First Date of Next Month.");
 		} else
 			click(nextToDefDate, "Next Day");
 		click(doneButton, "Done");
 		Thread.sleep(100);
-		
-		//TIME - 
+
+		// TIME -
 		click(startTime, "Start Time");
 		Thread.sleep(200);
 		click(driver.findElement(By.xpath(timeOption.replace("PLACEHOLDER", beginTime))), "Begin Time Option");
 		click(finishTime, "End Time");
 		Thread.sleep(200);
 		click(driver.findElement(By.xpath(timeOption.replace("PLACEHOLDER", endTime))), "End Time Option");
-		
+
 		click(btnNext, "Next Button");
+		if(sectionTitle.getText().trim().equalsIgnoreCase("Attendees"))
+			assertTrue("Landed on Attendees Page");
+		else
+			assertFalse("Attendees Page Not Displayed.");
 	}
 }

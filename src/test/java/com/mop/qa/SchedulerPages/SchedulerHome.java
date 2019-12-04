@@ -16,11 +16,13 @@ public class SchedulerHome extends PageBase {
 	}
 
 	// Landing Page Interaction Elements.
+	@FindBy(xpath = "//div[contains(@class,'headerText')]")
+	WebElement newMeetingHeader;
 	@FindBy(css = "span.icon")
 	WebElement newSchedule;
 	@FindBy(css = "div.headerCloseIcon")
 	WebElement popUpClose;
-	@FindBy(xpath = "//div[@class='DarkslotBorder']/ancestor::div[contains(@class,'mainViewDayContentsSingleSlot')]") //following-sibling::div
+	@FindBy(xpath = "//div[@class='DarkslotBorder']/ancestor::div[contains(@class,'mainViewDayContentsSingleSlot')]/following-sibling::div") 
 	List<WebElement> availableSlots;
 	String currentSlot = "(//div[@class='DarkslotBorder']/ancestor::div[contains(@class,'mainViewDayContentsSingleSlot')]/following-sibling::div)[NUMBER]";
 	String meetingCard = "//div[contains(@class,'slotContentContainer')]";
@@ -107,7 +109,6 @@ public class SchedulerHome extends PageBase {
 				try {
 					click(slot.findElement(By.cssSelector("div.allMeetingsInASlot")), "Empty Slot");
 				} catch (Exception e) {
-					System.out.println(e + " Trying With Next");
 					continue;
 				}
 				Thread.sleep(1000);
@@ -119,5 +120,15 @@ public class SchedulerHome extends PageBase {
 		}
 		if (driver.findElements(By.tagName("app-new-meeting-schedule")).size() == 0)
 			assertFalse("No Slots Available Free in the day");
+	}
+	
+	public void startScheduleJourney(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(1000);
+		click(newSchedule, "Schedule");
+		Thread.sleep(500);
+		if(newMeetingHeader.getText().trim().equals("NEW MEETING"))
+			assertTrue("Landed on New Meeting Screen");
+		else
+			assertFalse("New Meeting Screen Not Opened.");
 	}
 }
