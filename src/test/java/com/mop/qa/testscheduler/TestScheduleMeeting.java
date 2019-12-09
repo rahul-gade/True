@@ -10,7 +10,6 @@ import com.mop.qa.SchedulerPages.SchedulerHome;
 import com.mop.qa.SchedulerPages.SchedulerLocation;
 import com.mop.qa.SchedulerPages.SchedulerMeetingTitle;
 import com.mop.qa.SchedulerPages.SchedulerScheduleMeeting;
-import com.mop.qa.Utilities.MPException;
 import com.mop.qa.testbase.TestBase;
 
 public class TestScheduleMeeting extends TestBase {
