@@ -209,6 +209,7 @@ public class IM_BasicDealDetails extends PageBase {
 		click(submit, "SUBMIT");
 		Thread.sleep(3000);
 		if (driver.findElements(By.cssSelector("app-confirm-dialog")).size() > 0) {
+			assertTrue("Confirm Dialog Box is Displayed!");
 			switch (flow) {
 			case "Create Anyway":
 				System.out.println("Running Create Anyway");
@@ -240,46 +241,51 @@ public class IM_BasicDealDetails extends PageBase {
 				break;
 			}
 		}
-		else if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules")) {
+	}
+	
+	public void subMitAndDelete(RemoteWebDriver driver) throws Exception {
+		click(submit, "SUBMIT");
+		Thread.sleep(3000);
+		if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules")) {
 			assertTrue("landed on system rules form");
-			switch(flow) {
-			case "Delete Draft" :
-				click(closeBtn, "Close Button");
+			click(closeBtn, "Close Button");
+			Thread.sleep(1000);
+			if (newDeal.isDisplayed()) {
+				assertTrue("Landed back t my deals page");
+				int available = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", createdProject))).size();
+				WebElement deal = driver.findElement(By.xpath(newSection.replace("DEAL-NAME", createdProject)));
+				click(deal.findElement(By.xpath("./parent::div//div[contains(@class,'action')]/a")), "Delete Button");
+				Thread.sleep(250);
+				assertTrue("Delete Confirm Dialog displayed", deleteDialog.isDisplayed());
+				click(delete, "Delete Button");
 				Thread.sleep(1000);
-				if (newDeal.isDisplayed()) {
-					assertTrue("Landed back t my deals page");
-					int available = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", createdProject))).size();
-					WebElement deal = driver.findElement(By.xpath(newSection.replace("DEAL-NAME", createdProject)));
-					click(deal.findElement(By.xpath("./parent::div//div[contains(@class,'action')]/a")), "Delete Button");
-					Thread.sleep(250);
-					assertTrue("Delete Confirm Dialog displayed", deleteDialog.isDisplayed());
-					click(delete, "Delete Button");
-					Thread.sleep(1000);
-					int avUpdate = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", createdProject))).size();
-					System.out.println(available);
-					System.out.println(avUpdate);
-					assertTrue("Deal Deleted Successfully", available - avUpdate == 1);
-				} else
-					assertTrue("Did not land to IM Home");
-				break;
-			case "Open Draft" :
-				click(closeBtn, "Close Button");
-				Thread.sleep(1000);
-				if (newDeal.isDisplayed()) {
-					assertTrue("Landed back t my deals page");
-					WebElement deal = driver.findElement(By.xpath(newSection.replace("DEAL-NAME", createdProject)));
-					click(deal.findElement(By.xpath("./parent::div")), "Deal Card");
-					Thread.sleep(1000);
-					if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules"))
-						assertTrue("Landed on system Rules page");
-					else
-						assertFalse("System Rules Page did not open");
-				} else
-					assertTrue("Did not land to IM Home");
-				break;
-			}
+				int avUpdate = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", createdProject))).size();
+				System.out.println(available);
+				System.out.println(avUpdate);
+				assertTrue("Deal Deleted Successfully", available - avUpdate == 1);
+			} else
+				assertTrue("Did not land to IM Home");
 		} else
-			assertFalse("System rules page not displayed");
+			assertFalse("System Rules Page did not open");
+	}
+	
+	public void submitAndOpenDraft(RemoteWebDriver driver) throws Exception{
+		click(submit, "SUBMIT");
+		Thread.sleep(3000);
+		click(closeBtn, "Close Button");
+		Thread.sleep(1000);
+		if (newDeal.isDisplayed()) {
+			assertTrue("Landed back t my deals page");
+			WebElement deal = driver.findElement(By.xpath(newSection.replace("DEAL-NAME", createdProject)));
+			click(deal.findElement(By.xpath("./parent::div")), "Deal Card");
+			Thread.sleep(1000);
+			if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules"))
+				assertTrue("Landed on system Rules page");
+			else
+				assertFalse("System Rules Page did not open");
+		} else
+			assertTrue("Did not land to IM Home");
 	}
 }
+
 

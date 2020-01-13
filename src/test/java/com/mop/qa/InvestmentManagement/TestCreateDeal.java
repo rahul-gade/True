@@ -7,7 +7,7 @@ import com.mop.qa.testbase.TestBase;
 
 public class TestCreateDeal extends TestBase {
 	private static final Logger LOGGER = Logger.getLogger(TestIMBasicDetails.class.getName());
-
+//	DEPRECATED TEST
 	@Test
 	public void createDeal() {
 		try {
@@ -28,33 +28,30 @@ public class TestCreateDeal extends TestBase {
 			String dealSponsor = rds.getValue("INVMGMT", currentTest, "dealSponsor");
 			String dealOwner = rds.getValue("INVMGMT", currentTest, "dealOwner");
 			String teamMembers = rds.getValue("INVMGMT", currentTest, "teamMembers");
-			String flow = rds.getValue("INVMGMT", currentTest, "Flow");
 			IM_BasicDealDetails bDetails = new IM_BasicDealDetails(remoteDriver);
 			bDetails.enterBasicDetails(remoteDriver, company, project, industry, sector, subSector, stake, filePath,
 					dealSponsor, dealOwner, teamMembers);
-			bDetails.submitAndSelectFlow(remoteDriver, flow);
+			bDetails.submitAndOpenDraft(remoteDriver);
 //			home.openDraft(remoteDriver);
-			if (flow.equals("Open Draft")) {
-				String dealSize = rds.getValue("INVMGMT", currentTest, "dealSize");
-				String ruleSector = rds.getValue("INVMGMT", currentTest, "ruleSector");
-				String ruleStake = rds.getValue("INVMGMT", currentTest, "ruleStake");
-				String ebitda = rds.getValue("INVMGMT", currentTest, "EBITDA");
-				IM_SystemRules sysRule1 = new IM_SystemRules(remoteDriver);
-				sysRule1.enterDetails(remoteDriver, dealSize, ruleSector, ruleStake, ebitda);
-				
-				String growth = rds.getValue("INVMGMT", currentTest, "growth");
-				String scale = rds.getValue("INVMGMT", currentTest, "scale");
-				IM_SystemRules_2 sysRule2 = new IM_SystemRules_2(remoteDriver);
-				sysRule2.enterDetails(remoteDriver, growth, scale);
-				
-				String ROCE = rds.getValue("INVMGMT", currentTest, "ROCE");
-				String margin = rds.getValue("INVMGMT", currentTest, "GrossMargin");
-				IM_SystemRules_3 sysRule3 = new IM_SystemRules_3(remoteDriver);
-				sysRule3.enterDetails(remoteDriver, ROCE, margin);
-				
-				IM_SubmitSystemRules submit = new IM_SubmitSystemRules(remoteDriver);
-				submit.collapseFieldsAndSubmit();
-			}
+			String dealSize = rds.getValue("INVMGMT", currentTest, "dealSize");
+			String ruleSector = rds.getValue("INVMGMT", currentTest, "ruleSector");
+			String ruleStake = rds.getValue("INVMGMT", currentTest, "ruleStake");
+			String ebitda = rds.getValue("INVMGMT", currentTest, "EBITDA");
+			IM_SystemRules sysRule1 = new IM_SystemRules(remoteDriver);
+			sysRule1.enterDetails(remoteDriver, dealSize, ruleSector, ruleStake, ebitda);
+			
+			String growth = rds.getValue("INVMGMT", currentTest, "growth");
+			String scale = rds.getValue("INVMGMT", currentTest, "scale");
+			IM_SystemRules_2 sysRule2 = new IM_SystemRules_2(remoteDriver);
+			sysRule2.enterDetails(remoteDriver, growth, scale);
+			
+			String ROCE = rds.getValue("INVMGMT", currentTest, "ROCE");
+			String margin = rds.getValue("INVMGMT", currentTest, "GrossMargin");
+			IM_SystemRules_3 sysRule3 = new IM_SystemRules_3(remoteDriver);
+			sysRule3.enterDetails(remoteDriver, ROCE, margin);
+			
+			IM_SubmitSystemRules submit = new IM_SubmitSystemRules(remoteDriver);
+			submit.collapseFieldsAndSubmit();
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

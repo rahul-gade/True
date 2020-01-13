@@ -118,8 +118,7 @@ public class IM_Home extends PageBase {
 		if (driver.findElementsByTagName("app-deal-list-view").size() == 0)
 			assertTrue("Deals are shown in grid view");
 		else
-			assertFalse("View did not change");
-		
+			assertFalse("View did not change");		
 //		tabs
 		assertTrue("Deal Pipeline Tab is displayed", dealPipeline.isDisplayed());
 		assertTrue("All Deals Tab is displayed", allDeals.isDisplayed());
@@ -157,14 +156,6 @@ public class IM_Home extends PageBase {
 		assertTrue("New Deal Pop-up Opened", newDealPopup.getText().contains("Basic Deal Details"));
 	}
 
-//	probably a Useless Method
-	public void checkDraftCount(RemoteWebDriver driver, String project) throws Exception {
-		if (driver.findElements(By.xpath(newSection.replace("DEAL-NAME", project))).size() > 1)
-			assertFalse("More than 1 draft exists");
-		else { // TODO
-		}
-	}
-
 	public void deleteAllAutoDrafts(RemoteWebDriver driver) throws Exception {
 		int drafts = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", "Automation Test"))).size();
 		while (drafts > 0) {
@@ -177,11 +168,15 @@ public class IM_Home extends PageBase {
 			drafts = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", "Automation Test"))).size();
 		}
 	}
-	//Useless Method - till system rules get done
-	public void openDraft(RemoteWebDriver driver) throws Exception{
-		WebElement deal = driver.findElement(By.xpath(newSection.replace("DEAL-NAME", "Automation Test")));
-		click(deal.findElement(By.xpath("./parent::div")), "Deal Card");
-		Thread.sleep(2000);
+
+	public void findLiveDeal(RemoteWebDriver driver, String project) throws Exception {
+		Thread.sleep(1000);
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		project+=dateFormat.format(date);
+		WebElement deal = driver.findElement(By.xpath(liveSection.replace("DEAL-NAME", project)));
+		click(deal.findElement(By.xpath("./parent::div")), "Project Card");
+		Thread.sleep(1500);
 	}
 
 }

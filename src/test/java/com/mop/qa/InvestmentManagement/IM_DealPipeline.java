@@ -31,7 +31,7 @@ public class IM_DealPipeline extends PageBase {
 	WebElement searchBar;
 	@FindBy(css = "ul.filter-action-list li a")
 	WebElement summaryBtn;
-	
+
 	@FindBy(xpath = "//mat-select-trigger")
 	WebElement activityDDown;
 
@@ -43,7 +43,7 @@ public class IM_DealPipeline extends PageBase {
 	public void checkDealPipeline(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(500);
 		click(dealPipeline, "Deal Pipeline");
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 		assertTrue("Active Tab is 'Deal Pipeline'", activeTab.getText().equals("Deal Pipeline"));
 		if (header.getText().contains("SUMMARY"))
 			assertTrue("Heading is proper");
@@ -55,20 +55,20 @@ public class IM_DealPipeline extends PageBase {
 			assertFalse("Inventory view does not have six sections");
 		click(activityDDown, "Activities For DropDown");
 		Thread.sleep(100);
-		if(driver.findElements(By.cssSelector("div.mat-select-panel")).size()>0) {
+		if (driver.findElements(By.cssSelector("div.mat-select-panel")).size() > 0) {
 			assertTrue("Week Drop Down displayed");
 			Actions action = new Actions(driver);
 			action.moveToElement(dealPipeline).click().build().perform();
 		} else
 			assertFalse("Week Drop Down NOT displayed");
-		
+
 		click(closeBtn, "Close Btn");
 		Thread.sleep(500);
-		if(searchBar.isDisplayed())
+		if (searchBar.isDisplayed())
 			assertTrue("Landed on summary page");
 		else
 			assertFalse("Summary Page not shown");
-		
+
 		click(summaryBtn, "Summary Btn");
 		Thread.sleep(500);
 		if (header.getText().contains("SUMMARY"))
