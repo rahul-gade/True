@@ -82,13 +82,22 @@ public class IM_DealSummaryPage extends PageBase {
 	@FindBy(css = "a[routerLink=notes]")
 	WebElement notes;
 
-//	sector details
+//	sector details data
 	@FindBy(xpath = "//p[text()='Sub-sector']/following-sibling::p")
-	WebElement subSector;
+	WebElement subSectorData;
 	@FindBy(xpath = "//p[text()='Stake']/following-sibling::p")
-	WebElement stake;
+	WebElement stakeData;
 	@FindBy(xpath = "//ul[contains(@class,'sector-details')]//span[text()='$']/parent::p")
-	WebElement dealSize;
+	WebElement dealSizeData;
+	@FindBy(xpath = "//p[text()='Source']/following-sibling::p")
+	WebElement sourceData;
+	@FindBy(xpath = "//p[text()='R&A Status']/following-sibling::p/span")
+	WebElement rnaCircle;
+	@FindBy(xpath ="//p[text()='Portfolio Fit']/following-sibling::p/span")
+	WebElement portCircle;
+//	sector edit
+	@FindBy(css = "div.dd-sector-details")
+	WebElement sectorSection;
 	@FindBy(css = "im-sector-details a.edit-icon")
 	WebElement editSector;
 	@FindBy(css = "input[formcontrolname=sourceName]")
@@ -99,11 +108,11 @@ public class IM_DealSummaryPage extends PageBase {
 	WebElement portfolioFit;
 	String likeOptions = "mat-option[value=OPTION]"; // positive - negative - neutral --- REPLACE 'OPTION' [css]
 	
+//	universal
 	@FindBy(css = "button.btn")
 	WebElement saveBtn;
 	@FindBy(css = "button.link")
 	WebElement cancelBtn;
-//	company information
 
 	public void analyzePage(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(driver);
@@ -169,31 +178,35 @@ public class IM_DealSummaryPage extends PageBase {
 
 	public void analyzeSectorDetails(RemoteWebDriver driver, String dealSource, String RNA, String portfolio) throws Exception {
 		Actions action = new Actions(driver);
-		if (subSector.isDisplayed()) {
-			action.moveToElement(subSector).perform();
-			assertTrue("Subsector is displayed as: "+subSector.getText());
+		if (subSectorData.isDisplayed()) {
+			action.moveToElement(subSectorData).perform();
+			assertTrue("Subsector is displayed as: "+subSectorData.getText());
 		} else
 			assertFalse("Subsector is NOT displayed");
 		Thread.sleep(100);
-		if (stake.isDisplayed()) {
-			action.moveToElement(stake).perform();
-			assertTrue("Stake is displayed as: "+stake.getText());
+		if (stakeData.isDisplayed()) {
+			action.moveToElement(stakeData).perform();
+			assertTrue("Stake is displayed as: "+stakeData.getText());
 		} else
 			assertFalse("Stake is NOT displayed");
 		Thread.sleep(100);
-		if (dealSize.isDisplayed()) {
-			action.moveToElement(dealSize).perform();
-			assertTrue("Deal Size is displayed as: $"+dealSize.getText()+" Mn");
+		if (dealSizeData.isDisplayed()) {
+			action.moveToElement(dealSizeData).perform();
+			assertTrue("Deal Size is displayed as:"+dealSizeData.getText());
 		} else
 			assertFalse("Deal Size is NOT displayed");
 		Thread.sleep(100);
-		
-		click(editSector, "Edit Sector");
+		action.moveToElement(sectorSection).perform();
+		click(editSector, "Edit Sector Pencil Icon");
 		Thread.sleep(100);
 		click(source, "Source");
 		enterText(source, dealSource, "Source");
 		Thread.sleep(250);
-		click("//mat-option", "Source Option");
+		if (driver.findElements(By.xpath("//mat-option")).size()>0) {
+			assertTrue("Source Options Displayed");
+			click("//mat-option", "Source Option");
+		} else
+			assertFalse("Source options are not displayed");
 		Thread.sleep(250);
 		click(rnaStatus, "RNA Status");
 		Thread.sleep(250);
@@ -204,5 +217,14 @@ public class IM_DealSummaryPage extends PageBase {
 		click(driver.findElement(By.cssSelector(likeOptions.replace("OPTION", portfolio))), "POrtfolio Option");
 		Thread.sleep(250);
 		click(saveBtn, "Save");
+		Thread.sleep(250);
+		if (sourceData.isDisplayed()) {
+			action.moveToElement(sourceData).perform();
+			assertTrue("Source is displayed as:"+sourceData.getText());
+		} else
+			assertFalse("Source is NOT Saved");
+		action.moveToElement(rnaCircle).perform();
+		assertTrue("R&A Status Circle is shown", rnaCircle.isDisplayed());
+		assertTrue("Portfolio Circle is shown", portCircle.isDisplayed());
 	}
 }

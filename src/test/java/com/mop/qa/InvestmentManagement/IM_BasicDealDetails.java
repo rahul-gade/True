@@ -201,20 +201,20 @@ public class IM_BasicDealDetails extends PageBase {
 			ownerChip = driver.findElement(By.cssSelector("app-deal-owner mat-chip"));
 			assertTrue("Owner Chip Added Successfully", ownerChip.getText().contains(owner));
 		}
+		Thread.sleep(1000);
 //			team members [optional]
 		// TODO
 	}
 
 	public void submitAndSelectFlow(RemoteWebDriver driver, String flow) throws Exception {
 		click(submit, "SUBMIT");
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		if (driver.findElements(By.cssSelector("app-confirm-dialog")).size() > 0) {
 			assertTrue("Confirm Dialog Box is Displayed!");
 			switch (flow) {
 			case "Create Anyway":
 				System.out.println("Running Create Anyway");
 				click(createAnyway, "Create Deal Anyway");
-
 				Thread.sleep(2000);
 				if (dealTitle.getText().contains(createdProject))
 					assertTrue("Landed on Deal Summary Page");
@@ -245,7 +245,7 @@ public class IM_BasicDealDetails extends PageBase {
 	
 	public void subMitAndDelete(RemoteWebDriver driver) throws Exception {
 		click(submit, "SUBMIT");
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules")) {
 			assertTrue("landed on system rules form");
 			click(closeBtn, "Close Button");
@@ -271,7 +271,7 @@ public class IM_BasicDealDetails extends PageBase {
 	
 	public void submitAndOpenDraft(RemoteWebDriver driver) throws Exception{
 		click(submit, "SUBMIT");
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		click(closeBtn, "Close Button");
 		Thread.sleep(1000);
 		if (newDeal.isDisplayed()) {
@@ -282,7 +282,7 @@ public class IM_BasicDealDetails extends PageBase {
 			if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules"))
 				assertTrue("Landed on system Rules page");
 			else
-				assertFalse("System Rules Page did not open");
+				assertFalse("System Rules Page did not open - just submitted");
 		} else
 			assertTrue("Did not land to IM Home");
 	}
