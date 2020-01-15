@@ -93,7 +93,7 @@ public class IM_DealSummaryPage extends PageBase {
 	WebElement sourceData;
 	@FindBy(xpath = "//p[text()='R&A Status']/following-sibling::p/span")
 	WebElement rnaCircle;
-	@FindBy(xpath ="//p[text()='Portfolio Fit']/following-sibling::p/span")
+	@FindBy(xpath = "//p[text()='Portfolio Fit']/following-sibling::p/span")
 	WebElement portCircle;
 //	sector edit
 	@FindBy(css = "div.dd-sector-details")
@@ -107,12 +107,20 @@ public class IM_DealSummaryPage extends PageBase {
 	@FindBy(css = "mat-select[formcontrolname='portfolioFitControl']")
 	WebElement portfolioFit;
 	String likeOptions = "mat-option[value=OPTION]"; // positive - negative - neutral --- REPLACE 'OPTION' [css]
-	
+
 //	universal
 	@FindBy(css = "button.btn")
 	WebElement saveBtn;
 	@FindBy(css = "button.link")
 	WebElement cancelBtn;
+
+//	financials
+	@FindBy(xpath = "//div[@class='dd-panel'][2]")
+	WebElement finSection;
+
+//	attractiveness Index
+	@FindBy(css = "div.attractiveness-content")
+	WebElement indexCard;
 
 	public void analyzePage(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(driver);
@@ -174,25 +182,32 @@ public class IM_DealSummaryPage extends PageBase {
 			assertTrue("Unread activities is shown as count: " + countBadge.getText());
 		action.moveByOffset(50, 0).click().build().perform();
 		Thread.sleep(500);
+
+		if (finSection.isDisplayed()) {
+			action.moveToElement(indexCard).build().perform();
+			assertTrue("Financials Section is displayed");
+		} else
+			assertFalse("Financials Section is not displayed");
 	}
 
-	public void analyzeSectorDetails(RemoteWebDriver driver, String dealSource, String RNA, String portfolio) throws Exception {
+	public void analyzeSectorDetails(RemoteWebDriver driver, String dealSource, String RNA, String portfolio)
+			throws Exception {
 		Actions action = new Actions(driver);
 		if (subSectorData.isDisplayed()) {
 			action.moveToElement(subSectorData).perform();
-			assertTrue("Subsector is displayed as: "+subSectorData.getText());
+			assertTrue("Subsector is displayed as: " + subSectorData.getText());
 		} else
 			assertFalse("Subsector is NOT displayed");
 		Thread.sleep(100);
 		if (stakeData.isDisplayed()) {
 			action.moveToElement(stakeData).perform();
-			assertTrue("Stake is displayed as: "+stakeData.getText());
+			assertTrue("Stake is displayed as: " + stakeData.getText());
 		} else
 			assertFalse("Stake is NOT displayed");
 		Thread.sleep(100);
 		if (dealSizeData.isDisplayed()) {
 			action.moveToElement(dealSizeData).perform();
-			assertTrue("Deal Size is displayed as:"+dealSizeData.getText());
+			assertTrue("Deal Size is displayed as:" + dealSizeData.getText());
 		} else
 			assertFalse("Deal Size is NOT displayed");
 		Thread.sleep(100);
@@ -202,7 +217,7 @@ public class IM_DealSummaryPage extends PageBase {
 		click(source, "Source");
 		enterText(source, dealSource, "Source");
 		Thread.sleep(250);
-		if (driver.findElements(By.xpath("//mat-option")).size()>0) {
+		if (driver.findElements(By.xpath("//mat-option")).size() > 0) {
 			assertTrue("Source Options Displayed");
 			click("//mat-option", "Source Option");
 		} else
@@ -220,7 +235,7 @@ public class IM_DealSummaryPage extends PageBase {
 		Thread.sleep(250);
 		if (sourceData.isDisplayed()) {
 			action.moveToElement(sourceData).perform();
-			assertTrue("Source is displayed as:"+sourceData.getText());
+			assertTrue("Source is displayed as:" + sourceData.getText());
 		} else
 			assertFalse("Source is NOT Saved");
 		action.moveToElement(rnaCircle).perform();
