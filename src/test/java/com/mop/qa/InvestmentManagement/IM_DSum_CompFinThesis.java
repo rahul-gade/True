@@ -110,11 +110,11 @@ public class IM_DSum_CompFinThesis extends PageBase {
 	WebElement detailsTab;
 
 	public void enterThesis(RemoteWebDriver driver) throws Exception {
-//		if(driver.findElements(By.cssSelector("a[routerLink='hypothesis']")).size()>0)
-//			assertFalse("Hypothesis Tab Already Active");
-//		else
-//			assertTrue("Hypothesis Tab Inactive by default");
-		
+		if (driver.findElements(By.cssSelector("a[routerLink='hypothesis']")).size() > 0)
+			assertFalse("Hypothesis Tab Already Active");
+		else
+			assertTrue("Hypothesis Tab Inactive by default");
+
 		Actions action = new Actions(driver);
 		action.moveToElement(thesisSection).perform();
 		click(editThesis, "Edit Thesis Section");
@@ -137,12 +137,12 @@ public class IM_DSum_CompFinThesis extends PageBase {
 			assertTrue("Hypothesis Tab Activated");
 			action.moveToElement(hypothesisTab).click().build().perform();
 			Thread.sleep(500);
-			if(driver.findElements(By.cssSelector("section.hypotheses-section")).size()>0)
+			if (driver.findElements(By.cssSelector("section.hypotheses-section")).size() > 0)
 				assertTrue("Hypothessis Section Opened");
 			else
 				assertFalse("Hypothessis Section Opened");
 			Thread.sleep(500);
-			
+
 		} else
 			assertFalse("Hypothesis Tab Not Activated");
 	}

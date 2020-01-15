@@ -24,7 +24,7 @@ public class TestAnalyzeDealSummary extends TestBase {
 			String source = rds.getValue("INVMGMT", currentTest, "source");
 			String rna = rds.getValue("INVMGMT", currentTest, "RNA");
 			String portfolio = rds.getValue("INVMGMT", currentTest, "Portfolio");
-//			summary.analyzeSectorDetails(remoteDriver, source, rna, portfolio); 
+			summary.analyzeSectorDetails(remoteDriver, source, rna, portfolio); 
 			
 			String marketCap = rds.getValue("INVMGMT", currentTest, "MarketCap");
 			String HQ = rds.getValue("INVMGMT", currentTest, "HQ");
@@ -36,9 +36,9 @@ public class TestAnalyzeDealSummary extends TestBase {
 			String india = rds.getValue("INVMGMT", currentTest, "India");
 			String international = rds.getValue("INVMGMT", currentTest, "International");
 			IM_DSum_CompFinThesis sumRem = new IM_DSum_CompFinThesis(remoteDriver);
-//			sumRem.analyzeCompanyInfo(remoteDriver, marketCap, HQ, CEO, services, holders, perces, geoFocus, india, international);
+			sumRem.analyzeCompanyInfo(remoteDriver, marketCap, HQ, CEO, services, holders, perces, geoFocus, india, international);
 			
-//			sumRem.enterThesis(remoteDriver); //commented -- Hypothesis Inactive Check!
+			sumRem.enterThesis(remoteDriver); //commented -- Hypothesis Inactive Check!
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

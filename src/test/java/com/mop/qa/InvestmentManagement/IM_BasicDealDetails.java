@@ -59,7 +59,7 @@ public class IM_BasicDealDetails extends PageBase {
 	String createdProject = "";
 	String pastSection = "//h3[text()='PAST DEALS']/parent::div//div[contains(text(),'DEAL-NAME')]";
 	String newSection = "//h3[text()='NEW']/parent::div//div[contains(text(),'DEAL-NAME')]";
-	
+
 //	delete confirm
 	@FindBy(css = "app-confirm-dialog")
 	WebElement deleteDialog;
@@ -242,7 +242,7 @@ public class IM_BasicDealDetails extends PageBase {
 			}
 		}
 	}
-	
+
 	public void subMitAndDelete(RemoteWebDriver driver) throws Exception {
 		click(submit, "SUBMIT");
 		Thread.sleep(5000);
@@ -268,8 +268,8 @@ public class IM_BasicDealDetails extends PageBase {
 		} else
 			assertFalse("System Rules Page did not open");
 	}
-	
-	public void submitAndOpenDraft(RemoteWebDriver driver) throws Exception{
+
+	public void submitAndOpenDraft(RemoteWebDriver driver) throws Exception {
 		click(submit, "SUBMIT");
 		Thread.sleep(5000);
 		click(closeBtn, "Close Button");
@@ -287,5 +287,3 @@ public class IM_BasicDealDetails extends PageBase {
 			assertTrue("Did not land to IM Home");
 	}
 }
-
-

@@ -177,7 +177,11 @@ public class IM_Home extends PageBase {
 		project+=dateFormat.format(date);
 		WebElement deal = driver.findElement(By.xpath(liveSection.replace("DEAL-NAME", project)));
 		click(deal.findElement(By.xpath("./parent::div")), "Project Card");
-		Thread.sleep(1500);
+		Thread.sleep(2000);
+		if(driver.findElement(By.cssSelector("span.dd-title")).getText().contains(project))
+			assertTrue("Landed on Project Details Page");
+		else
+			assertFalse("Project Page didn't open");
 	}
 
 }
