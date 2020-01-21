@@ -45,10 +45,14 @@ public class IM_DealPipeline extends PageBase {
 		click(dealPipeline, "Deal Pipeline");
 		Thread.sleep(2500);
 		assertTrue("Active Tab is 'Deal Pipeline'", activeTab.getText().equals("Deal Pipeline"));
-		if (header.getText().contains("SUMMARY"))
-			assertTrue("Heading is proper");
-		else
-			assertFalse("heading is not proper");
+//		if (header.getText().contains("SUMMARY"))
+//			assertTrue("Heading is proper");
+//		else
+//			assertFalse("heading is not proper");
+		if(summaryBtn.isDisplayed()) {
+			click(summaryBtn, "Summary Button");
+			Thread.sleep(1000);
+		}
 		if (inventoryList.size() == 6)
 			assertTrue("six sections shown with count");
 		else

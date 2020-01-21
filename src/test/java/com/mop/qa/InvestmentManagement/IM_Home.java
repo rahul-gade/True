@@ -75,7 +75,7 @@ public class IM_Home extends PageBase {
 	WebElement deleteDialog;
 	@FindBy(css = "app-confirm-dialog button")
 	WebElement delete;
-	
+
 //	system rules
 	@FindBy(css = "h4.sub-title")
 	WebElement pageHeading;
@@ -100,7 +100,9 @@ public class IM_Home extends PageBase {
 		Thread.sleep(200);
 		click(IMNavOption, "Investment");
 		waitForPageLoad();
-		Thread.sleep(2000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 	}
 
 	public void checkHomePage(RemoteWebDriver driver) throws Exception {
@@ -119,7 +121,7 @@ public class IM_Home extends PageBase {
 		if (driver.findElementsByTagName("app-deal-list-view").size() == 0)
 			assertTrue("Deals are shown in grid view");
 		else
-			assertFalse("View did not change");		
+			assertFalse("View did not change");
 //		tabs
 		assertTrue("Deal Pipeline Tab is displayed", dealPipeline.isDisplayed());
 		assertTrue("All Deals Tab is displayed", allDeals.isDisplayed());
@@ -174,11 +176,11 @@ public class IM_Home extends PageBase {
 		Thread.sleep(1500);
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
-		project+=dateFormat.format(date);
+		project += dateFormat.format(date);
 		WebElement deal = driver.findElement(By.xpath(liveSection.replace("DEAL-NAME", project)));
 		click(deal.findElement(By.xpath("./parent::div")), "Project Card");
 		Thread.sleep(2000);
-		if(driver.findElement(By.cssSelector("span.dd-title")).getText().contains(project))
+		if (driver.findElement(By.cssSelector("span.dd-title")).getText().contains(project))
 			assertTrue("Landed on Project Details Page");
 		else
 			assertFalse("Project Page didn't open");

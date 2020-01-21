@@ -258,7 +258,7 @@ public class IM_BasicDealDetails extends PageBase {
 				Thread.sleep(250);
 				assertTrue("Delete Confirm Dialog displayed", deleteDialog.isDisplayed());
 				click(delete, "Delete Button");
-				Thread.sleep(1000);
+				Thread.sleep(2500);
 				int avUpdate = driver.findElements(By.xpath(newSection.replace("DEAL-NAME", createdProject))).size();
 				System.out.println(available);
 				System.out.println(avUpdate);

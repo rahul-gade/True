@@ -1,6 +1,5 @@
 package com.mop.qa.InvestmentManagement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,8 +10,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 public class IM_DSum_CompFinThesis extends PageBase {
 
@@ -208,7 +205,7 @@ public class IM_DSum_CompFinThesis extends PageBase {
 
 	public void analyzeCompanyInfo(RemoteWebDriver driver, String cap, String HQ, String ceo, String prods,
 			String holders, String perces, String focus, String india, String international) throws Exception {
-		String[] services = prods.split(",");
+//		String[] services = prods.split(",");
 		String[] sHolders = holders.split(",");
 		String[] sPerc = perces.split(",");
 		String[] Focus = focus.split(",");
@@ -221,7 +218,7 @@ public class IM_DSum_CompFinThesis extends PageBase {
 		Thread.sleep(250);
 		click(listed, "Listed Option");
 		Thread.sleep(250);
-		click("//span[text()='Yes']", "Yes");
+		click("//mat-option//span[text()='Yes']", "Yes");
 		Thread.sleep(250);
 		if (marketCap.isDisplayed()) {
 			assertTrue("Market Capital Field is displayed");
