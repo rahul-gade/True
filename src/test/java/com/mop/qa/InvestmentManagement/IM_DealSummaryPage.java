@@ -121,6 +121,32 @@ public class IM_DealSummaryPage extends PageBase {
 //	attractiveness Index
 	@FindBy(css = "div.attractiveness-content")
 	WebElement indexCard;
+	
+//	folders
+	@FindBy(css = "a[routerlink=documents]")
+	WebElement folderIcon;
+	@FindBy(css = "div.mat-tab-list")
+	WebElement tabList;
+	@FindBy(css = "//div[text()='DMS']")
+	WebElement dms;
+	@FindBy(css = "li[title='Select Folders']")
+	WebElement multiselect;
+	@FindBy(css = "li[title='Upload Docs']")
+	WebElement uploadIcon;
+	@FindBy(css = "li[title='Create Folder']")
+	WebElement createFolder;
+	@FindBy(css = "li[title='Delete']")
+	WebElement deleteFiles;
+	
+	public void validateFolders(RemoteWebDriver driver, String filePath) throws Exception {
+		int cut = filePath.lastIndexOf("\\");
+		String fileName_1 = filePath.substring(cut+1);
+		System.out.println(fileName_1);
+		Thread.sleep(500);
+		click(dealDetails, "Deal Details");
+		Thread.sleep(1000);
+		
+	}
 
 	public void analyzePage(RemoteWebDriver driver) throws Exception {
 		Actions action = new Actions(driver);

@@ -245,7 +245,9 @@ public class IM_BasicDealDetails extends PageBase {
 
 	public void subMitAndDelete(RemoteWebDriver driver) throws Exception {
 		click(submit, "SUBMIT");
-		Thread.sleep(5000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 		if (pageHeading.isDisplayed() && pageHeading.getText().contains("System Rules")) {
 			assertTrue("landed on system rules form");
 			click(closeBtn, "Close Button");
@@ -271,7 +273,9 @@ public class IM_BasicDealDetails extends PageBase {
 
 	public void submitAndOpenDraft(RemoteWebDriver driver) throws Exception {
 		click(submit, "SUBMIT");
-		Thread.sleep(5000);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 		click(closeBtn, "Close Button");
 		Thread.sleep(1000);
 		if (newDeal.isDisplayed()) {

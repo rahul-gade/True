@@ -43,7 +43,7 @@ public class IM_DealPipeline extends PageBase {
 	public void checkDealPipeline(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(500);
 		click(dealPipeline, "Deal Pipeline");
-		Thread.sleep(2500);
+		Thread.sleep(7000);
 		assertTrue("Active Tab is 'Deal Pipeline'", activeTab.getText().equals("Deal Pipeline"));
 //		if (header.getText().contains("SUMMARY"))
 //			assertTrue("Heading is proper");
