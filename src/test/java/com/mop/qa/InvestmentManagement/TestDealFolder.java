@@ -11,6 +11,7 @@ public class TestDealFolder extends TestBase{
 	@Test
 	public void testDealFolder() {
 		try {
+			System.out.println("Test -->  "+this.getClass().getSimpleName());
 			String startURL = rds.getValue("INVMGMT", currentTest, "URL");
 			String uname = rds.getValue("INVMGMT", currentTest, "UserName");
 			String pwd = rds.getValue("INVMGMT", currentTest, "Password");
@@ -21,7 +22,10 @@ public class TestDealFolder extends TestBase{
 			
 			IM_DealSummaryPage summary = new IM_DealSummaryPage(remoteDriver);
 			String filePath = rds.getValue("INVMGMT", currentTest, "filePath");
+			String newFile = rds.getValue("INVMGMT", currentTest, "filePathX");
 			summary.validateFolders(remoteDriver, filePath);
+			summary.createFolder(remoteDriver);
+			summary.uploadFile(remoteDriver, newFile);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

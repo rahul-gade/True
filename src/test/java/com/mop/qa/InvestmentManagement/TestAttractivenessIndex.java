@@ -11,6 +11,7 @@ public class TestAttractivenessIndex extends TestBase{
 	@Test
 	public void testAttractivenessIndex() {
 		try {
+			System.out.println("Test -->  "+this.getClass().getSimpleName());
 			String startURL = rds.getValue("INVMGMT", currentTest, "URL");
 			String uname = rds.getValue("INVMGMT", currentTest, "UserName");
 			String pwd = rds.getValue("INVMGMT", currentTest, "Password");

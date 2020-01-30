@@ -60,7 +60,7 @@ public class IM_HypothesisPage extends PageBase {
 	WebElement deletePost;
 	@FindBy(css = "div.post-description")
 	WebElement postDesc;
-
+//	hypothesis actions
 	@FindBy(css = "section.hypotheses-section")
 	WebElement hypothesisSection;
 	@FindBy(css = "app-hypothesis-details")

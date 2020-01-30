@@ -11,6 +11,7 @@ public class TestAddMember extends TestBase{
 	@Test
 	public void testAddMember() {
 		try {
+			System.out.println("Test -->  "+this.getClass().getSimpleName());
 			String startURL = rds.getValue("INVMGMT", currentTest, "URL");
 			String uname = rds.getValue("INVMGMT", currentTest, "UserName");
 			String pwd = rds.getValue("INVMGMT", currentTest, "Password");

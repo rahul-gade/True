@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import com.mop.qa.pageobject.FileUpload;
 import com.mop.qa.testbase.PageBase;
 
 public class IM_DealSummaryPage extends PageBase {
@@ -121,13 +122,12 @@ public class IM_DealSummaryPage extends PageBase {
 //	attractiveness Index
 	@FindBy(css = "div.attractiveness-content")
 	WebElement indexCard;
-	
 //	folders
 	@FindBy(css = "a[routerlink=documents]")
 	WebElement folderIcon;
 	@FindBy(css = "div.mat-tab-list")
 	WebElement tabList;
-	@FindBy(css = "//div[text()='DMS']")
+	@FindBy(xpath = "//div[text()='DMS']") /// parent::div
 	WebElement dms;
 	@FindBy(css = "li[title='Select Folders']")
 	WebElement multiselect;
@@ -135,17 +135,78 @@ public class IM_DealSummaryPage extends PageBase {
 	WebElement uploadIcon;
 	@FindBy(css = "li[title='Create Folder']")
 	WebElement createFolder;
+	@FindBy(css = "app-new-folder input")
+	WebElement folderName;
+	@FindBy(css = "app-custom-dms div.title")
+	WebElement folderHead;
 	@FindBy(css = "li[title='Delete']")
 	WebElement deleteFiles;
-	
+	String file = "//span[contains(text(),'FILE')]";
+
+	public void uploadFile(RemoteWebDriver driver, String newFile) throws Exception {
+		int cut = newFile.lastIndexOf("\\");
+		String fileName_1 = newFile.substring(cut + 1);
+		click(uploadIcon, "Upload Files");
+		Thread.sleep(1000);
+		FileUpload fileU = new FileUpload(remoteDriver);
+		fileU.fileUpload(newFile);
+		Thread.sleep(2000);
+		if (driver.findElementsByXPath(file.replace("FILE", fileName_1)).size() > 0)
+			assertTrue("File uploaded successfully");
+		else
+			assertFalse("File Not uploaded successfully");
+	}
+
+	public void createFolder(RemoteWebDriver driver) throws Exception {
+		click(createFolder, "New Folder icon");
+		Thread.sleep(500);
+		if (driver.findElements(By.cssSelector("app-new-folder")).size() > 0)
+			assertTrue("New FOlder Pop-up is displayed");
+		else
+			assertFalse("New FOlder Pop-up is NOT displayed");
+
+		click(folderName, "Folder Name");
+		enterText(folderName, "Automated Folder Name", "Folder Name");
+		Thread.sleep(250);
+
+		click(saveBtn, "CREATE");
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElementsByXPath("//img[contains(@src,'spinner')]").size() > 0);
+		if (driver.findElementsByXPath(file.replace("FILE", "Automated Folder Name")).size() > 0)
+			assertTrue("Folder Created successfully");
+		else
+			assertFalse("Folder Not created");
+
+		click(file.replace("FILE", "Automated Folder Name"), "Created FOlder");
+		Thread.sleep(500);
+
+		if (folderHead.getText().contains("Automated Folder Name"))
+			assertTrue("Landed on folder view");
+		else
+			assertFalse("Folder Navigation unsuccessful");
+	}
+
 	public void validateFolders(RemoteWebDriver driver, String filePath) throws Exception {
 		int cut = filePath.lastIndexOf("\\");
-		String fileName_1 = filePath.substring(cut+1);
+		String fileName_1 = filePath.substring(cut + 1);
 		System.out.println(fileName_1);
 		Thread.sleep(500);
 		click(dealDetails, "Deal Details");
 		Thread.sleep(1000);
-		
+		click(folderIcon, "Folders");
+		Thread.sleep(500);
+		if (tabList.isDisplayed())
+			assertTrue("Folders page is displayed");
+		else
+			assertFalse("Folders page is NOT displayed");
+
+		click(dms, "DMS");
+		Thread.sleep(500);
+		if (driver.findElements(By.xpath(file.replace("FILE", fileName_1))).size() > 0)
+			assertTrue("File uploaded during creation is saved successfully");
+		else
+			assertFalse("File uploaded during creation is not saved.");
 	}
 
 	public void analyzePage(RemoteWebDriver driver) throws Exception {
@@ -268,4 +329,5 @@ public class IM_DealSummaryPage extends PageBase {
 		assertTrue("R&A Status Circle is shown", rnaCircle.isDisplayed());
 		assertTrue("Portfolio Circle is shown", portCircle.isDisplayed());
 	}
+
 }
