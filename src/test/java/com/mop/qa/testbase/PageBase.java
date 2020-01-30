@@ -905,7 +905,7 @@ public class PageBase {
 
 	public void enterUrl(String url) throws Exception {
 		try {
-			System.out.println(toolName);
+//			System.out.println(toolName);
 			switch (toolName) {
 
 			case "Appium":
