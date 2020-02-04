@@ -45,12 +45,26 @@ public class BM_Home extends PageBase {
 	@FindBy(css = "img.bm-sia-cross-header")
 	WebElement closePlanPage;
 	
-	public void findProject(RemoteWebDriver driver, String sect, String company, String header) throws Exception {
+	public void checkCreatedDeal(RemoteWebDriver driver, String url, String company) throws Exception { 
+		//add 'l' to Method_Name to validate
+		click(centerNav, "Central Navigation");
+		Thread.sleep(200);
+		click(BMNavOption, "Business Management");
+		waitForPageLoad();
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0); //img[src*='spinner']
+		Thread.sleep(10000);	
+	}
+	
+	public void findProject(RemoteWebDriver driver, String stage, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
-		click(sectorLink.replace("STAGE", sect), "Sector");
-		Thread.sleep(2500);
-		String cssField = cardMaker.replace("SECTOR", header).replace("COMPANY", company);
+//		not clicking this anymore since working with my LIst
+//		click(sectorLink.replace("STAGE", stage), "Sector");
+//		Thread.sleep(2500);
+		
+		String cssField = cardMaker.replace("SECTOR", sector).replace("COMPANY", company);
 		WebElement targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
 		click(targetCard, "Selected Comapany Card");
 		Thread.sleep(1000);
@@ -60,33 +74,35 @@ public class BM_Home extends PageBase {
 			assertFalse("Did not land on company Page");
 	}
 
-	public void testBMHome(RemoteWebDriver driver, String sect, String company, String header) throws Exception {
+	public void testBMHome(RemoteWebDriver driver, String sect, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
-		click(sectorLink.replace("STAGE", sect), "Sector");
-		Thread.sleep(2500);
-		WebElement link = driver.findElementByXPath(sectorLink.replace("STAGE", sect) + "/ancestor::li");
-		if (link.getAttribute("class").contains("active"))
-			assertTrue("Stage name is activated");
-		else
-			assertTrue("Stage Name is not activated");
+//		not clicking this anymore since working with my LIst
+//		click(sectorLink.replace("STAGE", stage), "Sector");
+//		Thread.sleep(2500);
+		
+//		WebElement link = driver.findElementByXPath(sectorLink.replace("STAGE", sect) + "/ancestor::li");
+//		if (link.getAttribute("class").contains("active"))
+//			assertTrue("Stage name is activated");
+//		else
+//			assertTrue("Stage Name is not activated");
 		
 //		list view
 		click(listView, "List View");
-		Thread.sleep(2500);
+		Thread.sleep(500);
 		if (driver.findElements(By.cssSelector("grid-view-section")).size() == 0)
 			assertTrue("Display changed to list View");
 		else
 			assertFalse("Display not changed to list view");
 //		grid view
 		click(gridView, "List View");
-		Thread.sleep(2500);
+		Thread.sleep(500);
 		if (driver.findElements(By.cssSelector("list-view-section")).size() == 0)
 			assertTrue("Display changed to grid View");
 		else
 			assertFalse("Display not changed to grid view");
-//		compile CSS Selector String
-		String cssField = cardMaker.replace("SECTOR", header).replace("COMPANY", company);
+//		compile CSS Selector String for card
+		String cssField = cardMaker.replace("SECTOR", sector).replace("COMPANY", company);
 //		make card Element
 		WebElement targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
 		click(targetCard, "Comapany Card");
@@ -99,8 +115,8 @@ public class BM_Home extends PageBase {
 		Thread.sleep(1000);
 		assertTrue("Landed Back to home Page", landingHeader.isDisplayed());
 
-		click(sectorLink.replace("STAGE", sect), "Sector");
-		Thread.sleep(2500);
+//		click(sectorLink.replace("STAGE", sect), "Sector");
+//		Thread.sleep(2500);
 //		updating card element to avoid ==> Stale-Element-Reference-Exception
 		targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
 		click(targetCard.findElement(By.xpath(".//app-blue-desktop-icon/div")), "Blue Desktop Icon");
@@ -132,11 +148,23 @@ public class BM_Home extends PageBase {
 		waitForPageLoad();
 		click(centerNav, "Central Navigation");
 		Thread.sleep(200);
-		click(BMNavOption, "Investment");
+		click(BMNavOption, "Business Management");
 		waitForPageLoad();
 		do {
 			Thread.sleep(1000);
 		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 	}
+
+	public void openBM(RemoteWebDriver driver) throws Exception{
+		click(centerNav, "Central Navigation");
+		Thread.sleep(200);
+		click(BMNavOption, "Business Management");
+		waitForPageLoad();
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+	}
+
+
 
 }

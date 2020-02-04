@@ -142,6 +142,17 @@ public class IM_DealSummaryPage extends PageBase {
 	@FindBy(css = "li[title='Delete']")
 	WebElement deleteFiles;
 	String file = "//span[contains(text(),'FILE')]";
+	
+
+	public void closeDeal(RemoteWebDriver driver) throws Exception {
+		Thread.sleep(1000);
+		click(dealStageOpt, "Deal Stage");
+		Thread.sleep(250);
+		click(closed, "Closed");
+		Thread.sleep(500);
+		click(saveBtn, "Confirm");
+		Thread.sleep(500);
+	}
 
 	public void uploadFile(RemoteWebDriver driver, String newFile) throws Exception {
 		int cut = newFile.lastIndexOf("\\");
@@ -329,5 +340,6 @@ public class IM_DealSummaryPage extends PageBase {
 		assertTrue("R&A Status Circle is shown", rnaCircle.isDisplayed());
 		assertTrue("Portfolio Circle is shown", portCircle.isDisplayed());
 	}
+
 
 }

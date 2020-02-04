@@ -166,7 +166,7 @@ public class IM_BasicDealDetails extends PageBase {
 				assertTrue("sponsor added properly");
 			else
 				assertFalse("Sponsor not correct");
-//			assertTrue("Same as Sponsor Checkbox Enabled", sameAsSponsor.isEnabled());
+			assertTrue("Same as Sponsor Checkbox Enabled", sameAsSponsor.isEnabled());
 		} else
 			assertFalse("sponsor chip not added");
 
@@ -202,8 +202,7 @@ public class IM_BasicDealDetails extends PageBase {
 			assertTrue("Owner Chip Added Successfully", ownerChip.getText().contains(owner));
 		}
 		Thread.sleep(1000);
-//			team members [optional]
-		// TODO
+		// TODO team members [optional]
 	}
 
 	public void submitAndSelectFlow(RemoteWebDriver driver, String flow) throws Exception {

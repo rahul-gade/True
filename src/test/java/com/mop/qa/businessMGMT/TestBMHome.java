@@ -19,8 +19,8 @@ public class TestBMHome extends TestBase {
 			home.launchApp(remoteDriver, startURL, uname, pwd);
 
 			String sector = rds.getValue("BMGMT", currentTest, "Sector");
-			String company = rds.getValue("BMGMT", currentTest, "Company");
 			String header = rds.getValue("BMGMT", currentTest, "Heading");
+			String company = rds.getValue("BMGMT", currentTest, "Company");
 			home.testBMHome(remoteDriver, sector, company, header);
 		} catch (Exception e) {
 			LOGGER.info(e);
