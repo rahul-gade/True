@@ -45,18 +45,6 @@ public class BM_Home extends PageBase {
 	@FindBy(css = "img.bm-sia-cross-header")
 	WebElement closePlanPage;
 	
-	public void checkCreatedDeal(RemoteWebDriver driver, String url, String company) throws Exception { 
-		//add 'l' to Method_Name to validate
-		click(centerNav, "Central Navigation");
-		Thread.sleep(200);
-		click(BMNavOption, "Business Management");
-		waitForPageLoad();
-		do {
-			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0); //img[src*='spinner']
-		Thread.sleep(10000);	
-	}
-	
 	public void findProject(RemoteWebDriver driver, String stage, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
@@ -69,7 +57,7 @@ public class BM_Home extends PageBase {
 		click(targetCard, "Selected Comapany Card");
 		Thread.sleep(1000);
 		if (comapnyHeader.getText().contains(company))
-			assertTrue("Landed on Company Page");
+			assertTrue(" Project Found and Landed on Company Page");
 		else
 			assertFalse("Did not land on company Page");
 	}

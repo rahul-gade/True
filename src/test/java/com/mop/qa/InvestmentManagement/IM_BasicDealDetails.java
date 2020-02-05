@@ -77,6 +77,66 @@ public class IM_BasicDealDetails extends PageBase {
 	@FindBy(css = "span.dd-title")
 	WebElement dealTitle;
 
+	public void enterForBM(RemoteWebDriver driver, String company, String project, String ind, String sect,
+			String subSect, String stake, String dealSponsor2) throws Exception {
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//div/div/img")).size() > 0);
+		// company
+		click(companyName, "Company Name");
+		enterText(companyName, company, "Company Name");
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//span[text()='" + company + "']")).size() == 0);
+		Thread.sleep(500);
+		click("//span[text()='" + company + "']", "Company Option");
+		Thread.sleep(500);
+
+		// project name
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HHmm");
+		Date date = new Date();
+		click(projectName, "Project Name");
+		createdProject = project + dateFormat.format(date);
+		enterText(projectName, createdProject, "Project Name");
+
+		// industry Name
+		click(industry, "industry DropDown");
+		Thread.sleep(250);
+		click(matOption.replace("OPTION", ind), "Industry Option");
+		Thread.sleep(250);
+
+		// sector Name
+		click(sector, "Sector DropDown");
+		Thread.sleep(250);
+		click(matOption.replace("OPTION", sect), "Sector Option");
+		Thread.sleep(250);
+
+		// Sub Sector Name
+		click(subSector, "Sub-Sector DropDown");
+		Thread.sleep(250);
+		click(matOption.replace("OPTION", subSect), "SubSector Option");
+		Thread.sleep(250);
+
+		// stake radio
+		click(stakeOpt.replace("STAKE-NAME", stake), "Stake option");
+		Thread.sleep(250);
+		
+//		deal sponsor
+		click(dealSponsor, "Sponsor");
+		enterText(dealSponsor, dealSponsor2, "Deal Sponsor");
+		Thread.sleep(500);
+		click("//mat-option", "Option");
+		if (driver.findElements(By.cssSelector("app-deal-sponsor mat-chip")).size() == 1) {
+			assertTrue("sponsor chip added successfully");
+			if (driver.findElement(By.cssSelector("app-deal-sponsor mat-chip")).getText().contains(dealSponsor2))
+				assertTrue("sponsor added properly");
+			else
+				assertFalse("Sponsor not correct");
+			assertTrue("Same as Sponsor Checkbox Enabled", sameAsSponsor.isEnabled());
+		} else
+			assertFalse("sponsor chip not added");
+	}
+
 	public void enterBasicDetails(RemoteWebDriver driver, String company, String project, String ind, String sect,
 			String subSect, String stake, String filePath, String sponsor, String owner, String teamMembers)
 			throws Exception {
@@ -289,4 +349,5 @@ public class IM_BasicDealDetails extends PageBase {
 		} else
 			assertTrue("Did not land to IM Home");
 	}
+
 }

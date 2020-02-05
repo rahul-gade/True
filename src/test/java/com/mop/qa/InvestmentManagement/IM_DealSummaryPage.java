@@ -46,7 +46,7 @@ public class IM_DealSummaryPage extends PageBase {
 	@FindBy(xpath = "//button[contains(text(),'New Document')]")
 	WebElement newDocument;
 //	deal Stage options
-	@FindBy(css = "div.mat-select-panel")
+	@FindBy(css = "li[resourceuri='IM_NEXT_MILESTONE_DRPDWN'] mat-select")
 	WebElement dealStageOpt;
 	@FindBy(xpath = "//mat-option//span[contains(text(),'NEW')]")
 	WebElement newStage;
