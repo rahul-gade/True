@@ -1,6 +1,7 @@
 package com.mop.qa.businessMGMT;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -44,16 +45,21 @@ public class BM_Home extends PageBase {
 	WebElement backBtn;
 	@FindBy(css = "img.bm-sia-cross-header")
 	WebElement closePlanPage;
-	
+
 	public void findProject(RemoteWebDriver driver, String stage, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
 //		not clicking this anymore since working with my LIst
 //		click(sectorLink.replace("STAGE", stage), "Sector");
 //		Thread.sleep(2500);
-		
+		WebElement targetCard = null;
 		String cssField = cardMaker.replace("SECTOR", sector).replace("COMPANY", company);
-		WebElement targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
+		try {
+			targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+			assertFalse("Company Card Not Found");
+		}
 		click(targetCard, "Selected Comapany Card");
 		Thread.sleep(1000);
 		if (comapnyHeader.getText().contains(company))
@@ -68,13 +74,13 @@ public class BM_Home extends PageBase {
 //		not clicking this anymore since working with my LIst
 //		click(sectorLink.replace("STAGE", stage), "Sector");
 //		Thread.sleep(2500);
-		
+
 //		WebElement link = driver.findElementByXPath(sectorLink.replace("STAGE", sect) + "/ancestor::li");
 //		if (link.getAttribute("class").contains("active"))
 //			assertTrue("Stage name is activated");
 //		else
 //			assertTrue("Stage Name is not activated");
-		
+
 //		list view
 		click(listView, "List View");
 		Thread.sleep(500);
@@ -89,10 +95,16 @@ public class BM_Home extends PageBase {
 			assertTrue("Display changed to grid View");
 		else
 			assertFalse("Display not changed to grid view");
-//		compile CSS Selector String for card
+//		compile CSS Selector String for Project Card
 		String cssField = cardMaker.replace("SECTOR", sector).replace("COMPANY", company);
 //		make card Element
-		WebElement targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
+		WebElement targetCard = null;
+		try {
+			targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertFalse("Company Card not formed in BM");
+		}
 		click(targetCard, "Comapany Card");
 		Thread.sleep(1000);
 		if (comapnyHeader.getText().contains(company))
@@ -143,16 +155,28 @@ public class BM_Home extends PageBase {
 		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 	}
 
-	public void openBM(RemoteWebDriver driver) throws Exception{
-		click(centerNav, "Central Navigation");
-		Thread.sleep(200);
-		click(BMNavOption, "Business Management");
-		waitForPageLoad();
-		do {
+	public void openBM(RemoteWebDriver driver, String URL) throws Exception {
+//		check if central nav is available
+		if (driver.findElementsByClassName("center-navigation").size() > 0) {
+			click(centerNav, "Central Navigation");
+			Thread.sleep(200);
+			click(BMNavOption, "Business Management");
+			waitForPageLoad();
+			do {
+				Thread.sleep(1000);
+			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+		} else {
+			enterUrl(URL);
 			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+			waitForPageLoad();
+			click(centerNav, "Central Navigation");
+			Thread.sleep(200);
+			click(BMNavOption, "Business Management");
+			waitForPageLoad();
+			do {
+				Thread.sleep(1000);
+			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+		}
 	}
-
-
 
 }

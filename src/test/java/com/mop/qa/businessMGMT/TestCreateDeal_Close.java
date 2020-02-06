@@ -43,7 +43,7 @@ public class TestCreateDeal_Close extends TestBase{
 			String sectorB = rds.getValue("BMGMT", currentTest, "Sector");
 			String header = rds.getValue("BMGMT", currentTest, "Heading");
 			BM_Home bHome = new BM_Home(remoteDriver);
-			bHome.openBM(remoteDriver);
+			bHome.openBM(remoteDriver, startURL);
 			bHome.findProject(remoteDriver, sectorB, company, header);
 		} catch (Exception e) {
 			LOGGER.info(e);
