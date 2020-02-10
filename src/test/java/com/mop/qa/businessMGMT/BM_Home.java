@@ -49,9 +49,6 @@ public class BM_Home extends PageBase {
 	public void findProject(RemoteWebDriver driver, String stage, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
-//		not clicking this anymore since working with my LIst
-//		click(sectorLink.replace("STAGE", stage), "Sector");
-//		Thread.sleep(2500);
 		WebElement targetCard = null;
 		String cssField = cardMaker.replace("SECTOR", sector).replace("COMPANY", company);
 		try {
@@ -71,16 +68,7 @@ public class BM_Home extends PageBase {
 	public void testBMHome(RemoteWebDriver driver, String sect, String company, String sector) throws Exception {
 		Thread.sleep(2000);
 		assertTrue("Home Page Loaded Successfully", landingHeader.isDisplayed());
-//		not clicking this anymore since working with my LIst
-//		click(sectorLink.replace("STAGE", stage), "Sector");
-//		Thread.sleep(2500);
-
-//		WebElement link = driver.findElementByXPath(sectorLink.replace("STAGE", sect) + "/ancestor::li");
-//		if (link.getAttribute("class").contains("active"))
-//			assertTrue("Stage name is activated");
-//		else
-//			assertTrue("Stage Name is not activated");
-
+		
 //		list view
 		click(listView, "List View");
 		Thread.sleep(500);
@@ -115,8 +103,6 @@ public class BM_Home extends PageBase {
 		Thread.sleep(1000);
 		assertTrue("Landed Back to home Page", landingHeader.isDisplayed());
 
-//		click(sectorLink.replace("STAGE", sect), "Sector");
-//		Thread.sleep(2500);
 //		updating card element to avoid ==> Stale-Element-Reference-Exception
 		targetCard = driver.findElementByCssSelector(cssField).findElement(By.xpath("./parent::div"));
 		click(targetCard.findElement(By.xpath(".//app-blue-desktop-icon/div")), "Blue Desktop Icon");

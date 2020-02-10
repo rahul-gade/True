@@ -28,14 +28,9 @@ public class TestCreateDeal_Close extends TestBase{
 			String sector = rds.getValue("INVMGMT", currentTest, "sector");
 			String subSector = rds.getValue("INVMGMT", currentTest, "subSector");
 			String stake = rds.getValue("INVMGMT", currentTest, "stake");
-//			String filePath = rds.getValue("INVMGMT", currentTest, "filePath");
 			String dealSponsor = rds.getValue("INVMGMT", currentTest, "dealSponsor");
-//			String dealOwner = rds.getValue("INVMGMT", currentTest, "dealOwner");
-//			String teamMembers = rds.getValue("INVMGMT", currentTest, "teamMembers");
 			IM_BasicDealDetails bDetails = new IM_BasicDealDetails(remoteDriver);
 			String flow = rds.getValue("INVMGMT", currentTest, "Flow");
-//			bDetails.enterBasicDetails(remoteDriver, company, project, industry, sector, subSector, stake, filePath,
-//					dealSponsor, dealOwner, teamMembers);
 			bDetails.enterForBM(remoteDriver, company, project, industry, sector, subSector, stake, dealSponsor);
 			bDetails.submitAndSelectFlow(remoteDriver, flow);
 			IM_DealSummaryPage summary = new IM_DealSummaryPage(remoteDriver);

@@ -63,18 +63,18 @@ public class BM_Company_Overview extends PageBase {
 				assertFalse("Confirm Dialog NOT displayed");
 		} else
 			assertFalse("Upload MIS pop-up is not displayed");
-		
+
 //		Recent Activities
 		click(recents, "Recent activities");
 		Thread.sleep(250);
-		if(driver.findElements(By.cssSelector("div.activity-header")).size()>0)
+		if (driver.findElements(By.cssSelector("div.activity-header")).size() > 0)
 			assertTrue("Recent Activities Box displayed");
 		else
 			assertFalse("Recent Activities Box not displayed");
 		Actions act = new Actions(driver);
 		act.moveByOffset(50, 0).click().build().perform();
 		Thread.sleep(500);
-		
+
 //		Add Team Members
 		click(add, "ADD");
 		Thread.sleep(1000);
@@ -88,7 +88,6 @@ public class BM_Company_Overview extends PageBase {
 				assertFalse("Pop-up did not close");
 		} else
 			assertFalse("Add Member pop-up is not displayed");
-//		TODO Plan Page  <== Better to not do it here
 	}
 
 	public void checkQuickActions(RemoteWebDriver driver) throws Exception {
@@ -150,7 +149,7 @@ public class BM_Company_Overview extends PageBase {
 		Thread.sleep(250);
 		click(tabOverview, "Overview");
 		Thread.sleep(250);
-		if(tabOverview.findElement(By.xpath(li)).getAttribute("class").contains("active"))
+		if (tabOverview.findElement(By.xpath(li)).getAttribute("class").contains("active"))
 			assertTrue("Overview Tab Active");
 		else
 			assertFalse("Overview Tab not activated");

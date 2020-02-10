@@ -7,7 +7,7 @@ import com.mop.qa.NoteTaker.NT_Home;
 import com.mop.qa.testbase.TestBase;
 
 public class TestCreateNote extends TestBase{
-	public static final Logger LOGGER = Logger.getLogger(TestVisionAndMission.class.getName());
+	public static final Logger LOGGER = Logger.getLogger(TestCreateNote.class.getName());
 	
 	@Test
 	public void testCreateNote() {
@@ -43,7 +43,6 @@ public class TestCreateNote extends TestBase{
 			BNote.deleteNotes(remoteDriver);
 			nHome.openNoteTaker(remoteDriver, URL);
 			nHome.confirmDelete(remoteDriver, BNote.qANTitle);
-//			TODO check integration by visiting Note Take actually!
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

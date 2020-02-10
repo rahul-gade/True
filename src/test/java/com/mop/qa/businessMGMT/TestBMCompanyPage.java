@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import com.mop.qa.testbase.TestBase;
 
 public class TestBMCompanyPage extends TestBase{
-	private static final Logger LOGGER = Logger.getLogger(TestBMHome.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TestBMCompanyPage.class.getName());
 	
 	@Test
 	public void testBMCompanyPage() {

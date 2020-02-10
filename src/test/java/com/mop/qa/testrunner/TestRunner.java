@@ -32,7 +32,7 @@ public class TestRunner {
 	static List<TestParameter> list;
 	public static List<String> testname;
 	private static final Logger LOGGER = Logger.getLogger(TestRunner.class.getName());
-	// public static void main(String args[]) {
+//	 public static void main(String args[]) {
 
 	@Test
 	public void testRun() {
