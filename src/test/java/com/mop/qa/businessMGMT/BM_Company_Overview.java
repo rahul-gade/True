@@ -106,7 +106,7 @@ public class BM_Company_Overview extends PageBase {
 			click(close, "Cross Button");
 			Thread.sleep(500);
 			if (driver.findElementsByTagName("app-new-task-wrapper").size() == 0)
-				assertTrue("Landed Back to COmpany Page");
+				assertTrue("Landed Back to Company Page");
 			else
 				assertFalse("Pop-up did not close");
 		} else

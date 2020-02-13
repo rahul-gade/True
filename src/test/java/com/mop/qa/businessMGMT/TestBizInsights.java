@@ -5,11 +5,11 @@ import org.testng.annotations.Test;
 
 import com.mop.qa.testbase.TestBase;
 
-public class TestAddPCMember extends TestBase{
-	public static final Logger LOGGER = Logger.getLogger(TestAddPCMember.class.getName());
-	
+public class TestBizInsights extends TestBase{
+	public static final Logger LOGGER = Logger.getLogger(TestBizInsights.class.getName());
+
 	@Test
-	public void testAddPCMember() {
+	public void testBizInsights() {
 		try {
 			System.out.println("Test -->  "+this.getClass().getSimpleName());
 			String startURL = rds.getValue("BMGMT", currentTest, "URL");
@@ -23,17 +23,12 @@ public class TestAddPCMember extends TestBase{
 			String company = rds.getValue("BMGMT", currentTest, "Company");
 			home.findProject(remoteDriver, stage, company, header);
 			
-			BM_AddMember member = new BM_AddMember(remoteDriver);
-			member.openPopUp(remoteDriver);
+			BM_Company_BizGoals goal = new BM_Company_BizGoals(remoteDriver);
+			goal.leadHere(remoteDriver);
+			goal.bizInsights(remoteDriver);
 			
-			String pName = rds.getValue("BMGMT", currentTest, "ProfileName");
-			String location = rds.getValue("BMGMT", currentTest, "Location");
-			String designation = rds.getValue("BMGMT", currentTest, "Designation");
-			String contact = rds.getValue("BMGMT", currentTest, "Contact");
-			String mail = rds.getValue("BMGMT", currentTest, "Mail");
-			member.addMember(remoteDriver, pName);
-			member.addProfile(remoteDriver, location, designation, contact, mail);
-			member.verifyMember(remoteDriver, member.memberName);
+			BM_Insights insight = new BM_Insights(remoteDriver);
+			insight.testInsightPage(remoteDriver, company);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

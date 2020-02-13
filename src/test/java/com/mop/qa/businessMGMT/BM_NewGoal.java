@@ -121,6 +121,7 @@ public class BM_NewGoal extends PageBase {
 		Thread.sleep(500);
 	}
 
+//	angular datepicker handler method
 	public void selectDate(RemoteWebDriver driver, String dateType) throws Exception {
 		DateFormat dF = new SimpleDateFormat("YYYY-MMM-dd");
 		Calendar c = Calendar.getInstance();

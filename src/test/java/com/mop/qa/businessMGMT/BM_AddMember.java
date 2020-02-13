@@ -30,6 +30,9 @@ public class BM_AddMember extends PageBase {
 	WebElement profileTypeDialog;
 	@FindBy(xpath = "//div[text()='PC']") // ancestor::mat-radio-button
 	WebElement PCRadio;
+	String profile = "//span[contains(text(),'NAME')]";
+	@FindBy(css = "img.cross-header")
+	WebElement close;
 
 //	add new profile popup
 	@FindBy(css = "input[formcontrolname=designation]")
@@ -48,6 +51,20 @@ public class BM_AddMember extends PageBase {
 	@FindBy(css = "button.btn")
 	WebElement submit;
 
+	public void verifyMember(RemoteWebDriver driver, String name) throws Exception {
+		if (driver.findElementsByXPath(profile.replace("NAME", name)).size() > 0)
+			assertTrue("Member Added Successfully");
+		else
+			assertFalse("Member Not Added");
+
+		click(close, "Close");
+		Thread.sleep(500);
+		if (driver.findElementsByTagName("app-add-memebers").size() == 0)
+			assertTrue("Landed Back to company page");
+		else
+			assertFalse("Did not land to copany page");
+	}
+
 	public void addProfile(RemoteWebDriver driver, String loc, String desig, String phone, String email)
 			throws Exception {
 		click(designation, "Designation");
@@ -60,11 +77,14 @@ public class BM_AddMember extends PageBase {
 		} while (driver.findElementsByCssSelector("img[src*='spinner']").size() > 0);
 		click(locx.replace("LOCATION", loc), "Location Option - " + loc);
 		Thread.sleep(250);
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyymmHHmm");
+		Date date = new Date();
 		click(contact, "Phone Number");
-		enterText(contact, phone, "Phone Number");
+		enterText(contact, dateFormat.format(date), "Phone Number");
 		Thread.sleep(250);
 		click(mail, "E-Mail");
-		enterText(mail, email, "E-Mail");
+		enterText(mail, dateFormat.format(date) + email, "E-Mail");
 		Thread.sleep(250);
 
 		click(submit, "SUBMIT");
@@ -85,12 +105,13 @@ public class BM_AddMember extends PageBase {
 		Thread.sleep(2500);
 		click(makeMailDefault, "Default Email"); // make mail default
 
+		Thread.sleep(250);
 		click(submit, "SUBMIT");
 		Thread.sleep(1500);
 		if (driver.findElementsByTagName("app-add-new-profile").size() > 0)
-			assertFalse("Pop-up still Present"); //clear this thing
+			assertFalse("Pop-up still Present"); // clear this thing
 		else
-			assertTrue("Member probably added successfully");
+			assertTrue("Landed back to Add Team Members Pop-up");
 	}
 
 	public void addMember(RemoteWebDriver driver, String pName) throws Exception {

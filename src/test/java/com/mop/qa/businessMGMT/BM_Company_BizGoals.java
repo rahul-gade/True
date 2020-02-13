@@ -35,6 +35,27 @@ public class BM_Company_BizGoals extends PageBase {
 	@FindBy(css = "a.bm-vgd-close-icon")
 	WebElement cross;
 
+//	insights
+	@FindBy(css = "div.business-insight-container button")
+	WebElement beginInsights;
+	@FindBy(css = "div.business-insight-container2")
+	WebElement BizInsightCard;
+
+	public void bizInsights(RemoteWebDriver driver) throws Exception {
+		if (driver.findElementsByCssSelector("div.business-insight-container").size() > 0) {
+			assertTrue("Business Insights Not Started Yet");
+			click(beginInsights, "Begin");
+		} else if (driver.findElementsByCssSelector("div.business-insight-container2").size() > 0) {
+			assertTrue("Business Insights Already Started");
+			click(BizInsightCard, "Business Insights Card");
+		}
+		Thread.sleep(1000);
+		if (driver.findElementsByTagName("app-business-insight").size() > 0)
+			assertTrue("Business Insights Sreen opened");
+		else
+			assertFalse("Business Insights Page Did not Open");
+	}
+
 	public void submitAndVerifyGoal(RemoteWebDriver driver, String type, String goalTitle) throws Exception {
 		if (type.contains("Idea"))
 			click(submit, "Save Goal/Add Plan Button");
@@ -127,5 +148,4 @@ public class BM_Company_BizGoals extends PageBase {
 		else
 			assertFalse("New goal screen not shown");
 	}
-
 }
