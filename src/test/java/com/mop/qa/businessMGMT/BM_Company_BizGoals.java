@@ -15,6 +15,8 @@ public class BM_Company_BizGoals extends PageBase {
 		super(driver);
 	}
 
+	@FindBy(css = "img[src*=back]")
+	WebElement backBtn;
 	@FindBy(xpath = "//a[text()='Business Goals']")
 	WebElement tabBusinessGoals;
 	String li = "./parent::li";
@@ -40,8 +42,29 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement beginInsights;
 	@FindBy(css = "div.business-insight-container2")
 	WebElement BizInsightCard;
+	@FindBy(css = "div.blue")
+	WebElement blueMarker;
+	@FindBy(css = "div.grey")
+	WebElement greyMarker;
 
-	public void bizInsights(RemoteWebDriver driver) throws Exception {
+	public void validateMarker(RemoteWebDriver driver, String color) throws Exception {
+		Integer value = 0;
+		switch (color) {
+		case "blue":
+			value = Integer.parseInt(blueMarker.getAttribute("style").replaceAll("[^0-9]", ""));
+			break;
+		case "grey":
+			value = Integer.parseInt(greyMarker.getAttribute("style").replaceAll("[^0-9]", ""));
+			break;
+		}
+
+		if (value > 0)
+			assertTrue("Progress Bars Updated");
+		else
+			assertFalse("Progress Bars not updated");
+	}
+
+	public void openBizInsights(RemoteWebDriver driver) throws Exception {
 		if (driver.findElementsByCssSelector("div.business-insight-container").size() > 0) {
 			assertTrue("Business Insights Not Started Yet");
 			click(beginInsights, "Begin");
@@ -61,6 +84,11 @@ public class BM_Company_BizGoals extends PageBase {
 			click(submit, "Save Goal/Add Plan Button");
 		else
 			click(goalSave, "Save Goal Button");
+		Thread.sleep(500);
+		
+//		if coming from business Insights
+		if(driver.findElementsByTagName("app-business-insight").size()>0)
+			click(backBtn, "Back Arrow");
 
 		Thread.sleep(1000);
 		if (tabBusinessGoals.findElement(By.xpath(li)).getAttribute("class").contains("active"))

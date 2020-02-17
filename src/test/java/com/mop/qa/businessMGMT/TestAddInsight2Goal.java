@@ -5,11 +5,11 @@ import org.testng.annotations.Test;
 
 import com.mop.qa.testbase.TestBase;
 
-public class TestAddPostInsight extends TestBase{
-	public static final Logger LOGGER = Logger.getLogger(TestAddPostInsight.class.getName());
+public class TestAddInsight2Goal extends TestBase{
+	public static final Logger LOGGER = Logger.getLogger(TestAddInsight2Goal.class.getName());
 	
 	@Test
-	public void testAddPostInsight() {
+	public void AddInsight2Goal() {
 		try {
 			System.out.println("Test -->  "+this.getClass().getSimpleName());
 			String startURL = rds.getValue("BMGMT", currentTest, "URL");
@@ -28,17 +28,12 @@ public class TestAddPostInsight extends TestBase{
 			goal.openBizInsights(remoteDriver);
 			
 			BM_Insights insight = new BM_Insights(remoteDriver);
-			String pTitle = rds.getValue("BMGMT", currentTest, "PostTitle");
-			String filePath = rds.getValue("BMGMT", currentTest, "FilePath");
-			insight.addPost(remoteDriver, pTitle, filePath);
-			String assessment = rds.getValue("BMGMT", currentTest, "Assessment");
-			insight.assesInsight(remoteDriver, assessment);
-			goal.validateMarker(remoteDriver, "blue");
-			goal.openBizInsights(remoteDriver);
-			insight.markNA(remoteDriver);
-			goal.validateMarker(remoteDriver, "grey");
-			goal.openBizInsights(remoteDriver);
-			insight.makeApplicable(remoteDriver);
+			insight.addToGoal(remoteDriver);
+			
+			BM_NewGoal newGoal = new BM_NewGoal(remoteDriver);
+			newGoal.checkAutoFill(remoteDriver, insight.cardName, insight.vert);
+			newGoal.fillbasicData(remoteDriver, insight.cardName, newGoal.fV, "Idea", "Low", "1");
+			goal.submitAndVerifyGoal(remoteDriver, "Idea", insight.cardName);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

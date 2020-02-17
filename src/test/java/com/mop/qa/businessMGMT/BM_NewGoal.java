@@ -28,6 +28,9 @@ public class BM_NewGoal extends PageBase {
 	WebElement title;
 	@FindBy(css = "mat-select[formcontrolname=vertical]")
 	WebElement vertical;
+	@FindBy(css = "mat-select[formcontrolname=vertical] span.mat-select-value-text span")
+	WebElement filledVert;
+	String fV = "";
 	@FindBy(css = "mat-select[formcontrolname=goal_type]")
 	WebElement goalType;
 	String option = "//mat-option/span[contains(text(),'OPTION')]"; // Also for S.P.O.C.
@@ -55,6 +58,20 @@ public class BM_NewGoal extends PageBase {
 	@FindBy(css = "span.remove-link")
 	WebElement removeLink;
 
+	public void checkAutoFill(RemoteWebDriver driver, String cardName, String vert) throws Exception {
+		if (title.getAttribute("value").trim().equalsIgnoreCase(cardName))
+			assertTrue("Title " + cardName + " is autofilled");
+		else
+			assertFalse("Title is not autofilled/incorrectly filled");
+
+		if (vert.equalsIgnoreCase(filledVert.getText().trim())) {
+			assertTrue("Vertical " + vert + " is autofilled");
+			fV = filledVert.getText().trim();
+		} else
+			assertFalse("Vertical is not autofilled/incorrectly filled");
+	}
+
+//	used by 100 Day Goal & SIA Goal - Don't use for IDEA
 	public void submitAndVerify(RemoteWebDriver driver, String type, String goalTitle) throws Exception {
 		click(submit, "Save Goal/Add Plan Button");
 		Thread.sleep(1000);
@@ -141,5 +158,4 @@ public class BM_NewGoal extends PageBase {
 			Thread.sleep(100);
 		}
 	}
-
 }

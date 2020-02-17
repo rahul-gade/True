@@ -25,7 +25,7 @@ public class TestBizInsights extends TestBase{
 			
 			BM_Company_BizGoals goal = new BM_Company_BizGoals(remoteDriver);
 			goal.leadHere(remoteDriver);
-			goal.bizInsights(remoteDriver);
+			goal.openBizInsights(remoteDriver);
 			
 			BM_Insights insight = new BM_Insights(remoteDriver);
 			insight.testInsightPage(remoteDriver, company);
