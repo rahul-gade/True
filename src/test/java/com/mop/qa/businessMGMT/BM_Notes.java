@@ -1,8 +1,5 @@
 package com.mop.qa.businessMGMT;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -29,7 +26,7 @@ public class BM_Notes extends PageBase {
 	String noteNode = "ul.bullet-list li:nth-of-type(NODE) div.nodeText";
 	String tabTitle = "Automated Note from Tab";
 	String qANTitle = "Automated Note from Quick Actions";
-	int createdNotes=0;
+	int createdNotes = 0;
 	@FindBy(css = "span.text-notification")
 	WebElement badgeC;
 	@FindBy(css = "button.btn")
@@ -106,7 +103,7 @@ public class BM_Notes extends PageBase {
 	}
 
 	public void confirmDelete(RemoteWebDriver driver, String tabTitle2) throws Exception {
-		if(driver.findElementsByXPath("//span[text()='"+tabTitle2+"']").size()==0)
+		if (driver.findElementsByXPath("//span[text()='" + tabTitle2 + "']").size() == 0)
 			assertTrue("Note Successfully Deleted");
 		else
 			assertFalse("Note Not deleted from BM");

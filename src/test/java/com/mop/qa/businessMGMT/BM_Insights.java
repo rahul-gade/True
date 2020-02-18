@@ -81,7 +81,7 @@ public class BM_Insights extends PageBase {
 	public void markNA(RemoteWebDriver driver) throws Exception {
 		List<WebElement> navs = navMenu.findElements(By.tagName("li"));
 		for (WebElement nav : navs) {
-			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", "")), iteration = 1;
+			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
 			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
 			click(nav, tabName);
 			if (count > 0) {
@@ -116,7 +116,7 @@ public class BM_Insights extends PageBase {
 	public void makeApplicable(RemoteWebDriver driver) throws Exception {
 		List<WebElement> navs = navMenu.findElements(By.tagName("li"));
 		for (WebElement nav : navs) {
-			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", "")), iteration = 1;
+			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
 			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
 			click(nav, tabName);
 			if (count > 0) {

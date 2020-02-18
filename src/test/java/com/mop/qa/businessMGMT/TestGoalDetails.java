@@ -7,17 +7,20 @@ import com.mop.qa.testbase.TestBase;
 
 /*
  * This Class is no longer used
- * As All the features in this class are tested back in 
+ * As All the features in this class are tested back in >>
+ * 
  * TestAddGoalSIA.java 
  * 
  * This is done to prevent redundancy and save time.
- * 
  * ALSO - THE CLASS IS REMOVED FROM testrunner AND datasheet
  */
+
+@Deprecated
 public class TestGoalDetails extends TestBase {
 	public static final Logger LOGGER = Logger.getLogger(TestGoalDetails.class.getName());
 
 	@Test
+	@Deprecated
 	public void testGoalDetails() {
 		try {
 			System.out.println("Test -->  " + this.getClass().getSimpleName());

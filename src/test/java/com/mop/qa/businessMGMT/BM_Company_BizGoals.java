@@ -52,6 +52,9 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement blueMarker;
 	@FindBy(css = "div.grey")
 	WebElement greyMarker;
+	
+	@FindBy(css = "img.business-goal-view-icon")
+	WebElement goalView;
 
 	public void checkArchive(RemoteWebDriver driver, String goalTitle) throws Exception {
 		Thread.sleep(1000);

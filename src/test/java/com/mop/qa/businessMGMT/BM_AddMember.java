@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 
