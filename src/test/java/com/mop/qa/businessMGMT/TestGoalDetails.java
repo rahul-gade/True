@@ -5,11 +5,20 @@ import org.testng.annotations.Test;
 
 import com.mop.qa.testbase.TestBase;
 
-public class TestAddGoalSIA extends TestBase {
-	public static final Logger LOGGER = Logger.getLogger(TestAddGoalSIA.class.getName());
+/*
+ * This Class is no longer used
+ * As All the features in this class are tested back in 
+ * TestAddGoalSIA.java 
+ * 
+ * This is done to prevent redundancy and save time.
+ * 
+ * ALSO - THE CLASS IS REMOVED FROM testrunner AND datasheet
+ */
+public class TestGoalDetails extends TestBase {
+	public static final Logger LOGGER = Logger.getLogger(TestGoalDetails.class.getName());
 
 	@Test
-	public void testAddGoalIdea() {
+	public void testGoalDetails() {
 		try {
 			System.out.println("Test -->  " + this.getClass().getSimpleName());
 			String startURL = rds.getValue("BMGMT", currentTest, "URL");
@@ -25,34 +34,14 @@ public class TestAddGoalSIA extends TestBase {
 
 			BM_Company_BizGoals goals = new BM_Company_BizGoals(remoteDriver);
 			goals.leadHere(remoteDriver);
-			goals.initiateNewGoal(remoteDriver);
 			String goalTitle = rds.getValue("BMGMT", currentTest, "GoalTitle");
-			String vertical = rds.getValue("BMGMT", currentTest, "Vertical");
 			String type = rds.getValue("BMGMT", currentTest, "Type");
 			String criticality = rds.getValue("BMGMT", currentTest, "Criticality");
 			String critCode = rds.getValue("BMGMT", currentTest, "CritCode");
-
-			BM_NewGoal goal = new BM_NewGoal(remoteDriver);
-			goal.fillbasicData(remoteDriver, goalTitle, vertical, type, criticality, critCode);
-			goal.testAdditionalFields(remoteDriver, type);
-			String tn_spoc = rds.getValue("BMGMT", currentTest, "TN_SPOC");
-			String pc_spoc = rds.getValue("BMGMT", currentTest, "PC_SPOC");
-			goal.enterAdditionalFields(remoteDriver, tn_spoc, pc_spoc);
-			goal.submitAndVerify(remoteDriver, type, goalTitle);
-
-			BM_AddActionPlan plan = new BM_AddActionPlan(remoteDriver);
-			String planTitle = rds.getValue("BMGMT", currentTest, "PlanTitle");
-			String MSTitle = rds.getValue("BMGMT", currentTest, "MileStone");
-			String metricTitle = rds.getValue("BMGMT", currentTest, "Metric");
-			String metricUnit = rds.getValue("BMGMT", currentTest, "Unit");
-			plan.addNewPlan(remoteDriver, type, goal.dateStart, goal.dateEnd, planTitle, pc_spoc, MSTitle, metricTitle,
-					metricUnit);
-			goals.submitAndVerifyGoal(remoteDriver, type, goalTitle);
-			BM_GoalDetails details = new BM_GoalDetails(remoteDriver);
-			
-//			goal details and archiving features - DID NOT check for every goal type!
 			goals.openGoalDetails(remoteDriver, goalTitle);
+			BM_GoalDetails details = new BM_GoalDetails(remoteDriver);
 			details.testDetails(remoteDriver, goalTitle, type, criticality, critCode);
+			
 			goals.openGoalDetails(remoteDriver, goalTitle);
 			details.archiveGoal(remoteDriver);
 			goals.checkArchive(remoteDriver, goalTitle);

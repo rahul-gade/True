@@ -30,6 +30,12 @@ public class BM_Company_BizGoals extends PageBase {
 	@FindBy(css = "div.add-new-goal-link")
 	WebElement addGoalBtn;
 	String savedGoal = "//a[contains(text(),'TITLE')]";
+	@FindBy(css = "div.business-goal-archived")
+	WebElement archived;
+	@FindBy(css = "img[alt=Revert]")
+	WebElement revert;
+	@FindBy(css = "img[title=back]")
+	WebElement back;
 
 //	goal details
 	@FindBy(css = "span.vgd-title-text")
@@ -46,6 +52,64 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement blueMarker;
 	@FindBy(css = "div.grey")
 	WebElement greyMarker;
+
+	public void checkArchive(RemoteWebDriver driver, String goalTitle) throws Exception {
+		Thread.sleep(1000);
+		if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() == 0) {
+			assertTrue("Goal Successfully removed from default goal list");
+			click(archived, "ARCHIVED");
+			Thread.sleep(1000);
+			if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() > 0)
+				assertTrue("Goal Successfully Added to archive");
+			else
+				assertFalse("Goal Not found in archive page");
+
+			click(revert, "Revert");
+			Thread.sleep(250);
+			if (driver.findElementsByXPath("//*[contains(text(),'unarchived')]").size() > 0) {
+				assertTrue("Unarchived successfully");
+				do {
+					Thread.sleep(1000);
+				} while (driver.findElementsByXPath("//*[contains(text(),'unarchived')]").size() > 0);
+			} else
+				assertTrue("Toast Message not displayed");
+			
+			click(back, "Archive Back"); 
+			Thread.sleep(1500);
+			if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() > 0)
+				assertTrue("Goal Successfully added back to active list");
+			else
+				assertFalse("Goal NOT added back to active list");
+		} else
+			assertFalse("Goal not removed from list");
+
+	}
+
+	public void openGoalDetails(RemoteWebDriver driver, String goalTitle) throws Exception {
+//		Scroll Down
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+		if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() > 0) {
+			do {
+				Thread.sleep(1000);
+			} while (driver.findElementsByCssSelector("div.custom-snackbar").size() > 0);
+			assertTrue("Goal Added to list Successfully");
+			WebElement newGoal = driver.findElementByXPath(savedGoal.replace("TITLE", goalTitle))
+					.findElement(By.xpath("./ancestor::mat-expansion-panel"));
+			click(savedGoal.replace("TITLE", goalTitle), goalTitle);
+
+//			goal details page
+			click(newGoal.findElement(By.xpath(".//a[text()='View Details']")), "View Details");
+			Thread.sleep(500);
+			if (driver.findElementsByTagName("app-view-goal-details").size() > 0
+					&& VGDTitle.getText().trim().equals(goalTitle))
+				assertTrue("goal details page opened successfully");
+			else
+				assertFalse("Goal Details Page not opened");
+		}
+
+	}
 
 	public void validateMarker(RemoteWebDriver driver, String color) throws Exception {
 		Integer value = 0;
@@ -85,9 +149,9 @@ public class BM_Company_BizGoals extends PageBase {
 		else
 			click(goalSave, "Save Goal Button");
 		Thread.sleep(500);
-		
+
 //		if coming from business Insights
-		if(driver.findElementsByTagName("app-business-insight").size()>0)
+		if (driver.findElementsByTagName("app-business-insight").size() > 0)
 			click(backBtn, "Back Arrow");
 
 		Thread.sleep(1000);
@@ -126,16 +190,16 @@ public class BM_Company_BizGoals extends PageBase {
 			action.moveByOffset(-100, 0).click().build().perform();
 			Thread.sleep(500);
 
-//			goal details page
-			click(newGoal.findElement(By.xpath(".//a[text()='View Details']")), "View Details");
-			Thread.sleep(500);
-			if (driver.findElementsByTagName("app-view-goal-details").size() > 0
-					&& VGDTitle.getText().trim().equals(goalTitle))
-				assertTrue("goal details page opened successfully");
-			else
-				assertFalse("Goal Details Page not opened");
-			click(cross, "Close");
-			Thread.sleep(1500);
+//			goal details page - NOT Needed Anymore, Checking for every new goal!
+//			click(newGoal.findElement(By.xpath(".//a[text()='View Details']")), "View Details");
+//			Thread.sleep(500);
+//			if (driver.findElementsByTagName("app-view-goal-details").size() > 0
+//					&& VGDTitle.getText().trim().equals(goalTitle))
+//				assertTrue("goal details page opened successfully");
+//			else
+//				assertFalse("Goal Details Page not opened");
+//			click(cross, "Close");
+//			Thread.sleep(1500);
 
 //			check milestone cards - only for SIA/100 Day
 			if (type.contains("SIA") || type.contains("100 Day")) {
