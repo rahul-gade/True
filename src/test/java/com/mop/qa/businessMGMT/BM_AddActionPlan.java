@@ -3,6 +3,7 @@ package com.mop.qa.businessMGMT;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -69,8 +70,10 @@ public class BM_AddActionPlan extends PageBase {
 		String metricUnit = null;
 
 //		enter data
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
 		click(title, "Title");
-		enterText(title, planTitle, "Title");
+		enterText(title, planTitle + dateFormat.format(date), "Title");
 		click(startDatePicker, "Start Date");
 		selectDate(driver, "START");
 		Thread.sleep(250);

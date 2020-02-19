@@ -38,7 +38,7 @@ public class TestAddGoalSIA extends TestBase {
 			String tn_spoc = rds.getValue("BMGMT", currentTest, "TN_SPOC");
 			String pc_spoc = rds.getValue("BMGMT", currentTest, "PC_SPOC");
 			goal.enterAdditionalFields(remoteDriver, tn_spoc, pc_spoc);
-			goal.submitAndVerify(remoteDriver, type, goalTitle);
+			goal.submitAndVerify(remoteDriver, type, goal.goal);
 
 			BM_AddActionPlan plan = new BM_AddActionPlan(remoteDriver);
 			String planTitle = rds.getValue("BMGMT", currentTest, "PlanTitle");
@@ -47,15 +47,15 @@ public class TestAddGoalSIA extends TestBase {
 			String metricUnit = rds.getValue("BMGMT", currentTest, "Unit");
 			plan.addNewPlan(remoteDriver, type, goal.dateStart, goal.dateEnd, planTitle, pc_spoc, MSTitle, metricTitle,
 					metricUnit);
-			goals.submitAndVerifyGoal(remoteDriver, type, goalTitle);
+			goals.submitAndVerifyGoal(remoteDriver, type, goal.goal);
 			BM_GoalDetails details = new BM_GoalDetails(remoteDriver);
 			
 //			goal details and archiving features - DID NOT check for every goal type!
-			goals.openGoalDetails(remoteDriver, goalTitle);
-			details.testDetails(remoteDriver, goalTitle, type, criticality, critCode);
-			goals.openGoalDetails(remoteDriver, goalTitle);
+			goals.openGoalDetails(remoteDriver, goal.goal);
+			details.testDetails(remoteDriver, goal.goal, type, criticality, critCode);
+			goals.openGoalDetails(remoteDriver, goal.goal);
 			details.archiveGoal(remoteDriver);
-			goals.checkArchive(remoteDriver, goalTitle);
+			goals.checkArchive(remoteDriver, goal.goal);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

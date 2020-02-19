@@ -34,7 +34,7 @@ public class TestAddGoalIDEA extends TestBase{
 			
 			BM_NewGoal goal = new BM_NewGoal(remoteDriver);
 			goal.fillbasicData(remoteDriver, goalTitle, vertical, type, criticality, critCode);
-			goals.submitAndVerifyGoal(remoteDriver, type, goalTitle);
+			goals.submitAndVerifyGoal(remoteDriver, type, goal.goal);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

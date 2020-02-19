@@ -38,14 +38,14 @@ public class TestAddGoal100Day extends TestBase {
 			String tn_spoc = rds.getValue("BMGMT", currentTest, "TN_SPOC");
 			String pc_spoc = rds.getValue("BMGMT", currentTest, "PC_SPOC");
 			goal.enterAdditionalFields(remoteDriver, tn_spoc, pc_spoc);
-			goal.submitAndVerify(remoteDriver, type, goalTitle);
+			goal.submitAndVerify(remoteDriver, type, goal.goal);
 			
 			BM_AddActionPlan plan = new BM_AddActionPlan(remoteDriver);
 			String planTitle = rds.getValue("BMGMT", currentTest, "PlanTitle");
 			String MSTitle = rds.getValue("BMGMT", currentTest, "MileStone");
 			plan.addNewPlan(remoteDriver, type, goal.dateStart, goal.dateEnd, planTitle, pc_spoc, MSTitle);
 			
-			goals.submitAndVerifyGoal(remoteDriver, type, goalTitle);
+			goals.submitAndVerifyGoal(remoteDriver, type, goal.goal);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

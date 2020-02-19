@@ -3,6 +3,7 @@ package com.mop.qa.businessMGMT;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -15,12 +16,17 @@ public class BM_NewGoal extends PageBase {
 	public BM_NewGoal(RemoteWebDriver driver) {
 		super(driver);
 	}
-
+	
+//	external fields
+	String goal = "";
+	String fV = "";
+	String dateStart = null, dateEnd = null;
+	
 //	datePicker
 	@FindBy(css = "button.mat-calendar-period-button")
 	WebElement periodBtn;
 	String cell = "//div[text()='CELL']"; // vary with YYYY->MMM->D
-	String dateStart = null, dateEnd = null;
+	
 
 //	basic data
 	@FindBy(css = "input[formcontrolname=title]")
@@ -29,7 +35,6 @@ public class BM_NewGoal extends PageBase {
 	WebElement vertical;
 	@FindBy(css = "mat-select[formcontrolname=vertical] span.mat-select-value-text span")
 	WebElement filledVert;
-	String fV = "";
 	@FindBy(css = "mat-select[formcontrolname=goal_type]")
 	WebElement goalType;
 	String option = "//mat-option/span[contains(text(),'OPTION')]"; // Also for S.P.O.C.
@@ -121,8 +126,11 @@ public class BM_NewGoal extends PageBase {
 
 	public void fillbasicData(RemoteWebDriver driver, String goalTitle, String vert, String type, String criticality,
 			String critCode) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		goal = goalTitle + dateFormat.format(date);
 		click(title, "Title");
-		enterText(title, goalTitle, "Title");
+		enterText(title, goal, "Title");
 		Thread.sleep(500);
 		click(vertical, "Vertical");
 		Thread.sleep(500);
