@@ -245,7 +245,7 @@ public class BM_Insights extends PageBase {
 				assertTrue(tabName + ": is Activated");
 			else
 				assertTrue("Activation failed");
-			System.out.println(tabName + "\t-->" + count); // show
+//			System.out.println(tabName + "\t-->" + count); // show
 			if (driver.findElementsByTagName("mat-expansion-panel").size() == count)
 				assertTrue("Available Insights are equal to the count shown in tab");
 			else

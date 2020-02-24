@@ -52,9 +52,11 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement blueMarker;
 	@FindBy(css = "div.grey")
 	WebElement greyMarker;
-	
-	@FindBy(css = "img.business-goal-view-icon")
+
+	@FindBy(css = "span.business-goal-view-txt")
 	WebElement goalView;
+	@FindBy(css = "span.hdp-end-plan-btn")
+	WebElement endPlan;
 
 	public void checkArchive(RemoteWebDriver driver, String goalTitle) throws Exception {
 		Thread.sleep(1000);
@@ -76,8 +78,8 @@ public class BM_Company_BizGoals extends PageBase {
 				} while (driver.findElementsByXPath("//*[contains(text(),'unarchived')]").size() > 0);
 			} else
 				assertTrue("Toast Message not displayed");
-			
-			click(back, "Archive Back"); 
+
+			click(back, "Archive Back");
 			Thread.sleep(1500);
 			if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() > 0)
 				assertTrue("Goal Successfully added back to active list");
@@ -243,4 +245,26 @@ public class BM_Company_BizGoals extends PageBase {
 		else
 			assertFalse("New goal screen not shown");
 	}
+
+	public boolean checkPlanState(RemoteWebDriver driver) throws Exception {
+		if (goalView.getText().contains("SIA")) {
+			assertTrue("Goals Ended! Select Another Company!");
+			System.out.println("Goals Ended! Select Another Company!");
+			return false;
+		}
+		return true;
+	}
+	
+
+	public void openPlan(RemoteWebDriver driver) throws Exception {
+		click(goalView, "View");
+		Thread.sleep(500);
+		if(driver.findElementsByTagName("app-view-hundred-day-plan").size()>0)
+			assertTrue("HUndred day plan page opened");
+		else
+			assertFalse("HUndred day plan page opened");
+		
+		
+	}
+
 }

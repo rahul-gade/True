@@ -142,27 +142,39 @@ public class BM_Home extends PageBase {
 	}
 
 	public void openBM(RemoteWebDriver driver, String URL) throws Exception {
-//		check if central nav is available
-		if (driver.findElementsByClassName("center-navigation").size() > 0) {
-			click(centerNav, "Central Navigation");
-			Thread.sleep(200);
-			click(BMNavOption, "Business Management");
-			waitForPageLoad();
-			do {
-				Thread.sleep(1000);
-			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
-		} else {
+//		if (driver.findElementsByClassName("center-navigation").size() > 0) {
+//			click(centerNav, "Central Navigation");
+//			Thread.sleep(200);
+//			click(BMNavOption, "Business Management");
+//			waitForPageLoad();
+//			do {
+//				Thread.sleep(1000);
+//			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+//		} else {
+//			enterUrl(URL);
+//			Thread.sleep(1000);
+//			waitForPageLoad();
+//			click(centerNav, "Central Navigation");
+//			Thread.sleep(200);
+//			click(BMNavOption, "Business Management");
+//			waitForPageLoad();
+//			do {
+//				Thread.sleep(1000);
+//			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+//		}
+		
+		if (driver.findElementsByClassName("center-navigation").size() == 0) {
 			enterUrl(URL);
 			Thread.sleep(1000);
 			waitForPageLoad();
-			click(centerNav, "Central Navigation");
-			Thread.sleep(200);
-			click(BMNavOption, "Business Management");
-			waitForPageLoad();
-			do {
-				Thread.sleep(1000);
-			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 		}
+		click(centerNav, "Central Navigation");
+		Thread.sleep(200);
+		click(BMNavOption, "Business Management");
+		waitForPageLoad();
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
 	}
 
 }

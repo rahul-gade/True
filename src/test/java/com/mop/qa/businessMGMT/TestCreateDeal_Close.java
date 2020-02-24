@@ -21,7 +21,7 @@ public class TestCreateDeal_Close extends TestBase{
 			IM_Home home = new IM_Home(remoteDriver);
 			home.launchApp(remoteDriver, startURL, uname, pwd);
 			home.startDealJourney();
-
+//
 			String company = rds.getValue("INVMGMT", currentTest, "companyName");
 			String project = rds.getValue("INVMGMT", currentTest, "projectName");
 			String industry = rds.getValue("INVMGMT", currentTest, "industry");

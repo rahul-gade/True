@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 
 import com.mop.qa.testbase.PageBase;
 
+import net.bytebuddy.asm.Advice.Unused;
+
 public class BM_AddActionPlan extends PageBase {
 
 	public BM_AddActionPlan(RemoteWebDriver driver) {
@@ -21,12 +23,12 @@ public class BM_AddActionPlan extends PageBase {
 	@FindBy(css = "button.mat-calendar-period-button")
 	WebElement periodBtn;
 	String cell = "//div[text()='CELL']"; // vary with YYYY-MMM-D
-
 //	calendar validations - method solution pending TODO
-//	@FindBy(css = "input[formcontrolname='start_date']")
-//	WebElement sDate;
-//	@FindBy(css = "input[formcontrolname='end_date']")
-//	WebElement eDate;
+	@FindBy(css = "input[formcontrolname='start_date']")
+	WebElement sDate;
+	@FindBy(css = "input[formcontrolname='end_date']")
+	WebElement eDate;
+
 	@FindBy(css = "input[formcontrolname=plan_title]")
 	WebElement title;
 	@FindBy(xpath = "//input[@formcontrolname='start_date']/ancestor::mat-form-field//mat-datepicker-toggle")
@@ -52,15 +54,15 @@ public class BM_AddActionPlan extends PageBase {
 	WebElement metricTitle;
 	@FindBy(css = "input[placeholder='Unit']")
 	WebElement unit;
-
-//	common for milestone and metric - TODO not used yet, incorporate somewhere!!!
+	
+//	common for milestone and metric - TODO These are not used yet, incorporate somewhere!!!
 	@FindBy(css = "span.add-another-link")
 	WebElement addAnother;
 	@FindBy(css = "span.remove-link")
 	WebElement saveGoal;
 
 	public void addNewPlan(RemoteWebDriver driver, String... fields) throws Exception {
-//		initiating common fields from arguments - type in fields[0] to be used directly
+//		initiating common fields from arguments - GOAL TYPE-value in fields[0] to be used directly
 		String dateStart = fields[1];
 		String dateEnd = fields[2];
 		String planTitle = fields[3];
@@ -68,7 +70,6 @@ public class BM_AddActionPlan extends PageBase {
 		String mileStone = fields[5];
 		String metric = null;
 		String metricUnit = null;
-
 //		enter data
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
@@ -124,7 +125,7 @@ public class BM_AddActionPlan extends PageBase {
 		String[] date = dF.format(c.getTime()).toUpperCase().split("-");
 		click(periodBtn, "Date Period");
 		for (String s : date) {
-			if (s.length() < 3)
+			if (s.length() < 3) // handling single digit date
 				s = String.valueOf(Integer.parseInt(s));
 			click(cell.replace("CELL", s), "Calendar Cell: " + s);
 			Thread.sleep(100);
