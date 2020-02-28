@@ -1,5 +1,8 @@
 package com.mop.qa.businessMGMT;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -57,6 +60,15 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement goalView;
 	@FindBy(css = "span.hdp-end-plan-btn")
 	WebElement endPlan;
+
+	List<String> goalNames;
+	String gTitle = "//a[contains(text(),'GTITLE')]", HDP = null, SIA = null;
+
+	public void collectGoals(RemoteWebDriver driver, String gTitles) {
+		String[] titles = gTitles.split(",");
+		HDP = driver.findElementByXPath(gTitle.replace("GTITLE", titles[0])).getText().trim();
+		SIA = driver.findElementByXPath(gTitle.replace("GTITLE", titles[1])).getText().trim();
+	}
 
 	public void checkArchive(RemoteWebDriver driver, String goalTitle) throws Exception {
 		Thread.sleep(1000);
@@ -195,17 +207,6 @@ public class BM_Company_BizGoals extends PageBase {
 			action.moveByOffset(-100, 0).click().build().perform();
 			Thread.sleep(500);
 
-//			goal details page - NOT Needed Anymore, Checking for every new goal!
-//			click(newGoal.findElement(By.xpath(".//a[text()='View Details']")), "View Details");
-//			Thread.sleep(500);
-//			if (driver.findElementsByTagName("app-view-goal-details").size() > 0
-//					&& VGDTitle.getText().trim().equals(goalTitle))
-//				assertTrue("goal details page opened successfully");
-//			else
-//				assertFalse("Goal Details Page not opened");
-//			click(cross, "Close");
-//			Thread.sleep(1500);
-
 //			check milestone cards - only for SIA/100 Day
 			if (type.contains("SIA") || type.contains("100 Day")) {
 				click(savedGoal.replace("TITLE", goalTitle), goalTitle);
@@ -254,17 +255,14 @@ public class BM_Company_BizGoals extends PageBase {
 		}
 		return true;
 	}
-	
 
 	public void openPlan(RemoteWebDriver driver) throws Exception {
 		click(goalView, "View");
 		Thread.sleep(500);
-		if(driver.findElementsByTagName("app-view-hundred-day-plan").size()>0)
+		if (driver.findElementsByTagName("app-view-hundred-day-plan").size() > 0)
 			assertTrue("HUndred day plan page opened");
 		else
 			assertFalse("HUndred day plan page opened");
-		
-		
 	}
 
 }

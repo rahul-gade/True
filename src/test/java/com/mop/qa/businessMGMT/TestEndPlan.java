@@ -26,10 +26,13 @@ public class TestEndPlan extends TestBase{
 			BM_Company_BizGoals goals = new BM_Company_BizGoals(remoteDriver);
 			BM_PlanView plan = new BM_PlanView(remoteDriver);
 			goals.leadHere(remoteDriver);
+
+			String gTitles = rds.getValue("BMGMT", currentTest, "GoalTitle");
+			goals.collectGoals(remoteDriver, gTitles);
 			goals.openPlan(remoteDriver);
-			if(goals.checkPlanState(remoteDriver))
-				plan.endPlan(remoteDriver);
-//			goals.checkPlanPage(remoteDriver);
+			String[] v = rds.getValue("BMGMT", currentTest, "Vertical").split(",");
+			String vHDP = v[0], vSIA = v[1];
+			plan.verifySideBar(remoteDriver, goals.HDP, vHDP); 
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

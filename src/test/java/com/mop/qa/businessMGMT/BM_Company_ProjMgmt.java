@@ -11,7 +11,6 @@ public class BM_Company_ProjMgmt extends PageBase{
 
 	public BM_Company_ProjMgmt(RemoteWebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@FindBy(xpath = "//a[text()='Project Management']")

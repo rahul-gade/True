@@ -44,8 +44,11 @@ public class TestAddGoal100Day extends TestBase {
 			String planTitle = rds.getValue("BMGMT", currentTest, "PlanTitle");
 			String MSTitle = rds.getValue("BMGMT", currentTest, "MileStone");
 			plan.addNewPlan(remoteDriver, type, goal.dateStart, goal.dateEnd, planTitle, pc_spoc, MSTitle);
-			
 			goals.submitAndVerifyGoal(remoteDriver, type, goal.goal);
+			
+//			BM_PlanView pView = new BM_PlanView(remoteDriver);
+//			goals.openPlan(remoteDriver);
+//			pView.checkSidebar(remoteDriver, goal.goal, vertical, );
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

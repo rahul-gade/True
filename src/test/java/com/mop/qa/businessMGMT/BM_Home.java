@@ -77,7 +77,7 @@ public class BM_Home extends PageBase {
 		else
 			assertFalse("Display not changed to list view");
 //		grid view
-		click(gridView, "List View");
+		click(gridView, "Grid View");
 		Thread.sleep(500);
 		if (driver.findElements(By.cssSelector("list-view-section")).size() == 0)
 			assertTrue("Display changed to grid View");
@@ -138,31 +138,10 @@ public class BM_Home extends PageBase {
 		waitForPageLoad();
 		do {
 			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+		} while (driver.findElementsByCssSelector("img[src*=spinner]").size() > 0);
 	}
 
 	public void openBM(RemoteWebDriver driver, String URL) throws Exception {
-//		if (driver.findElementsByClassName("center-navigation").size() > 0) {
-//			click(centerNav, "Central Navigation");
-//			Thread.sleep(200);
-//			click(BMNavOption, "Business Management");
-//			waitForPageLoad();
-//			do {
-//				Thread.sleep(1000);
-//			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
-//		} else {
-//			enterUrl(URL);
-//			Thread.sleep(1000);
-//			waitForPageLoad();
-//			click(centerNav, "Central Navigation");
-//			Thread.sleep(200);
-//			click(BMNavOption, "Business Management");
-//			waitForPageLoad();
-//			do {
-//				Thread.sleep(1000);
-//			} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
-//		}
-		
 		if (driver.findElementsByClassName("center-navigation").size() == 0) {
 			enterUrl(URL);
 			Thread.sleep(1000);
@@ -174,7 +153,7 @@ public class BM_Home extends PageBase {
 		waitForPageLoad();
 		do {
 			Thread.sleep(1000);
-		} while (driver.findElements(By.xpath("//img[contains(@src,'spinner')]")).size() > 0);
+		} while (driver.findElementsByCssSelector("img[src*=spinner]").size() > 0);
 	}
 
 }
