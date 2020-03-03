@@ -22,7 +22,7 @@ public class BM_AddActionPlan extends PageBase {
 //	datepicker
 	@FindBy(css = "button.mat-calendar-period-button")
 	WebElement periodBtn;
-	String cell = "//div[text()='CELL']"; // vary with YYYY-MMM-D
+	String cell = "//td//div[text()='CELL']"; // vary with YYYY-MMM-D
 //	calendar validations - method solution pending TODO
 	@FindBy(css = "input[formcontrolname='start_date']")
 	WebElement sDate;

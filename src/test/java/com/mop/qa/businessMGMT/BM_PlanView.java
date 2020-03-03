@@ -39,6 +39,14 @@ public class BM_PlanView extends PageBase {
 	@FindBy(css = "img[alt=Close]")
 	WebElement closeSidebar;
 
+//	end plan
+	@FindBy(css = "span.bm-ehdp-checkbox")
+	WebElement cBoxWhole;
+	@FindBy(xpath = "//mat-checkbox")
+	WebElement cBoxState;
+	@FindBy(css = "button.bm-ehdp-confirmbtn")
+	WebElement confirmBtn;
+
 	public void verifySideBar(RemoteWebDriver driver, String planName, String vertical) throws Exception {
 //		Goal Section
 		WebElement hdpPanel = driver.findElementByXPath(vert.replace("VERTICAL", vertical));
@@ -79,31 +87,33 @@ public class BM_PlanView extends PageBase {
 		click(closeSidebar, "Close Sidebar");
 		Thread.sleep(250);
 		assertTrue("Split Screen is closed", driver.findElementsByClassName("aside-content").size() == 0);
-		perc = Integer
-				.parseInt(driver.findElementByClassName("accor-subsection-percentage").getText().replaceAll("[^0-9]", ""));
+		perc = Integer.parseInt(
+				driver.findElementByClassName("accor-subsection-percentage").getText().replaceAll("[^0-9]", ""));
 		assertTrue("Percentage saved successfully", perc == 100);
+		Thread.sleep(500);
 	}
 
-	public void endPlan(RemoteWebDriver driver) throws Exception {
-		click(goalView, "View");
-		Thread.sleep(500);
-		if (driver.findElementsByTagName("app-view-hundred-day-plan").size() > 0)
-			assertTrue("HUndred day plan page opened");
-		else
-			assertFalse("HUndred day plan page NOT opened");
-
+	public void endPlan(RemoteWebDriver driver, String hDP) throws Exception {
 		click(endPlan, "END PLAN");
 		Thread.sleep(250);
-		if (driver.findElementsByTagName("app-closing-hundred-day-plan").size() > 0)
-			assertTrue("End PLan Pop-up displayed");
+		assertTrue("End PLan Pop-up displayed",
+				driver.findElementsByTagName("app-closing-hundred-day-plan").size() > 0);
+
+		if (cBoxWhole.getText().contains(hDP) && cBoxState.getAttribute("class").contains("checked"))
+			assertTrue(hDP + " is checked");
 		else
-			assertFalse("End PLan Pop-up NOT displayed");
+			assertFalse("Pending 100 day plan not shown/checkbox not checked");
+//
+//		click(confirmBtn, "Confirm");
+//		Thread.sleep(500);
+//		assertTrue("Pop-up closed", driver.findElementsByTagName("app-closing-hundred-day-plan").size() == 0);
+
 	}
 
 	void fillSlider(RemoteWebDriver driver) throws InterruptedException {
 		Actions action = new Actions(driver);
 		int width = sliderBG.getSize().getWidth();
-		action.moveToElement(sliderBG).moveByOffset(width / 2 - 1, 0).click().build().perform();
+		action.moveToElement(sliderBG).moveByOffset(width / 2-1, 0).click().build().perform();
 		Thread.sleep(250);
 	}
 }

@@ -120,7 +120,7 @@ public class IM_BasicDealDetails extends PageBase {
 		// stake radio
 		click(stakeOpt.replace("STAKE-NAME", stake), "Stake option");
 		Thread.sleep(250);
-		
+
 //		deal sponsor
 		click(dealSponsor, "Sponsor");
 		enterText(dealSponsor, dealSponsor2, "Deal Sponsor");
@@ -274,11 +274,16 @@ public class IM_BasicDealDetails extends PageBase {
 			case "Create Anyway":
 				System.out.println("Running Create Anyway");
 				click(createAnyway, "Create Deal Anyway");
-				Thread.sleep(2000);
+//				Thread.sleep(10000);
+//				do {
+//					Thread.sleep(1000);
+//				} while (driver.findElementsByCssSelector("span.dd-title").size() > 0);
+				waitForVisibilityOfElement(dealTitle);
+				Thread.sleep(1000);
 				if (dealTitle.getText().contains(createdProject))
 					assertTrue("Landed on Deal Summary Page");
 				else
-					assertFalse("Deal Summary Page did not open");
+					assertFalse("Deal Summary Page did not open/Project Name Incorrect");
 				break;
 
 			case "Pass Deal":

@@ -32,7 +32,8 @@ public class TestEndPlan extends TestBase{
 			goals.openPlan(remoteDriver);
 			String[] v = rds.getValue("BMGMT", currentTest, "Vertical").split(",");
 			String vHDP = v[0], vSIA = v[1];
-			plan.verifySideBar(remoteDriver, goals.HDP, vHDP); 
+			plan.verifySideBar(remoteDriver, goals.HDP, vHDP);
+			plan.endPlan(remoteDriver, goals.HDP);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

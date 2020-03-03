@@ -25,7 +25,8 @@ public class BM_NewGoal extends PageBase {
 //	datePicker
 	@FindBy(css = "button.mat-calendar-period-button")
 	WebElement periodBtn;
-	String cell = "//div[text()='CELL']"; // vary with YYYY->MMM->D
+//	String cell = "//td//div[contains(text(),'SHITTYNUMBER')]"; // vary with YYYY->MMM->D
+	String cell = "//td//div[text()='SHITTYNUMBER']"; // vary with YYYY->MMM->D
 	
 
 //	basic data
@@ -151,17 +152,17 @@ public class BM_NewGoal extends PageBase {
 		Calendar c = Calendar.getInstance();
 		if (dateType.contains("END")) {
 			c.add(Calendar.DAY_OF_MONTH, 30);
-			dateStart = dF.format(c.getTime());
+			dateEnd = dF.format(c.getTime()); //to use elsewhere!
 		} else {
 			c.add(Calendar.DAY_OF_MONTH, 1);
-			dateEnd = dF.format(c.getTime());
+			dateStart = dF.format(c.getTime()); //to use elsewhere!
 		}
-		String[] date = dF.format(c.getTime()).toUpperCase().split("-");
+		String[] date = dF.format(c.getTime()).toUpperCase().split("-"); 
 		click(periodBtn, "Date Period");
 		for (String s : date) {
 			if (s.length() < 3)
 				s = String.valueOf(Integer.parseInt(s));
-			click(cell.replace("CELL", s), "Calendar Cell: " + s);
+			click(cell.replace("SHITTYNUMBER", s), "Calendar Cell: " + s);
 			Thread.sleep(100);
 		}
 	}

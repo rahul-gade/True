@@ -61,7 +61,6 @@ public class BM_Company_BizGoals extends PageBase {
 	@FindBy(css = "span.hdp-end-plan-btn")
 	WebElement endPlan;
 
-	List<String> goalNames;
 	String gTitle = "//a[contains(text(),'GTITLE')]", HDP = null, SIA = null;
 
 	public void collectGoals(RemoteWebDriver driver, String gTitles) {
@@ -247,14 +246,14 @@ public class BM_Company_BizGoals extends PageBase {
 			assertFalse("New goal screen not shown");
 	}
 
-	public boolean checkPlanState(RemoteWebDriver driver) throws Exception {
-		if (goalView.getText().contains("SIA")) {
-			assertTrue("Goals Ended! Select Another Company!");
-			System.out.println("Goals Ended! Select Another Company!");
-			return false;
-		}
-		return true;
-	}
+//	public boolean checkPlanState(RemoteWebDriver driver) throws Exception {
+//		if (goalView.getText().contains("SIA")) {
+//			assertTrue("Goals Ended! Select Another Company!");
+//			System.out.println("Goals Ended! Select Another Company!");
+//			return false;
+//		}
+//		return true;
+//	}
 
 	public void openPlan(RemoteWebDriver driver) throws Exception {
 		click(goalView, "View");

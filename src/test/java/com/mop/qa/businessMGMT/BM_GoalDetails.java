@@ -39,36 +39,32 @@ public class BM_GoalDetails extends PageBase {
 	WebElement sliderThumb;
 	@FindBy(css = "span.value")
 	WebElement sliderLabel;
+	@FindBy(css = "div.mat-slider-track-background")
+	WebElement sliderBG;
 
 	public void testDetails(RemoteWebDriver driver, String goalTitle, String type, String critic, String critCode)
 			throws Exception {
 		Actions action = new Actions(driver);
-//		goal type
+//✓		goal type
 		if (goalType.getText().trim().equalsIgnoreCase(type))
 			assertTrue("Goal Type " + type + " is correct.");
 		else
 			assertFalse("Goal Type is not correct. Expected: " + type + " || Actual: " + goalType.getText());
 
-//		goal title
+//✓		goal title
 		if (title.getText().contains(goalTitle))
 			assertTrue("Goal Title " + goalTitle + " is correct.");
 		else
 			assertFalse("Goal Title is not correct. Expected: " + goalTitle + " || Actual: " + title.getText());
 
 //		progress bar
-		int perc = Integer.parseInt(sliderLabel.getText().replaceAll("%", ""));
 		if (driver.findElementsByCssSelector("button.vgd-archive-btn").size() == 0)
 			assertTrue("Archive button is not present when progress is less than 100%");
 		else
 			assertFalse("Archive button is present despite progress state");
-		do {
-			action.clickAndHold(sliderThumb);
-			action.moveByOffset(40, 0);
-			action.release();
-			action.build().perform();
-			perc = Integer.parseInt(sliderLabel.getText().replaceAll("%", ""));
-//			System.out.println(perc);
-		} while (perc < 100);
+		int width = sliderBG.getSize().getWidth();
+		action.moveToElement(sliderBG).moveByOffset(width / 2 + 1, 0).click().build().perform();
+		Thread.sleep(250);
 		if (driver.findElementsByXPath("//*[contains(text(),'successfully')]").size() > 0) {
 			assertTrue("Progress saved successfully");
 			do {
@@ -77,19 +73,19 @@ public class BM_GoalDetails extends PageBase {
 		} else
 			assertFalse("Toast Messages Not displayed");
 
-//		archive button
+//✓		archive button
 		if (archive.isDisplayed())
 			assertTrue("Archive Button Displayed when progress is set to 100%");
 		else
 			assertFalse("Archive Button is not displayed");
 
-//		Criticality
-		if (criticality.getText().trim().equalsIgnoreCase(critic)) {
+//✓		Criticality
+		if (criticality.getText().trim().equalsIgnoreCase(critic)) 
 			assertTrue("Criticality is correctly saved");
-		} else
+		else
 			assertFalse("criticality is not correctly saved\n" + critic + "   " + criticality.getText());
 
-// 		tabs
+//✓ 		tabs
 		List<WebElement> tabs = driver.findElementsByCssSelector("app-view-goal-details div.mat-tab-label");
 		for (WebElement tab : tabs) {
 			String name = tab.findElement(By.className("mat-tab-label-content")).getText();
