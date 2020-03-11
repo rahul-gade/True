@@ -127,7 +127,7 @@ public class BM_NewGoal extends PageBase {
 
 	public void fillbasicData(RemoteWebDriver driver, String goalTitle, String vert, String type, String criticality,
 			String critCode) throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HHmm");
 		Date date = new Date();
 		goal = goalTitle + dateFormat.format(date);
 		click(title, "Title");

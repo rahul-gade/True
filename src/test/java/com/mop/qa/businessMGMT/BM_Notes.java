@@ -102,8 +102,8 @@ public class BM_Notes extends PageBase {
 			assertFalse("Notes Tab Not activated");
 	}
 
-	public void confirmDelete(RemoteWebDriver driver, String tabTitle2) throws Exception {
-		if (driver.findElementsByXPath("//span[text()='" + tabTitle2 + "']").size() == 0)
+	public void confirmDelete(RemoteWebDriver driver, String tabTitle) throws Exception {
+		if (driver.findElementsByXPath("//span[text()='" + tabTitle + "']").size() == 0)
 			assertTrue("Note Successfully Deleted");
 		else
 			assertFalse("Note Not deleted from BM");

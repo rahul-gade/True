@@ -71,7 +71,7 @@ public class BM_AddActionPlan extends PageBase {
 		String metric = null;
 		String metricUnit = null;
 //		enter data
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HHmm");
 		Date date = new Date();
 		click(title, "Title");
 		enterText(title, planTitle + dateFormat.format(date), "Title");

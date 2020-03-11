@@ -34,7 +34,7 @@ public class TestCreateNote extends TestBase{
 			NT_Home nHome = new NT_Home(remoteDriver);
 			String URL = rds.getValue("BMGMT", currentTest, "NTURL");
 			nHome.openNoteTaker(remoteDriver, URL);
-			nHome.findBMNotes(remoteDriver, BNote.tabTitle, BNote.qANTitle);
+			nHome.findBMNotes(remoteDriver, BNote.tabTitle, BNote.qANTitle, company);
 			nHome.deleteNote(remoteDriver, BNote.tabTitle);
 			home.openBM(remoteDriver, startURL);
 			home.findProject(remoteDriver, stage, company, header);

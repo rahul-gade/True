@@ -61,12 +61,24 @@ public class BM_Company_BizGoals extends PageBase {
 	@FindBy(css = "span.hdp-end-plan-btn")
 	WebElement endPlan;
 
-	String gTitle = "//a[contains(text(),'GTITLE')]", HDP = null, SIA = null;
+	String gTitle = "//a[contains(text(),'GTITLE')]",
+			plan = "./ancestor::mat-expansion-panel//p[contains(text(),'PLAN')]", HDP_1 = null, HDP_2 = null,
+			SIA = null;
 
-	public void collectGoals(RemoteWebDriver driver, String gTitles) {
+	List<String> A_P = new ArrayList<String>();
+
+	public void collectGoals(RemoteWebDriver driver, String gTitles, String pTitles) throws Exception {
 		String[] titles = gTitles.split(",");
-		HDP = driver.findElementByXPath(gTitle.replace("GTITLE", titles[0])).getText().trim();
+		List<WebElement> hdp = driver.findElementsByXPath(gTitle.replace("GTITLE", titles[0]));
+		HDP_1 = hdp.get(0).getText().trim();
+		HDP_2 = hdp.get(1).getText().trim();
 		SIA = driver.findElementByXPath(gTitle.replace("GTITLE", titles[1])).getText().trim();
+
+		for (WebElement e : hdp) {
+			click(e, hdp.get(0).getText().trim());
+			Thread.sleep(750);
+			A_P.add(e.findElement(By.xpath(plan.replace("PLAN", pTitles))).getText().trim());
+		}
 	}
 
 	public void checkArchive(RemoteWebDriver driver, String goalTitle) throws Exception {
@@ -90,6 +102,9 @@ public class BM_Company_BizGoals extends PageBase {
 			} else
 				assertTrue("Toast Message not displayed");
 
+			do {
+				Thread.sleep(1000);
+			} while (driver.findElementsByCssSelector("img[src*='spinner']").size() > 0);
 			click(back, "Archive Back");
 			Thread.sleep(1500);
 			if (driver.findElementsByXPath(savedGoal.replace("TITLE", goalTitle)).size() > 0)

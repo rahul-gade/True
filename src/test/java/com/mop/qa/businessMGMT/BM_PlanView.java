@@ -1,5 +1,7 @@
 package com.mop.qa.businessMGMT;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 //app-view-hundred-day-plan <== Page App Component!!!
 import org.openqa.selenium.WebElement;
@@ -26,6 +28,7 @@ public class BM_PlanView extends PageBase {
 	@FindBy(css = "img[title=Next]")
 	WebElement nextBtn;
 	String vert = "//mat-panel-title[contains(text(),'VERTICAL')]/ancestor::mat-expansion-panel";
+	String plan_hdp = "//span[contains(text(),'CODEIN')]";
 
 //	sidebar
 	@FindBy(css = "span.vgd-title-text")
@@ -34,6 +37,10 @@ public class BM_PlanView extends PageBase {
 	WebElement aPlanTitle;
 	@FindBy(css = "div.mat-slider-track-background")
 	WebElement sliderBG;
+	@FindBy(css = "div.mat-slider-thumb")
+	WebElement sliderThumb;
+	@FindBy(css = "span.value")
+	WebElement sliderLabel;
 	@FindBy(css = "button.vgd-ss-archive-btn")
 	WebElement archive;
 	@FindBy(css = "img[alt=Close]")
@@ -41,16 +48,22 @@ public class BM_PlanView extends PageBase {
 
 //	end plan
 	@FindBy(css = "span.bm-ehdp-checkbox")
-	WebElement cBoxWhole;
-	@FindBy(xpath = "//mat-checkbox")
-	WebElement cBoxState;
+	List<WebElement> cBoxWhole;
 	@FindBy(css = "button.bm-ehdp-confirmbtn")
 	WebElement confirmBtn;
+	@FindBy(css = "button.btn")
+	WebElement confirm;
+	@FindBy(css = "app-view-sia-plan-details")
+	WebElement SIAplanPage;
 
-	public void verifySideBar(RemoteWebDriver driver, String planName, String vertical) throws Exception {
+	String unended = null, ended = null;
+
+	public void verifySidebar(RemoteWebDriver driver, String planName, String vertical, String Ac_Plan)
+			throws Exception {
 //		Goal Section
 		WebElement hdpPanel = driver.findElementByXPath(vert.replace("VERTICAL", vertical));
-		click(hdpPanel.findElement(By.className("bm-sia-goal-accordion-header-left")), "Plan " + planName);
+		System.out.println(planName);
+		click(hdpPanel.findElement(By.xpath(plan_hdp.replace("CODEIN", planName))), "Plan " + planName);
 		Thread.sleep(500);
 		assertTrue("Split Screen is displayed", driver.findElementsByClassName("aside-content").size() > 0);
 		assertTrue("Goal Title is correctly displayed", goalTitle.getText().trim().equals(planName));
@@ -60,22 +73,27 @@ public class BM_PlanView extends PageBase {
 		} else
 			assertFalse("Toast Messages Not displayed");
 		assertTrue("Archive Button Displayed when progress is set to 100%", archive.isDisplayed());
-//		close slider
+		
+		
+
+//		REFRESH PANEL after closing sidebar - check percentage
 		click(closeSidebar, "Close Sidebar");
 		Thread.sleep(250);
+		hdpPanel = driver.findElementByXPath(vert.replace("VERTICAL", vertical));
 		assertTrue("Split Screen is closed", driver.findElementsByClassName("aside-content").size() == 0);
+
 		int perc = Integer
 				.parseInt(driver.findElementByClassName("accor-header-percentage").getText().replaceAll("[^0-9]", ""));
 		assertTrue("Percentage saved successfully", perc == 100);
 
-//		Action plan subsection - Refresh Panel
-		hdpPanel = driver.findElementByXPath(vert.replace("VERTICAL", vertical));
-		WebElement aPlan = hdpPanel.findElement(By.cssSelector("span.bm-sia-goal-accor-subsection-title"));
-		String aPTitle = aPlan.getText();
+//		Action plan subsection
+		System.out.println(Ac_Plan);
+		WebElement aPlan = hdpPanel.findElement(By.xpath(plan_hdp.replace("CODEIN", Ac_Plan)));
+//		String aPTitle = aPlan.getText();
 		click(aPlan, "100 Day Goal Action Plan");
 		Thread.sleep(250);
 		assertTrue("Split Screen is displayed", driver.findElementsByClassName("aside-content").size() > 0);
-		if (aPlanTitle.getText().trim().equals(aPTitle))
+		if (aPlanTitle.getText().contains(Ac_Plan))
 			assertTrue("Action Plan Title is correctly displayed");
 		else
 			assertFalse("Action Plan Title is not corectly displayed");
@@ -93,27 +111,56 @@ public class BM_PlanView extends PageBase {
 		Thread.sleep(500);
 	}
 
-	public void endPlan(RemoteWebDriver driver, String hDP) throws Exception {
+	public void endPlan(RemoteWebDriver driver, String... hdps) throws Exception {
 		click(endPlan, "END PLAN");
 		Thread.sleep(250);
-		assertTrue("End PLan Pop-up displayed",
+		assertTrue("End Plan Pop-up displayed",
 				driver.findElementsByTagName("app-closing-hundred-day-plan").size() > 0);
+//		goal counter
+		int gCount = Integer
+				.parseInt(driver.findElementByClassName("bm-goal-count").getText().replaceAll("[^0-9]", ""));
+		if (gCount == cBoxWhole.size())
+			assertTrue("Selected Goals Count reflected correctly - " + gCount + " goals");
+//		check goal selections
+		for (int i = 0; i < cBoxWhole.size(); i++) {
+			if (i == 0)
+				ended = hdps[i];
+			WebElement cBox = cBoxWhole.get(i).findElement(By.xpath("./mat-checkbox"));
+			if (cBoxWhole.get(i).getText().contains(hdps[i]) && cBox.getAttribute("class").contains("checked"))
+				assertTrue(hdps[i] + " is checked by default!");
+			else
+				assertFalse(hdps[i] + " is Not checked by default!");
+//			deselect last goal
+			if (i == cBoxWhole.size() - 1) {
+				click(cBox, "CheckBox for " + hdps[i]);
+				unended = hdps[i];
+				if (!cBox.getAttribute("class").contains("checked"))
+					assertTrue("Goal " + hdps[i] + " deselected successfully");
+				else
+					assertFalse("Goal not deselected.");
+			}
+		}
+//		goal count recheck
+		gCount = Integer.parseInt(driver.findElementByClassName("bm-goal-count").getText().replaceAll("[^0-9]", ""));
+		if (gCount == cBoxWhole.size() - 1)
+			assertTrue("Selected Goals Count reflected correctly - " + gCount + " goals");
 
-		if (cBoxWhole.getText().contains(hDP) && cBoxState.getAttribute("class").contains("checked"))
-			assertTrue(hDP + " is checked");
+//		finally end
+		click(confirmBtn, "Confirm");
+		Thread.sleep(250);
+		click(confirm, "Confirm");
+		Thread.sleep(1500);
+		if (SIAplanPage.isDisplayed())
+			assertTrue("Landed on SIA Plan Page");
 		else
-			assertFalse("Pending 100 day plan not shown/checkbox not checked");
-//
-//		click(confirmBtn, "Confirm");
-//		Thread.sleep(500);
-//		assertTrue("Pop-up closed", driver.findElementsByTagName("app-closing-hundred-day-plan").size() == 0);
-
+			assertFalse("Did not land on SIA Plan Page");
 	}
 
 	void fillSlider(RemoteWebDriver driver) throws InterruptedException {
 		Actions action = new Actions(driver);
 		int width = sliderBG.getSize().getWidth();
-		action.moveToElement(sliderBG).moveByOffset(width / 2-1, 0).click().build().perform();
+		action.dragAndDropBy(sliderThumb, width, 0).perform();
+//		action.moveToElement(sliderBG).moveByOffset(width / 2-1, 0).click().build().perform();
 		Thread.sleep(250);
 	}
 }

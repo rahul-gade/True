@@ -63,7 +63,7 @@ public class BM_GoalDetails extends PageBase {
 		else
 			assertFalse("Archive button is present despite progress state");
 		int width = sliderBG.getSize().getWidth();
-		action.moveToElement(sliderBG).moveByOffset(width / 2 + 1, 0).click().build().perform();
+		action.dragAndDropBy(sliderThumb, width, 0).perform();
 		Thread.sleep(250);
 		if (driver.findElementsByXPath("//*[contains(text(),'successfully')]").size() > 0) {
 			assertTrue("Progress saved successfully");
@@ -80,7 +80,7 @@ public class BM_GoalDetails extends PageBase {
 			assertFalse("Archive Button is not displayed");
 
 //✓		Criticality
-		if (criticality.getText().trim().equalsIgnoreCase(critic)) 
+		if (criticality.getText().trim().equalsIgnoreCase(critic))
 			assertTrue("Criticality is correctly saved");
 		else
 			assertFalse("criticality is not correctly saved\n" + critic + "   " + criticality.getText());
@@ -116,10 +116,12 @@ public class BM_GoalDetails extends PageBase {
 			assertFalse("Assessment not added");
 	}
 
-	public void archiveGoal(RemoteWebDriver remoteDriver) throws Exception {
+	public void archiveGoal(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(500);
 		click(archive, "ARCHIVE");
-		Thread.sleep(1500);
+		do {
+			Thread.sleep(1000);
+		} while (driver.findElementsByCssSelector("img[src*='spinner']").size() > 0);
 		if (tabBusinessGoals.findElement(By.xpath(li)).getAttribute("class").contains("active"))
 			assertTrue("Landed back to business goals page");
 		else

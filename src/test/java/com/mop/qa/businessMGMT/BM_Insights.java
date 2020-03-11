@@ -24,6 +24,8 @@ public class BM_Insights extends PageBase {
 	WebElement backBtn;
 	@FindBy(css = "ul.navigation-menu")
 	WebElement navMenu;
+	@FindBy(css = "div.rightArrow")
+	WebElement rightArrow;
 	boolean checked = false;
 
 //	check accordion
@@ -40,8 +42,8 @@ public class BM_Insights extends PageBase {
 	WebElement nA;
 	@FindBy(xpath = "//div[text()=' ADD TO GOALS ']")
 	WebElement addToGoals;
-	
-	String cardName ="";
+
+	String cardName = "";
 	String vert = "";
 
 //	post pop-up
@@ -199,7 +201,7 @@ public class BM_Insights extends PageBase {
 				Thread.sleep(2000);
 
 				click(submitBtn, "Upload");
-				Thread.sleep(1000);
+				Thread.sleep(2500);
 
 				if (driver.findElementsByClassName("hypothesis-library-section").size() == 0)
 					assertTrue("Landed ack to new Post Pop-Up page");
@@ -234,8 +236,11 @@ public class BM_Insights extends PageBase {
 //		click(navs.get(0), "first - Navigation Tab");
 
 //		navigation
+		System.out.println(navs.size() + " <== Number of tabs");
+		int i = 0;
 		for (WebElement nav : navs) {
 			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+//			System.out.println(tabName);
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
 			if (count > 0 && !checked)
 				checkAccordion(driver);
@@ -245,11 +250,19 @@ public class BM_Insights extends PageBase {
 				assertTrue(tabName + ": is Activated");
 			else
 				assertTrue("Activation failed");
-//			System.out.println(tabName + "\t-->" + count); // show
+			System.out.println(tabName + "\t-->" + count); // show
 			if (driver.findElementsByTagName("mat-expansion-panel").size() == count)
 				assertTrue("Available Insights are equal to the count shown in tab");
 			else
 				assertFalse("Available Insights are equal to the count shown in tab");
+
+//			click right arrow to show more tabs after every 4 tabs :-)
+			i++;
+			if (navs.size() > 6 && i % 4 == 0) {
+				System.out.println("Showing More!");
+				click(rightArrow, "Right Arrow");
+				Thread.sleep(250);
+			}
 		}
 	}
 
