@@ -64,14 +64,14 @@ public class BM_NewGoal extends PageBase {
 	WebElement removeLink;
 
 	public void checkAutoFill(RemoteWebDriver driver, String cardName, String vert) throws Exception {
-		if (title.getAttribute("value").trim().equalsIgnoreCase(cardName))
+		if (title.getAttribute("value").equalsIgnoreCase(cardName))
 			assertTrue("Title " + cardName + " is autofilled");
 		else
 			assertFalse("Title is not autofilled/incorrectly filled");
 
-		if (vert.equalsIgnoreCase(filledVert.getText().trim())) {
+		if (vert.equalsIgnoreCase(filledVert.getText())) {
 			assertTrue("Vertical " + vert + " is autofilled");
-			fV = filledVert.getText().trim();
+			fV = filledVert.getText();
 		} else
 			assertFalse("Vertical is not autofilled/incorrectly filled");
 	}

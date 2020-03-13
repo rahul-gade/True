@@ -135,7 +135,7 @@ public class BM_AddActionPlan extends PageBase {
 //	calendar validations - unused and completely not working method
 //	public void checkDateValidity(RemoteWebDriver driver, String min, String max, String type) throws Exception {
 //		System.out.println("FROM THE PAGE====================Start Date Min");
-//		String dynString = sDate.getAttribute("min").trim();
+//		String dynString = sDate.getAttribute("min");
 //		SimpleDateFormat dF = new SimpleDateFormat("YYYY-MMM-dd");
 //		Date d = dF.parse(dynString.substring(0, dynString.indexOf('T')));
 //		System.out.println(d);

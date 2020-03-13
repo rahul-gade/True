@@ -34,7 +34,7 @@ public class BM_Notes extends PageBase {
 
 	public void deleteNotes(RemoteWebDriver driver) throws Exception {
 		Thread.sleep(1500);
-		int badgeCount = Integer.parseInt(badgeC.getText().trim());
+		int badgeCount = Integer.parseInt(badgeC.getText());
 		while (badgeCount > 0) {
 			WebElement delete = driver.findElementByCssSelector("div.notes-data-div-main img[src*=delete]");
 			click(delete, "Delete Note");
@@ -46,9 +46,9 @@ public class BM_Notes extends PageBase {
 				badgeCount = 0;
 				break;
 			}
-			if (Integer.parseInt(badgeC.getText().trim()) < badgeCount) {
+			if (Integer.parseInt(badgeC.getText()) < badgeCount) {
 				assertTrue("Note Deleted successfully");
-				badgeCount = Integer.parseInt(badgeC.getText().trim());
+				badgeCount = Integer.parseInt(badgeC.getText());
 			} else
 				assertFalse("Note Not deleted");
 		}

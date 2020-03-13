@@ -60,7 +60,7 @@ public class BM_Insights extends PageBase {
 		List<WebElement> navs = navMenu.findElements(By.tagName("li"));
 		for (WebElement nav : navs) {
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
-			vert = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+			vert = nav.getText().replaceAll("[^a-zA-Z]", "");
 			click(nav, vert);
 			if (count > 0) {
 				int accordions = driver.findElementsByTagName("mat-expansion-panel").size();
@@ -84,7 +84,7 @@ public class BM_Insights extends PageBase {
 		List<WebElement> navs = navMenu.findElements(By.tagName("li"));
 		for (WebElement nav : navs) {
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
-			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+			String tabName = nav.getText().replaceAll("[^a-zA-Z]", "");
 			click(nav, tabName);
 			if (count > 0) {
 				int accordions = driver.findElementsByTagName("mat-expansion-panel").size();
@@ -119,7 +119,7 @@ public class BM_Insights extends PageBase {
 		List<WebElement> navs = navMenu.findElements(By.tagName("li"));
 		for (WebElement nav : navs) {
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
-			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+			String tabName = nav.getText().replaceAll("[^a-zA-Z]", "");
 			click(nav, tabName);
 			if (count > 0) {
 				int accordions = driver.findElementsByTagName("mat-expansion-panel").size();
@@ -168,10 +168,10 @@ public class BM_Insights extends PageBase {
 
 		for (WebElement nav : navs) {
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
-			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+			String tabName = nav.getText().replaceAll("[^a-zA-Z]", "");
 			click(nav, tabName);
 			if (count > 0) {
-				int pCount = Integer.parseInt(postCount.getText().trim());
+				int pCount = Integer.parseInt(postCount.getText());
 				String iName = accordion_1.findElement(By.cssSelector("span.customer")).getText();
 				click(accordion_1, iName);
 				Thread.sleep(250);
@@ -210,7 +210,7 @@ public class BM_Insights extends PageBase {
 
 				click(submitBtn, "POST");
 				Thread.sleep(250);
-				if (Integer.parseInt(postCount.getText().trim()) > pCount)
+				if (Integer.parseInt(postCount.getText()) > pCount)
 					assertTrue("Post Added Successfully");
 				else
 					assertFalse("Post Not Added");
@@ -226,7 +226,7 @@ public class BM_Insights extends PageBase {
 
 	public void testInsightPage(RemoteWebDriver driver, String company) throws Exception {
 //		company name
-		if (companyName.getText().trim().contains(company))
+		if (companyName.getText().contains(company))
 			assertTrue("Company Name shown in header of the page");
 		else
 			assertFalse("Comppany name is different/not present");
@@ -239,7 +239,7 @@ public class BM_Insights extends PageBase {
 		System.out.println(navs.size() + " <== Number of tabs");
 		int i = 0;
 		for (WebElement nav : navs) {
-			String tabName = nav.getText().trim().replaceAll("[^a-zA-Z]", "");
+			String tabName = nav.getText().replaceAll("[^a-zA-Z]", "");
 //			System.out.println(tabName);
 			int count = Integer.parseInt(nav.findElement(By.tagName("p")).getText().replaceAll("/", ""));
 			if (count > 0 && !checked)

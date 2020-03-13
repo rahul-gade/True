@@ -39,10 +39,16 @@ public class TestEndPlan extends TestBase{
 			plan.verifySidebar(remoteDriver, bG.HDP_2, vHDP2, bG.A_P.get(1));
 			plan.endPlan(remoteDriver, bG.HDP_1, bG.HDP_2);
 			
+//			teporary - don't run if whole suite is in use!
+//			bG.openSIA(remoteDriver);
+			
 //			SIA View
 			BM_PlanView_SIA planSIA = new BM_PlanView_SIA(remoteDriver);
-			planSIA.testSIAPage(remoteDriver);
+			planSIA.testSIAPage(remoteDriver, company);
 			planSIA.verifySIAPlans(remoteDriver, plan.ended, plan.unended, bG.SIA);
+			planSIA.verifyHDPandClose(remoteDriver, plan.ended, plan.unended);
+			bG.checkPlanState(remoteDriver);
+			bG.verifyTransformation(remoteDriver, plan.ended, plan.unended);
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}

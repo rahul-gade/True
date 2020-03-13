@@ -62,22 +62,55 @@ public class BM_Company_BizGoals extends PageBase {
 	WebElement endPlan;
 
 	String gTitle = "//a[contains(text(),'GTITLE')]",
-			plan = "./ancestor::mat-expansion-panel//p[contains(text(),'PLAN')]", HDP_1 = null, HDP_2 = null,
+			plan = "./ancestor::mat-expansion-panel//p[contains(text(),'PLAN')]", 
+			HDP_1 = null, HDP_2 = null,
 			SIA = null;
 
 	List<String> A_P = new ArrayList<String>();
 
+	public void verifyTransformation(RemoteWebDriver driver, String endedPlan, String unendedPlan) throws Exception {
+		String expPanel = "/ancestor::mat-expansion-panel//span[text()='STATE']";
+		String using = "";
+		Actions action = new Actions(driver);
+
+//		scroll down
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+//		unended Plan
+		using = gTitle.replace("GTITLE", unendedPlan) + expPanel.replace("STATE", "100 Day Plan");
+		if (driver.findElementsByXPath(using).size() > 0) {
+			click(using, "Unended Plan State");
+			assertTrue("Unended plan " + unendedPlan + " is in 100 Day Plan state");
+			Thread.sleep(250);
+			action.moveByOffset(-100, 0).click().perform();
+			Thread.sleep(250);
+		} else
+			assertFalse("Unended plan is not in 100 Day Plan state");
+
+//		ended plan
+		using = gTitle.replace("GTITLE", endedPlan) + expPanel.replace("STATE", "SIA");
+		if (driver.findElementsByXPath(using).size() > 0) {
+			assertTrue("Ended plan " + endedPlan + " is moved to SIA state");
+			click(using, "Ended Plan State");
+			Thread.sleep(250);
+			action.moveByOffset(-100, 0).click().perform();
+			Thread.sleep(250);
+		} else
+			assertFalse("Ended Plan is not moved to SIA state.");
+	}
+
 	public void collectGoals(RemoteWebDriver driver, String gTitles, String pTitles) throws Exception {
 		String[] titles = gTitles.split(",");
 		List<WebElement> hdp = driver.findElementsByXPath(gTitle.replace("GTITLE", titles[0]));
-		HDP_1 = hdp.get(0).getText().trim();
-		HDP_2 = hdp.get(1).getText().trim();
-		SIA = driver.findElementByXPath(gTitle.replace("GTITLE", titles[1])).getText().trim();
+		HDP_1 = hdp.get(0).getText();
+		HDP_2 = hdp.get(1).getText();
+		SIA = driver.findElementByXPath(gTitle.replace("GTITLE", titles[1])).getText();
 
 		for (WebElement e : hdp) {
-			click(e, hdp.get(0).getText().trim());
+			click(e, hdp.get(0).getText());
 			Thread.sleep(750);
-			A_P.add(e.findElement(By.xpath(plan.replace("PLAN", pTitles))).getText().trim());
+			A_P.add(e.findElement(By.xpath(plan.replace("PLAN", pTitles))).getText());
 		}
 	}
 
@@ -134,7 +167,7 @@ public class BM_Company_BizGoals extends PageBase {
 			click(newGoal.findElement(By.xpath(".//a[text()='View Details']")), "View Details");
 			Thread.sleep(500);
 			if (driver.findElementsByTagName("app-view-goal-details").size() > 0
-					&& VGDTitle.getText().trim().equals(goalTitle))
+					&& VGDTitle.getText().equals(goalTitle))
 				assertTrue("goal details page opened successfully");
 			else
 				assertFalse("Goal Details Page not opened");
@@ -154,9 +187,9 @@ public class BM_Company_BizGoals extends PageBase {
 		}
 
 		if (value > 0)
-			assertTrue("Progress Bars Updated");
+			assertTrue(color + "Progress Bars Updated");
 		else
-			assertFalse("Progress Bars not updated");
+			assertFalse(color + "Progress Bars not updated");
 	}
 
 	public void openBizInsights(RemoteWebDriver driver) throws Exception {
@@ -261,14 +294,12 @@ public class BM_Company_BizGoals extends PageBase {
 			assertFalse("New goal screen not shown");
 	}
 
-//	public boolean checkPlanState(RemoteWebDriver driver) throws Exception {
-//		if (goalView.getText().contains("SIA")) {
-//			assertTrue("Goals Ended! Select Another Company!");
-//			System.out.println("Goals Ended! Select Another Company!");
-//			return false;
-//		}
-//		return true;
-//	}
+	public void checkPlanState(RemoteWebDriver driver) throws Exception {
+		if (goalView.getText().contains("SIA"))
+			assertTrue("VIEW button changed to VIEW SIA");
+		else
+			assertFalse("VIEW Button not changed to VIEW SIA");
+	}
 
 	public void openPlan(RemoteWebDriver driver) throws Exception {
 		click(goalView, "View");
@@ -279,4 +310,13 @@ public class BM_Company_BizGoals extends PageBase {
 			assertFalse("HUndred day plan page opened");
 	}
 
+//	temporary
+	public void openSIA(RemoteWebDriver driver) throws Exception {
+		click(goalView, "View");
+		Thread.sleep(500);
+		if (driver.findElementsByTagName("app-view-sia-plan-details").size() > 0)
+			assertTrue("SIA Plan page opened");
+		else
+			assertFalse("SIA Plan page opened");
+	}
 }

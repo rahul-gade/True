@@ -46,7 +46,7 @@ public class BM_GoalDetails extends PageBase {
 			throws Exception {
 		Actions action = new Actions(driver);
 //✓		goal type
-		if (goalType.getText().trim().equalsIgnoreCase(type))
+		if (goalType.getText().equalsIgnoreCase(type))
 			assertTrue("Goal Type " + type + " is correct.");
 		else
 			assertFalse("Goal Type is not correct. Expected: " + type + " || Actual: " + goalType.getText());
@@ -80,7 +80,7 @@ public class BM_GoalDetails extends PageBase {
 			assertFalse("Archive Button is not displayed");
 
 //✓		Criticality
-		if (criticality.getText().trim().equalsIgnoreCase(critic))
+		if (criticality.getText().equalsIgnoreCase(critic))
 			assertTrue("Criticality is correctly saved");
 		else
 			assertFalse("criticality is not correctly saved\n" + critic + "   " + criticality.getText());

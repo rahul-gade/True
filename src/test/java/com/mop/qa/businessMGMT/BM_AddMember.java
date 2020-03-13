@@ -106,7 +106,9 @@ public class BM_AddMember extends PageBase {
 
 		Thread.sleep(250);
 		click(submit, "SUBMIT");
-		Thread.sleep(1500);
+		do {
+			Thread.sleep(1500);
+		} while (driver.findElementsByCssSelector("img[src*='spinner']").size() > 0);
 		if (driver.findElementsByTagName("app-add-new-profile").size() > 0)
 			assertFalse("Pop-up still Present"); // clear this thing
 		else

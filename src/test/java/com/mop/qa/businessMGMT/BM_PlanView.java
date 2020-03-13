@@ -39,10 +39,14 @@ public class BM_PlanView extends PageBase {
 	WebElement sliderBG;
 	@FindBy(css = "div.mat-slider-thumb")
 	WebElement sliderThumb;
-	@FindBy(css = "span.value")
-	WebElement sliderLabel;
 	@FindBy(css = "button.vgd-ss-archive-btn")
 	WebElement archive;
+	@FindBy(css = "span.view-moredetails-txt")
+	WebElement moreDetails;
+	@FindBy(css = "a.bm-vgd-close-icon")
+	WebElement closeGD;
+	@FindBy(css = "a.bm-vapd-close-icon")
+	WebElement closeAPD; 
 	@FindBy(css = "img[alt=Close]")
 	WebElement closeSidebar;
 
@@ -51,7 +55,7 @@ public class BM_PlanView extends PageBase {
 	List<WebElement> cBoxWhole;
 	@FindBy(css = "button.bm-ehdp-confirmbtn")
 	WebElement confirmBtn;
-	@FindBy(css = "button.btn")
+	@FindBy(css = "app-confirm-message-dialog button.btn")
 	WebElement confirm;
 	@FindBy(css = "app-view-sia-plan-details")
 	WebElement SIAplanPage;
@@ -66,15 +70,27 @@ public class BM_PlanView extends PageBase {
 		click(hdpPanel.findElement(By.xpath(plan_hdp.replace("CODEIN", planName))), "Plan " + planName);
 		Thread.sleep(500);
 		assertTrue("Split Screen is displayed", driver.findElementsByClassName("aside-content").size() > 0);
-		assertTrue("Goal Title is correctly displayed", goalTitle.getText().trim().equals(planName));
+		assertTrue("Goal Title is correctly displayed", goalTitle.getText().equals(planName));
+//		more details
+		click(moreDetails, "View More Details");
+		Thread.sleep(250);
+		if(driver.findElementsByClassName("bm-vgd-header").size()>0)
+			assertTrue("Goal Details POp-up opened");
+		else
+			assertFalse("Goal Details POp-up not opened");
+		click(closeGD, "Close");
+		Thread.sleep(250);
+		if(driver.findElementsByClassName("bm-vgd-header").size()==0)
+			assertTrue("Goal Details POp-up closed");
+		else
+			assertFalse("Goal Details POp-up not closed");
+//		progress slider
 		fillSlider(driver);
 		if (driver.findElementsByXPath("//*[contains(text(),'successfully')]").size() > 0) {
 			assertTrue("Progress saved successfully");
 		} else
 			assertFalse("Toast Messages Not displayed");
 		assertTrue("Archive Button Displayed when progress is set to 100%", archive.isDisplayed());
-		
-		
 
 //		REFRESH PANEL after closing sidebar - check percentage
 		click(closeSidebar, "Close Sidebar");
@@ -90,13 +106,27 @@ public class BM_PlanView extends PageBase {
 		System.out.println(Ac_Plan);
 		WebElement aPlan = hdpPanel.findElement(By.xpath(plan_hdp.replace("CODEIN", Ac_Plan)));
 //		String aPTitle = aPlan.getText();
-		click(aPlan, "100 Day Goal Action Plan");
+		click(aPlan, Ac_Plan);
 		Thread.sleep(250);
 		assertTrue("Split Screen is displayed", driver.findElementsByClassName("aside-content").size() > 0);
 		if (aPlanTitle.getText().contains(Ac_Plan))
 			assertTrue("Action Plan Title is correctly displayed");
 		else
 			assertFalse("Action Plan Title is not corectly displayed");
+		
+//		action plan view more details
+		click(moreDetails, "View More Details");
+		Thread.sleep(250);
+		if(driver.findElementsByClassName("bm-vapd-title").size()>0)
+			assertTrue("Action Plan Details POp-up opened");
+		else
+			assertFalse("Action Plan Details POp-up not opened");
+		click(closeAPD, "Close");
+		Thread.sleep(250);
+		if(driver.findElementsByClassName("bm-vapd-title").size()==0)
+			assertTrue("Action Plan Details POp-up closed");
+		else
+			assertFalse("Action Plan Details POp-up not closed");
 		fillSlider(driver);
 		if (driver.findElementsByXPath("//*[contains(text(),'successfully')]").size() > 0) {
 			assertTrue("Progress saved successfully");
@@ -148,7 +178,7 @@ public class BM_PlanView extends PageBase {
 //		finally end
 		click(confirmBtn, "Confirm");
 		Thread.sleep(250);
-		click(confirm, "Confirm");
+		click(confirm, "Confirm in Final Dialog");
 		Thread.sleep(1500);
 		if (SIAplanPage.isDisplayed())
 			assertTrue("Landed on SIA Plan Page");
@@ -160,7 +190,7 @@ public class BM_PlanView extends PageBase {
 		Actions action = new Actions(driver);
 		int width = sliderBG.getSize().getWidth();
 		action.dragAndDropBy(sliderThumb, width, 0).perform();
-//		action.moveToElement(sliderBG).moveByOffset(width / 2-1, 0).click().build().perform();
 		Thread.sleep(250);
 	}
+
 }
